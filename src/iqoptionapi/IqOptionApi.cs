@@ -33,7 +33,6 @@ namespace iqoptionapi
                 WsClient = new IqOptionWebSocketClient(WebClient.SecuredToken, "iqoption.com");
 
                 if (await WsClient.OpenWebSocketAsync()) {
-
                     Debug.WriteLine("Ws Ready!");
                 }
 

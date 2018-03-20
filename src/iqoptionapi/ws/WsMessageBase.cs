@@ -12,6 +12,7 @@ namespace iqoptionapi.ws {
 
         [JsonProperty("name")]
         public virtual string Name { get; protected set; }
+
         [JsonProperty("msg")]
         public T Message { get; protected set; }
         

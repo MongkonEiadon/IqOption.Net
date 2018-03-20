@@ -1,5 +1,5 @@
 ﻿using System;
-using iqoptionapi.iqoptionapi.converters.JsonConverters;
+using iqoptionapi.converters.JsonConverters;
 using Newtonsoft.Json;
 
 namespace iqoptionapi {

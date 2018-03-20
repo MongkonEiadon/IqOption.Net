@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.iqoptionapi.converters.JsonConverters {
+namespace iqoptionapi.converters.JsonConverters {
     public class UnixDateTimeJsonConverter : DateTimeConverterBase
     {
         private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
