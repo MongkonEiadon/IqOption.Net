@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D53DAE50-05A2-46F3-97DE-C3CC5D7D9D9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iqoptionapi", "src\iqoptionapi\iqoptionapi.csproj", "{D783FD8C-F29C-4090-93AF-6411CDEC256C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D783FD8C-F29C-4090-93AF-6411CDEC256C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D783FD8C-F29C-4090-93AF-6411CDEC256C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D783FD8C-F29C-4090-93AF-6411CDEC256C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D783FD8C-F29C-4090-93AF-6411CDEC256C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9E7D454-5C50-445A-A9DD-91E8806B8921}
+	EndGlobalSection
+EndGlobal
