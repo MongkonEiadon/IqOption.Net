@@ -16,17 +16,17 @@ namespace iqoptionapi.ws {
 
         private readonly ILogger _logger;
 
-        public string SSID { get; set; }
+        public string SecureToken { get; set; }
 
         public WebSocket Client { get; }
 
         public DateTime TimeSync { get; private set; }
         public Profile Profile { get; private set; }
 
-        public IqOptionWebSocketClient(string ssid, string host = "iqoption.com") {
+        public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") {
 
             Client = new WebSocket(uri: $"wss://{host}/echo/websocket");
-            this.SSID = ssid;
+            this.SecureToken = secureToken;
 
             _logger = new Microsoft.Extensions.Logging.LoggerFactory().CreateLogger(nameof(IqOptionWebSocketClient));
 
@@ -59,7 +59,7 @@ namespace iqoptionapi.ws {
             });
 
             //send ssid message
-            SendMessageAsync(new SsidWsMessage(ssid));
+            SendMessageAsync(new SsidWsMessage(secureToken));
         }
 
         
