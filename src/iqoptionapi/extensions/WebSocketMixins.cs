@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using iqoptionapi.extensions;
 
 namespace iqoptionapi {
-    public static class WebSocketMixins {
+    internal static class WebSocketMixins {
 
         public static Task SendString(this ClientWebSocket ws, object data, CancellationToken cancellation) {
             return ws.SendString(data.AsJson(), cancellation);

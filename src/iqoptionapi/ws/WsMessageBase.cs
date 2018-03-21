@@ -6,7 +6,7 @@ namespace iqoptionapi.ws {
     public interface IWsIqOptionMessage {
         string CreateIqOptionMessage();
     }
-    public class WsMessageBase<T> : IWsIqOptionMessage
+    internal class WsMessageBase<T> : IWsIqOptionMessage
             where T: class {
 
 

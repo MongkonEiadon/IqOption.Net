@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace iqoptionapi {
-    public static class DateTimeExtensions
+    internal static class DateTimeExtensions
     {
 
 

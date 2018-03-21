@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D53DAE50-05A2-46F3-97DE-C3CC5D7D9D9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iqoptionapi", "src\iqoptionapi\iqoptionapi.csproj", "{D783FD8C-F29C-4090-93AF-6411CDEC256C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iqoptionapi", "src\iqoptionapi\iqoptionapi.csproj", "{D783FD8C-F29C-4090-93AF-6411CDEC256C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iqoptionapi.unit", "tests\iqoptionapi.unit\iqoptionapi.unit.csproj", "{3910EF72-DA85-4432-BF50-3A4BAD443573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iqoptionapi.unit", "tests\iqoptionapi.unit\iqoptionapi.unit.csproj", "{3910EF72-DA85-4432-BF50-3A4BAD443573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacContrib.Nsubstitute", "tests\AutofacContrib.Nsubstitute\AutofacContrib.Nsubstitute.csproj", "{AA451B3A-10FD-4663-B720-F3AD16579C9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutofacContrib.Nsubstitute", "tests\AutofacContrib.Nsubstitute\AutofacContrib.Nsubstitute.csproj", "{AA451B3A-10FD-4663-B720-F3AD16579C9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iqoptionapi.sample", "sample\iqoptionapi.sample\iqoptionapi.sample.csproj", "{A297AE1B-0BBB-4D71-A742-F426F63CAC47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{AA451B3A-10FD-4663-B720-F3AD16579C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA451B3A-10FD-4663-B720-F3AD16579C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA451B3A-10FD-4663-B720-F3AD16579C9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A297AE1B-0BBB-4D71-A742-F426F63CAC47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A297AE1B-0BBB-4D71-A742-F426F63CAC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A297AE1B-0BBB-4D71-A742-F426F63CAC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A297AE1B-0BBB-4D71-A742-F426F63CAC47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

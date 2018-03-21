@@ -11,15 +11,21 @@ using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi.ws {
     public class IqOptionWebSocketClient : IDisposable {
+
+        //privates
+        private readonly ILogger _logger;
+
+
+        #region [Public's]
         public IObservable<string> MessageReceivedObservable { get; }
         public IObservable<object> DataReceivedObservable { get; }
 
-        private readonly ILogger _logger;
+        #endregion  
+       
 
         public string SecureToken { get; set; }
 
         public WebSocket Client { get; }
-
         public DateTime TimeSync { get; private set; }
         public Profile Profile { get; private set; }
 
@@ -28,7 +34,7 @@ namespace iqoptionapi.ws {
             Client = new WebSocket(uri: $"wss://{host}/echo/websocket");
             this.SecureToken = secureToken;
 
-            _logger = new Microsoft.Extensions.Logging.LoggerFactory().CreateLogger(nameof(IqOptionWebSocketClient));
+            _logger = new LoggerFactory().CreateLogger(nameof(IqOptionWebSocketClient));
 
             this.MessageReceivedObservable =
                 Observable.Using(
@@ -59,7 +65,7 @@ namespace iqoptionapi.ws {
             });
 
             //send ssid message
-            SendMessageAsync(new SsidWsMessage(secureToken));
+            OpenSecuredSocketAsync();
         }
 
         
@@ -67,10 +73,13 @@ namespace iqoptionapi.ws {
       
 
         public async Task SendMessageAsync(IWsIqOptionMessage message) {
-
             if (await OpenWebSocketAsync()) {
                 Client.Send(message.CreateIqOptionMessage());
             }
+        }
+
+        protected Task OpenSecuredSocketAsync() {
+            return SendMessageAsync(new SsidWsMessage(SecureToken));
         }
 
         public Task<bool> OpenWebSocketAsync() {

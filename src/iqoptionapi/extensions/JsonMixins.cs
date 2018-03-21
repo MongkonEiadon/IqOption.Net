@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 namespace iqoptionapi.extensions
 {
-    public static class JsonMixins
+    internal static class JsonMixins
     {
         public static string AsJson(this object This)
         {
