@@ -13,7 +13,7 @@ namespace iqoptionapi.unit
             
 
             //arrange
-            var api = new IqOptionApi("mongkon.eiadon@gmail.com", "Code11054");
+            var api = new IqOptionApi(Configuration.Email, Configuration.Password);
 
             //act
             var result = await api.ConnectAsync();

@@ -1,40 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Net;
+using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using iqoptionapi.extensions;
+using iqoptionapi.models;
 using WebSocket4Net;
 using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi.ws {
-    public class IqOptionWebSocketClient : IDisposable {
+
+    public class ObservableObject : INotifyPropertyChanged {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+    public class IqOptionWebSocketClient : ObservableObject, IDisposable {
 
         //privates
         private readonly ILogger _logger;
-
+        private WebSocket Client { get; }
 
         #region [Public's]
         public IObservable<string> MessageReceivedObservable { get; }
         public IObservable<object> DataReceivedObservable { get; }
-
-        #endregion  
-       
-
         public string SecureToken { get; set; }
 
-        public WebSocket Client { get; }
-        public DateTime TimeSync { get; private set; }
-        public Profile Profile { get; private set; }
+        #endregion
+
+
+        private DateTime _timeSync;
+        public DateTime TimeSync {
+            get => _timeSync;
+            set {
+                this.OnPropertyChanged(nameof(Profile));
+                _timeSync = value;
+            }
+        }
+
+        private Profile _profile;
+        public Profile Profile {
+            get => _profile;
+            set {
+                this.OnPropertyChanged(nameof(Profile));
+                _profile = value;
+            }
+        }
+
+        public IObservable<Profile> ProfileObservable() {
+            return this.ToObservable(x => x.Profile);
+        }
+        
+
+
 
         public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") {
 
             Client = new WebSocket(uri: $"wss://{host}/echo/websocket");
+            _logger = IqOptionLoggerFactory.CreateLogger();
             this.SecureToken = secureToken;
 
-            _logger = new LoggerFactory().CreateLogger(nameof(IqOptionWebSocketClient));
 
             this.MessageReceivedObservable =
                 Observable.Using(
@@ -43,26 +80,30 @@ namespace iqoptionapi.ws {
                             .FromEventPattern<EventHandler<MessageReceivedEventArgs>, MessageReceivedEventArgs>(
                                 handler => _.MessageReceived += handler,
                                 handler => _.MessageReceived -= handler))
-                    .Select(x => x.EventArgs.Message);
+                    .Select(x => x.EventArgs.Message)
+                    .SubscribeOn(new EventLoopScheduler())
+                    .Publish()
+                    .RefCount();
 
 
             MessageReceivedObservable.Subscribe(x => {
 
-                _logger.LogTrace(x);
                 var a = x.JsonAs<WsMessageBase<object>>();
 
                 switch (a.Name?.ToLower()) {
 
                     case "timesync": {
                         this.TimeSync = a.Message.FromUnixToDateTime();
+                        //_logger.LogTrace($"{a.Message}");
                         break;
                     }
                     case "profile": {
-                        this.Profile = x.JsonAs<WsMessageBase<Profile>>().Message;
+                        _logger.LogTrace($"Get Profile!, {a.Message}");
+                        this.Profile = x.JsonAs<WsMessageBase<models.Profile>>().Message;
                         break;
                     }
                 }
-            });
+            }, onError: ex => { _logger.LogCritical(ex.Message); });
 
             //send ssid message
             OpenSecuredSocketAsync();
@@ -74,9 +115,15 @@ namespace iqoptionapi.ws {
 
         public async Task SendMessageAsync(IWsIqOptionMessage message) {
             if (await OpenWebSocketAsync()) {
+                _logger.LogTrace($"send msge => :\t{message.CreateIqOptionMessage()}");
                 Client.Send(message.CreateIqOptionMessage());
             }
         }
+
+        public async Task BuyAsync() {
+
+        }
+
 
         protected Task OpenSecuredSocketAsync() {
             return SendMessageAsync(new SsidWsMessage(SecureToken));
@@ -90,5 +137,7 @@ namespace iqoptionapi.ws {
         public void Dispose() {
             Client?.Dispose();
         }
+        
+        
     }
 }

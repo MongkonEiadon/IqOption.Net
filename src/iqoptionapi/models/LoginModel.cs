@@ -3,9 +3,9 @@
 namespace iqoptionapi.models {
     public class LoginModel {
         [JsonProperty("email")]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [JsonProperty("password")]
-        public string password { get; set; }
+        public string Password { get; set; }
     }
 }

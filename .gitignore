@@ -287,3 +287,4 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /sample/iqoptionapi.sample/appsettings.Debug.json
+/tests/iqoptionapi.unit/appsettings.Debug.json

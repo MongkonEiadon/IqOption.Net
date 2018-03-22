@@ -6,15 +6,27 @@ namespace iqoptionapi.ws {
     public interface IWsIqOptionMessage {
         string CreateIqOptionMessage();
     }
-    internal class WsMessageBase<T> : IWsIqOptionMessage
+
+    public interface IWsIqOptionMessage<T> : IWsIqOptionMessage where T : class
+    {
+        [JsonProperty("name")]
+        string Name { get; set; }
+
+        [JsonProperty("msg")]
+        T Message { get; set; }
+
+    }
+
+
+    internal class WsMessageBase<T> : IWsIqOptionMessage<T>
             where T: class {
 
 
         [JsonProperty("name")]
-        public virtual string Name { get; protected set; }
+        public virtual string Name { get; set; }
 
         [JsonProperty("msg")]
-        public T Message { get; protected set; }
+        public T Message { get; set; }
         
 
         public override string ToString() {

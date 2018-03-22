@@ -1,42 +1,57 @@
 ﻿using System;
 using System.IO;
+using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace iqoptionapi.sample {
-    public class Program {
-        public static void Main(string[] args)
-        { 
+namespace iqoptionapi.sample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
 
             var provider = ConfigureServices(new ServiceCollection());
+            var logger = provider.GetService<ILogger<Program>>();
 
-            provider.GetService<Startup>().Run().GetAwaiter();
+            try {
+                logger.LogInformation("Application start!");
 
-            Console.ReadKey();
+                var app = provider.GetService<Startup>();
+                app.Run().GetAwaiter();
+
+
+                Console.ReadLine();
+            }
+            catch (Exception ex) {
+                logger.LogCritical("App Error!", ex);
+            }
+
         }
 
-        private static IServiceProvider ConfigureServices(IServiceCollection services) {
-            ILoggerFactory loggerFactory = new LoggerFactory()
-                .AddConsole()
-                .AddDebug();
-
-            services.AddSingleton(loggerFactory); // Add first my already configured instance
-            services.AddLogging(c => c.AddConsole()); // Allow ILogger<T>
+        private static IServiceProvider ConfigureServices(IServiceCollection services)
+        {
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile($"appsettings.json", optional: true)
                 .Build();
 
+            services
+                .AddSingleton<ILoggerFactory, LoggerFactory>()
+                .AddSingleton(typeof(ILogger<>), typeof(Logger<>)) // Add first my already configured instance
+                .AddLogging(c =>
+                        c.SetMinimumLevel(LogLevel.Trace)
+                        .AddConsole()
+                        .AddConfiguration(configuration.GetSection("Logging")));
 
             services
                 .AddSingleton(configuration)
-                .AddSingleton(s => s.GetService<IOptions<IqOptionConfiguration>>().Value)
+                .AddSingleton<IqOptionConfiguration>(s => s.GetService<IOptions<IqOptionConfiguration>>().Value)
                 .AddSingleton<Startup>();
 
 

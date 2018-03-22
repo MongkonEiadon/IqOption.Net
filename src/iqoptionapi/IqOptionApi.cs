@@ -1,33 +1,67 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Net;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using iqoptionapi.extensions;
 using iqoptionapi.http;
+using iqoptionapi.models;
 using iqoptionapi.ws;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi {
 
-    public class IqOptionApi {
-        private string _host { get; }
+    public interface IIqOptionApi {
+        IqOptionWebSocketClient WsClient { get;  }
+        IqOptionHttpClient HttpClient { get; }
 
-        public IqOptionWebClient WebClient { get; }
+        Task<bool> ConnectAsync();
+        Task<models.Profile> GetProfileAsync();
+        Task<bool> ChangeBalanceAsync(long balanceId);
+
+
+        Profile Profile { get; }
+    }
+
+
+    public class IqOptionApi : IIqOptionApi {
+        private readonly IqOptionConfiguration _configuration;
+        private readonly ILogger _logger;
+
+        public IqOptionHttpClient HttpClient { get; }
         public IqOptionWebSocketClient WsClient { get; private set; }
 
+        public Profile Profile { get; private set; }
 
-        public IqOptionApi(string username, string password, string host = "iqoption.com") {
-            _host = host;
+        #region [Ctor]
 
-            //set up client
-            WebClient = new IqOptionWebClient(username, password);
+        public IqOptionApi(string username, string password, string host = "iqoption.com")
+            : this(new IqOptionConfiguration {Email = username, Password = password, Host = host}) {
         }
 
-        public async Task<bool> ConnectAsync() {
-            var result = await WebClient.LoginAsync();
-            if (result.StatusCode == HttpStatusCode.OK) {
-                WsClient = new IqOptionWebSocketClient(WebClient.SecuredToken, "iqoption.com");
+        public IqOptionApi(IqOptionConfiguration configuration) {
+            _configuration = configuration;
 
-                if (await WsClient.OpenWebSocketAsync()) Debug.WriteLine("Ws Ready!");
+            //set up client
+            HttpClient = new IqOptionHttpClient(configuration.Email, configuration.Password);
+
+            //set log
+            _logger = IqOptionLoggerFactory.CreateLogger();
+        }
+
+        #endregion
+
+
+        public async Task<bool> ConnectAsync() {
+            var result = await HttpClient.LoginAsync();
+
+            if (result.StatusCode == HttpStatusCode.OK) {
+                WsClient = new IqOptionWebSocketClient(HttpClient.SecuredToken, _configuration.Host);
+
+                if (await WsClient.OpenWebSocketAsync())
+                    SubscriptWebSocket();
+                    _logger.LogInformation("WebSocket Connected!");
 
                 return true;
             }
@@ -35,17 +69,38 @@ namespace iqoptionapi {
             return false;
         }
 
-        public async Task<IqResult<Profile>> GetProfileAsync() {
-            var result = await WebClient.GetProfileAsync();
-            return result.Content.JsonAs<IqResult<Profile>>();
+        public async Task<Profile> GetProfileAsync() {
+            var result = await HttpClient.GetProfileAsync();
+            var profile = result.Content.JsonAs<IqHttpResult<models.Profile>>()?.UserProfile;
+            _logger.LogInformation($"Get Profile!: \t{profile}");
+
+            return profile;
         }
-    }
 
-  
+        public async Task<bool> ChangeBalanceAsync(long balanceId) {
+            var result = await HttpClient.ChangeBalanceAsync(balanceId);
 
-    public class IqOptionConfiguration {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Host { get; set; }
+            if (result.Message!= null && !result.IsSuccessful) {
+                _logger.LogError($"Change balance ({balanceId}) error : {result.Message}");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void SubscriptWebSocket() {
+            Contract.Requires(WsClient != null);
+            Contract.Requires(HttpClient != null);
+
+            //subscribe profile
+            WsClient.ProfileObservable()
+                .Merge(HttpClient.ProfileObservable())
+                .DistinctUntilChanged()
+                .Subscribe(x => {
+                    _logger.LogInformation($"Profile Updated : {x?.ToString()}");
+                    this.Profile = x;
+                });
+        }
+        
     }
 }

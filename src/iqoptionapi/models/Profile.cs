@@ -2,7 +2,7 @@
 using iqoptionapi.converters.JsonConverters;
 using Newtonsoft.Json;
 
-namespace iqoptionapi {
+namespace iqoptionapi.models {
     public partial class Profile
     {
         [JsonProperty("avatar")]

@@ -12,18 +12,34 @@ using Newtonsoft.Json.Serialization;
 using RestSharp;
 
 namespace iqoptionapi.http {
-    public class IqOptionWebClient {
+    public class IqOptionHttpClient : ObservableObject {
 
         public LoginModel LoginModel { get; }
+
+        private ILogger _logger;
         protected static Uri ApiEndPoint(string host) => new Uri($"https://{host}/api");
         public string SecuredToken { get; private set; }
         public IRestClient Client { get; private set; }
-        public Profile Profile { get; private set; }
 
-        public IqOptionWebClient(string username, string password, string host = "iqoption.com")
+        private Profile _profile;
+        public Profile Profile {
+            get => _profile;
+            private set {
+                _profile = value;
+                this.OnPropertyChanged(nameof(Profile));
+            }
+        }
+
+        public IObservable<Profile> ProfileObservable() {
+            return this.ToObservable(x => x.Profile);
+        }
+
+        public IqOptionHttpClient(string username, string password, string host = "iqoption.com")
         {
             Client = new RestClient(ApiEndPoint(host));
-            LoginModel = new LoginModel() {email = username, password = password};
+            LoginModel = new LoginModel() {Email = username, Password = password};
+
+            _logger = IqOptionLoggerFactory.CreateLogger();
         }
 
         #region Web-Methods
@@ -33,7 +49,7 @@ namespace iqoptionapi.http {
 
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                var loginResult = result.Content.JsonAs<IqResult<Profile>>();
+                var loginResult = result.Content.JsonAs<IqHttpResult<Profile>>();
                 if (loginResult.IsSuccessful)
                 {
                     this.Client.CookieContainer = new CookieContainer();
@@ -60,9 +76,14 @@ namespace iqoptionapi.http {
             return result;
         }
 
-        public async Task<IRestResponse> ChangeBalanceAsync(long balanceId) {
+        public async Task<IqHttpResult<object>> ChangeBalanceAsync(long balanceId) {
             var result = await Client.ExecuteTaskAsync(new ChangeBalanceRequest(balanceId));
-            return result;
+
+            if (result.StatusCode == HttpStatusCode.OK) {
+                return result.Content.JsonAs<IqHttpResult<object>>();
+            }
+            
+            return null;
         }
 
 

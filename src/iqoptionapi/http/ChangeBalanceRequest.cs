@@ -3,8 +3,8 @@
 namespace iqoptionapi.http {
     public class ChangeBalanceRequest : IqOptionRequest {
 
-        public ChangeBalanceRequest(long balanceid) : base("profile/changebalance", Method.POST) {
-            this.AddParameter("balance_id", balanceid);
+        public ChangeBalanceRequest(long balanceId) : base("profile/ChangeBalance", Method.POST) {
+            this.AddParameter("balance_id", balanceId);
         }
     }
 }
