@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
@@ -88,6 +89,13 @@ namespace iqoptionapi {
             return true;
         }
 
+        public async Task GetInstrumentsAsync() {
+            await WsClient.SendInstrumentsRequestAsync();
+        }
+        
+
+
+
         private void SubscriptWebSocket() {
             Contract.Requires(WsClient != null);
             Contract.Requires(HttpClient != null);
@@ -100,6 +108,11 @@ namespace iqoptionapi {
                     _logger.LogInformation($"Profile Updated : {x?.ToString()}");
                     this.Profile = x;
                 });
+        }
+
+        public enum OrderDirection {
+            Put = 1,
+            Call = 2
         }
         
     }

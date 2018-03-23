@@ -11,9 +11,6 @@ namespace iqoptionapi.sample {
         public Startup(IqOptionConfiguration config, ILogger<Startup> logger) {
             _config = config;
             _logger = logger;
-
-            /*test log level*/
-
         }
 
         public async Task Run() {
@@ -28,10 +25,12 @@ namespace iqoptionapi.sample {
                 var profile = await api.GetProfileAsync();
                 _logger.LogInformation($"Success Get Profile for {_config.Email}");
 
+                await api.GetInstrumentsAsync();
 
+                _logger.LogInformation($"Change balance to {profile.Balances[0].Id}");
                 if (await api.ChangeBalanceAsync(profile.Balances[0].Id)) {
-                    _logger.LogInformation($"Change balance to {profile.Balances[0].Id}");
                 }
+
 
             }
             else

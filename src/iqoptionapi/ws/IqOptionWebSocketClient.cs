@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
@@ -8,25 +7,17 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using iqoptionapi.extensions;
 using iqoptionapi.models;
+using iqoptionapi.ws.request;
 using WebSocket4Net;
 using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi.ws {
-
-    public class ObservableObject : INotifyPropertyChanged {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
     public class IqOptionWebSocketClient : ObservableObject, IDisposable {
 
         //privates
@@ -62,16 +53,12 @@ namespace iqoptionapi.ws {
         public IObservable<Profile> ProfileObservable() {
             return this.ToObservable(x => x.Profile);
         }
-        
-
-
 
         public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") {
 
             Client = new WebSocket(uri: $"wss://{host}/echo/websocket");
             _logger = IqOptionLoggerFactory.CreateLogger();
             this.SecureToken = secureToken;
-
 
             this.MessageReceivedObservable =
                 Observable.Using(
@@ -102,6 +89,10 @@ namespace iqoptionapi.ws {
                         this.Profile = x.JsonAs<WsMessageBase<models.Profile>>().Message;
                         break;
                     }
+                    case "instruments": {
+                        var result = x.JsonAs<WsMessageBase<InstrumentsResult>>().Message;
+                        break;
+                    }
                 }
             }, onError: ex => { _logger.LogCritical(ex.Message); });
 
@@ -109,9 +100,6 @@ namespace iqoptionapi.ws {
             OpenSecuredSocketAsync();
         }
 
-        
-
-      
 
         public async Task SendMessageAsync(IWsIqOptionMessage message) {
             if (await OpenWebSocketAsync()) {
@@ -120,17 +108,25 @@ namespace iqoptionapi.ws {
             }
         }
 
-        public async Task BuyAsync() {
-
+        public Task SendInstrumentsRequestAsync() {
+            return Task.WhenAll(
+                SendMessageAsync(GetInstrumentWsMessage.CreateRequest(InstrumentType.Forex)),
+                SendMessageAsync(GetInstrumentWsMessage.CreateRequest(InstrumentType.CFD)),
+                SendMessageAsync(GetInstrumentWsMessage.CreateRequest(InstrumentType.Crypto))
+            );
         }
+
 
 
         protected Task OpenSecuredSocketAsync() {
             return SendMessageAsync(new SsidWsMessage(SecureToken));
         }
 
-        public Task<bool> OpenWebSocketAsync() {
-            return Client.OpenAsync();
+        public async Task<bool> OpenWebSocketAsync() {
+            if (Client.State == WebSocketState.Open)
+                return true;
+
+            return await Client.OpenAsync();
         }
 
 

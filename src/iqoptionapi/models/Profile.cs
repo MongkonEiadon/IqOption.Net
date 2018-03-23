@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using iqoptionapi.converters.JsonConverters;
 using Newtonsoft.Json;
 
@@ -201,5 +202,4 @@ namespace iqoptionapi.models {
         [JsonProperty("deposit_amount")]
         public long DepositAmount { get; set; }
     }
-
 }

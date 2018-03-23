@@ -1,7 +1,7 @@
 ﻿using iqoptionapi.extensions;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.ws {
+namespace iqoptionapi.ws.request {
 
     public interface IWsIqOptionMessage {
         string CreateIqOptionMessage();
@@ -24,6 +24,7 @@ namespace iqoptionapi.ws {
 
         [JsonProperty("name")]
         public virtual string Name { get; set; }
+        
 
         [JsonProperty("msg")]
         public T Message { get; set; }
@@ -36,5 +37,11 @@ namespace iqoptionapi.ws {
         public virtual string CreateIqOptionMessage() {
             return this.AsJson();
         }
+    }
+
+    internal class WsSendMessageBase<T> : WsMessageBase<T> where T : class {
+
+        [JsonProperty("name")]
+        public override string Name { get; set; } = "sendMessage";
     }
 }
