@@ -3,13 +3,12 @@
 namespace iqoptionapi {
     internal static class DateTimeExtensions
     {
+        public static DateTime FromUnixToDateTime(this object This) {
+            return DateTimeOffset.FromUnixTimeMilliseconds(Convert.ToInt64(This)).DateTime.ToLocalTime();
+        }
 
-
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public static DateTime FromUnixToDateTime(this object This)
-        {
-            return _epoch.AddMilliseconds(Convert.ToUInt64(This));
+        public static Int64 ToUnixTimeSecounds(this DateTime This) {
+            return new DateTimeOffset(This).ToUnixTimeSeconds();
         }
     }
 }

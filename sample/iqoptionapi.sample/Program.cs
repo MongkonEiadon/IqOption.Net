@@ -21,8 +21,7 @@ namespace iqoptionapi.sample
             try {
                 logger.LogInformation("Application start!");
 
-                var app = provider.GetService<Startup>();
-                app.Run().GetAwaiter();
+                var app = provider.GetService<Startup>().Run();
 
 
                 Console.ReadLine();

@@ -62,7 +62,7 @@ namespace iqoptionapi.http {
                         this.Client.CookieContainer?.Add(new Cookie(c.Name, c.Value, c.Path, c.Domain));
                     }
 
-                    this.Profile = loginResult.UserProfile;
+                    this.Profile = loginResult.Result;
 
                 }
             }

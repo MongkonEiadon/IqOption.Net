@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using iqoptionapi.extensions;
 using iqoptionapi.http;
@@ -18,9 +20,8 @@ namespace iqoptionapi {
         IqOptionHttpClient HttpClient { get; }
 
         Task<bool> ConnectAsync();
-        Task<models.Profile> GetProfileAsync();
+        Task<Profile> GetProfileAsync();
         Task<bool> ChangeBalanceAsync(long balanceId);
-
 
         Profile Profile { get; }
     }
@@ -34,6 +35,8 @@ namespace iqoptionapi {
         public IqOptionWebSocketClient WsClient { get; private set; }
 
         public Profile Profile { get; private set; }
+
+        public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
 
         #region [Ctor]
 
@@ -72,7 +75,7 @@ namespace iqoptionapi {
 
         public async Task<Profile> GetProfileAsync() {
             var result = await HttpClient.GetProfileAsync();
-            var profile = result.Content.JsonAs<IqHttpResult<models.Profile>>()?.UserProfile;
+            var profile = result.Content.JsonAs<IqHttpResult<models.Profile>>()?.Result;
             _logger.LogInformation($"Get Profile!: \t{profile}");
 
             return profile;
@@ -81,7 +84,7 @@ namespace iqoptionapi {
         public async Task<bool> ChangeBalanceAsync(long balanceId) {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
 
-            if (result.Message!= null && !result.IsSuccessful) {
+            if (result?.Message == null && !result.IsSuccessful) {
                 _logger.LogError($"Change balance ({balanceId}) error : {result.Message}");
                 return false;
             }
@@ -89,10 +92,12 @@ namespace iqoptionapi {
             return true;
         }
 
-        public async Task GetInstrumentsAsync() {
-            await WsClient.SendInstrumentsRequestAsync();
+        public Task<InstrumentResultSet> GetInstrumentsAsync() => WsClient.SendInstrumentsRequestAsync();
+
+        public async Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTime expiration = default (DateTime)) {
+            return await WsClient.BuyAsync(pair, size, direction, expiration);
+            
         }
-        
 
 
 
@@ -101,19 +106,31 @@ namespace iqoptionapi {
             Contract.Requires(HttpClient != null);
 
             //subscribe profile
-            WsClient.ProfileObservable()
+            WsClient.ProfileObservable
                 .Merge(HttpClient.ProfileObservable())
                 .DistinctUntilChanged()
                 .Subscribe(x => {
                     _logger.LogInformation($"Profile Updated : {x?.ToString()}");
                     this.Profile = x;
                 });
+
+            WsClient.InstrumentResultSetObservable
+                .Subscribe(x => {
+                    _logger.LogInformation($"Instrument Updated!");
+                    this.Instruments = x;
+                });
+
+
         }
 
-        public enum OrderDirection {
-            Put = 1,
-            Call = 2
-        }
         
     }
+        public enum OrderDirection {
+
+            [EnumMember(Value = "put")]
+            Put = 1,
+
+            [EnumMember(Value = "call")]
+            Call = 2
+        }
 }

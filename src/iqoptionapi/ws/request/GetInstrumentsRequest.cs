@@ -23,10 +23,10 @@ namespace iqoptionapi.ws.request {
         }
     }
 
-    internal class GetInstrumentWsMessage : WsSendMessageBase<GetInstrumentsRequest> {
+    internal class GetInstrumentWsRequestMessageBase : WsRequestSendMessageBase<GetInstrumentsRequest> {
 
-        public static IWsIqOptionMessage<GetInstrumentsRequest> CreateRequest(InstrumentType type) =>
-            new GetInstrumentWsMessage() {
+        public static IWsRequestMessage<GetInstrumentsRequest> CreateRequest(InstrumentType type) =>
+            new GetInstrumentWsRequestMessageBase() {
                 Message = new GetInstrumentsRequest() {
                     InstrumentBody = new GetInstrumentsRequest.Body() {
                         Type = type

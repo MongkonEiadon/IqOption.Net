@@ -10,7 +10,7 @@ namespace iqoptionapi.models {
         [JsonProperty("close")]
         public long Close { get; set; }
 
-        public DateTime OpenDateTime => Open.FromUnixToDateTime();
-        public DateTime CloseDateTime => Close.FromUnixToDateTime();
+        public DateTime OpenDateTime => DateTimeOffset.FromUnixTimeSeconds(Open).DateTime.ToLocalTime();
+        public DateTime CloseDateTime => DateTimeOffset.FromUnixTimeSeconds(Close).DateTime.ToLocalTime();
     }
 }

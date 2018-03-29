@@ -5,11 +5,8 @@ using Newtonsoft.Json.Converters;
 namespace iqoptionapi.converters.JsonConverters {
     internal class UnixDateTimeJsonConverter : DateTimeConverterBase
     {
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteRawValue(((DateTime)value - _epoch).TotalSeconds + "");
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+            writer.WriteRawValue(((DateTime)value).ToUnixTimeSecounds().ToString()); //   ((DateTime)value - _epoch).TotalSeconds + "");
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -17,8 +14,5 @@ namespace iqoptionapi.converters.JsonConverters {
             if (reader.Value == null) { return null; }
             return reader.Value.FromUnixToDateTime();
         }
-
-
-
     }
 }
