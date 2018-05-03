@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using iqoptionapi.exceptions;
 using iqoptionapi.extensions;
 using iqoptionapi.models;
 using iqoptionapi.ws;
@@ -65,6 +66,11 @@ namespace iqoptionapi.http {
                     this.Profile = loginResult.Result;
 
                 }
+
+                else {
+                    var exception = result.Content.JsonAs<IqHttpResult<LoginFailedResultMessage>>();
+                    throw new LoginLimitExceededException(exception.Result.Ttl);
+                }
             }
 
             return result;
@@ -76,11 +82,11 @@ namespace iqoptionapi.http {
             return result;
         }
 
-        public async Task<IqHttpResult<object>> ChangeBalanceAsync(long balanceId) {
+        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
             var result = await Client.ExecuteTaskAsync(new ChangeBalanceRequest(balanceId));
 
             if (result.StatusCode == HttpStatusCode.OK) {
-                return result.Content.JsonAs<IqHttpResult<object>>();
+                return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
             }
             
             return null;

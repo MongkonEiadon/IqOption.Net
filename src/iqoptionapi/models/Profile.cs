@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using iqoptionapi.converters.JsonConverters;
+using iqoptionapi.http;
 using Newtonsoft.Json;
 
 namespace iqoptionapi.models {
-    public partial class Profile
+    public partial class Profile : IHttpResultMessage
     {
         [JsonProperty("avatar")]
         public string Avatar { get; set; }
@@ -187,8 +188,8 @@ namespace iqoptionapi.models {
         [JsonProperty("tournaments_ids")]
         public object[] TournamentsIds { get; set; }
 
-        [JsonProperty("socials")]
-        public Socials Socials { get; set; }
+        //[JsonProperty("socials")]
+        //public Socials Socials { get; set; }
 
         [JsonProperty("flag")]
         public string Flag { get; set; }

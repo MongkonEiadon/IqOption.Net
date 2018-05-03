@@ -172,6 +172,8 @@ namespace iqoptionapi.ws {
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
             try {
 
+                _logger.LogDebug(nameof(SendInstrumentsRequestAsync));
+
                 //subscribe for the lastest result
                 this.InstrumentResultSetObservable
                     .Subscribe(x => {
@@ -211,7 +213,7 @@ namespace iqoptionapi.ws {
                         }, 
                         ex => { tcs.TrySetException(ex); });
 
-                expiration = this._instrumentResultSet.GetByActivityType(pair).Schedule[3].CloseDateTime;
+                //expiration = this._instrumentResultSet.GetByActivityType(pair).Schedule[3].CloseDateTime;
 
                 Task.Run(() => this.SendMessageAsync(new BuyV2WsRequestMessage(pair, size, direction, expiration, this.TimeSync.ToLocalTime())));
 

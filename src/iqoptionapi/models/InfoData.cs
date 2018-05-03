@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.ComponentModel;
+using iqoptionapi.converters.JsonConverters;
+using Newtonsoft.Json;
 
 namespace iqoptionapi.models {
     public partial class InfoData {
@@ -14,11 +17,11 @@ namespace iqoptionapi.models {
         [JsonProperty("currency")]
         public string Currency { get; set; }
 
-        [JsonProperty("currency_char")]
+        [JsonProperty("currency_char")] 
         public string CurrencyChar { get; set; }
 
         [JsonProperty("active_id")]
-        public long ActiveId { get; set; }
+        public ActivePair ActiveId { get; set; }
 
         [JsonProperty("active")]
         public string Active { get; set; }
@@ -30,13 +33,15 @@ namespace iqoptionapi.models {
         public double ExpValue { get; set; }
 
         [JsonProperty("dir")]
-        public string Direction { get; set; }
+        public OrderDirection Direction { get; set; }
 
         [JsonProperty("created")]
-        public long Created { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTime Created { get; set; }
 
         [JsonProperty("expired")]
-        public long Expired { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTime Expired { get; set; }
 
         [JsonProperty("exp_time")]
         public long ExpTime { get; set; }

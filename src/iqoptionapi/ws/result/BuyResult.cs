@@ -59,7 +59,7 @@ namespace iqoptionapi.ws {
         public object[] ErrorMessage { get; set; }
 
         public static BuyResult BuyResultError(object[] msg) {
-            return new BuyResult() {ErrorMessage = msg};
+            return new BuyResult() { ErrorMessage = msg };
         }
     }
 }

@@ -20,7 +20,7 @@ namespace iqoptionapi {
                 .AddDebug(LogLevel.Trace);
 
 
-            return loggerFactory.CreateLogger<IqOptionApi>();
+            return loggerFactory.CreateLogger("iqoptionapi");
         }
     }
 }

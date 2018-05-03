@@ -5,6 +5,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using iqoptionapi.extensions;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi {
 
-    public interface IIqOptionApi {
+    public interface IIqOptionApi  : IDisposable {
         IqOptionWebSocketClient WsClient { get;  }
         IqOptionHttpClient HttpClient { get; }
 
@@ -23,7 +24,18 @@ namespace iqoptionapi {
         Task<Profile> GetProfileAsync();
         Task<bool> ChangeBalanceAsync(long balanceId);
 
+        IObservable<InfoData[]> InfoDatasObservable { get; }
+
         Profile Profile { get; }
+
+        bool IsConnected { get; }
+
+        IObservable<bool> IsConnectedObservable { get; }
+
+        Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
+            DateTime expiration = default(DateTime));
+
+
     }
 
 
@@ -31,12 +43,16 @@ namespace iqoptionapi {
         private readonly IqOptionConfiguration _configuration;
         private readonly ILogger _logger;
 
+        public IObservable<InfoData[]> InfoDatasObservable { get; private set; }
         public IqOptionHttpClient HttpClient { get; }
         public IqOptionWebSocketClient WsClient { get; private set; }
 
         public Profile Profile { get; private set; }
 
         public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
+        public bool IsConnected { get; private set; }
+
+        public IObservable<bool> IsConnectedObservable => connectedSubject;
 
         #region [Ctor]
 
@@ -56,21 +72,31 @@ namespace iqoptionapi {
 
         #endregion
 
-
+        private Subject<bool> connectedSubject = new Subject<bool>();
         public async Task<bool> ConnectAsync() {
+
+            connectedSubject.OnNext(false);
+            IsConnected = false;
+
+            _logger.LogInformation("Begin Connect to IqOption.com");
             var result = await HttpClient.LoginAsync();
 
-            if (result.StatusCode == HttpStatusCode.OK) {
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                _logger.LogInformation($"{_configuration.Email} logged in to {_configuration.Host} success!");
                 WsClient = new IqOptionWebSocketClient(HttpClient.SecuredToken, _configuration.Host);
 
                 if (await WsClient.OpenWebSocketAsync())
                     SubscriptWebSocket();
-                    _logger.LogInformation("WebSocket Connected!");
 
-                return true;
+                    var profile = await GetProfileAsync();
+                    _logger.LogInformation($"WebSocket for {profile.Email}({profile.UserId}) Connected!");
+
+                IsConnected = true;
+                connectedSubject.OnNext(true);
             }
 
-            return false;
+            return IsConnected;
         }
 
         public async Task<Profile> GetProfileAsync() {
@@ -92,6 +118,7 @@ namespace iqoptionapi {
             return true;
         }
 
+
         public Task<InstrumentResultSet> GetInstrumentsAsync() => WsClient.SendInstrumentsRequestAsync();
 
         public async Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTime expiration = default (DateTime)) {
@@ -110,20 +137,26 @@ namespace iqoptionapi {
                 .Merge(HttpClient.ProfileObservable())
                 .DistinctUntilChanged()
                 .Subscribe(x => {
-                    _logger.LogInformation($"Profile Updated : {x?.ToString()}");
+                    _logger.LogDebug($"Profile Updated : {x?.ToString()}");
                     this.Profile = x;
                 });
 
             WsClient.InstrumentResultSetObservable
                 .Subscribe(x => {
-                    _logger.LogInformation($"Instrument Updated!");
+                    _logger.LogDebug($"Instrument Updated!");
                     this.Instruments = x;
                 });
+
+            this.InfoDatasObservable = WsClient.InfoDataObservable;
 
 
         }
 
-        
+
+        public void Dispose() {
+            connectedSubject?.Dispose();
+            WsClient?.Dispose();
+        }
     }
         public enum OrderDirection {
 
