@@ -24,6 +24,7 @@ namespace iqoptionapi {
         Task<Profile> GetProfileAsync();
         Task<bool> ChangeBalanceAsync(long balanceId);
 
+        IObservable<Profile> ProfileObservable { get; }
         IObservable<InfoData[]> InfoDatasObservable { get; }
 
         Profile Profile { get; }
@@ -47,7 +48,17 @@ namespace iqoptionapi {
         public IqOptionHttpClient HttpClient { get; }
         public IqOptionWebSocketClient WsClient { get; private set; }
 
-        public Profile Profile { get; private set; }
+        private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
+        private Profile _profile;
+        public Profile Profile {
+            get => _profile;
+            private set {
+                _profileSubject.OnNext(value);
+                _profile = value;
+            }
+        }
+
+        public IObservable<Profile> ProfileObservable => _profileSubject;
 
         public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
         public bool IsConnected { get; private set; }
@@ -102,7 +113,7 @@ namespace iqoptionapi {
         public async Task<Profile> GetProfileAsync() {
             var result = await HttpClient.GetProfileAsync();
             var profile = result.Content.JsonAs<IqHttpResult<models.Profile>>()?.Result;
-            _logger.LogInformation($"Get Profile!: \t{profile}");
+            _logger.LogTrace($"Get Profile!: \t{profile}");
 
             return profile;
         }

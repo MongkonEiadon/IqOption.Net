@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iqoptionapi.unit", "tests\i
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutofacContrib.Nsubstitute", "tests\AutofacContrib.Nsubstitute\AutofacContrib.Nsubstitute.csproj", "{AA451B3A-10FD-4663-B720-F3AD16579C9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iqoptionapi.sample", "sample\iqoptionapi.sample\iqoptionapi.sample.csproj", "{A297AE1B-0BBB-4D71-A742-F426F63CAC47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iqoptionapi.sample", "sample\iqoptionapi.sample\iqoptionapi.sample.csproj", "{A297AE1B-0BBB-4D71-A742-F426F63CAC47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
