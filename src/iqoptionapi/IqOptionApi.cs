@@ -89,22 +89,22 @@ namespace iqoptionapi {
             connectedSubject.OnNext(false);
             IsConnected = false;
 
-            _logger.LogInformation("Begin Connect to IqOption.com");
-            var result = await HttpClient.LoginAsync();
 
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
+            var result = await HttpClient.LoginAsync();
+            if (result.StatusCode == HttpStatusCode.OK) {
+
                 _logger.LogInformation($"{_configuration.Email} logged in to {_configuration.Host} success!");
                 WsClient = new IqOptionWebSocketClient(HttpClient.SecuredToken, _configuration.Host);
 
                 if (await WsClient.OpenWebSocketAsync())
-                    SubscriptWebSocket();
+                    SubscribeWebSocket();
 
-                    var profile = await GetProfileAsync();
-                    _logger.LogInformation($"WebSocket for {profile.Email}({profile.UserId}) Connected!");
+                var profile = await GetProfileAsync();
+                _logger.LogInformation($"WebSocket for {profile.Email}({profile.UserId}) Connected!");
 
                 IsConnected = true;
                 connectedSubject.OnNext(true);
+
             }
 
             return IsConnected;
@@ -113,7 +113,7 @@ namespace iqoptionapi {
         public async Task<Profile> GetProfileAsync() {
             var result = await HttpClient.GetProfileAsync();
             var profile = result.Content.JsonAs<IqHttpResult<models.Profile>>()?.Result;
-            _logger.LogTrace($"Get Profile!: \t{profile}");
+            _logger.LogTrace($"Get Profile!: \t{profile.Email}");
 
             return profile;
         }
@@ -139,7 +139,7 @@ namespace iqoptionapi {
 
 
 
-        private void SubscriptWebSocket() {
+        private void SubscribeWebSocket() {
             Contract.Requires(WsClient != null);
             Contract.Requires(HttpClient != null);
 
@@ -148,13 +148,13 @@ namespace iqoptionapi {
                 .Merge(HttpClient.ProfileObservable())
                 .DistinctUntilChanged()
                 .Subscribe(x => {
-                    _logger.LogDebug($"Profile Updated : {x?.ToString()}");
+                    _logger.LogTrace($"Profile Updated : {x?.ToString()}");
                     this.Profile = x;
                 });
 
             WsClient.InstrumentResultSetObservable
                 .Subscribe(x => {
-                    _logger.LogDebug($"Instrument Updated!");
+                    _logger.LogTrace($"Instrument Updated!");
                     this.Instruments = x;
                 });
 

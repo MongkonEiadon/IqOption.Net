@@ -115,13 +115,13 @@ namespace iqoptionapi.ws {
                     }
                     case "profile": {
                         _profile = x.JsonAs<WsRequestMessageBase<Profile>>().Message;
-                        _logger.LogTrace($"Received {_profile?.Email}'s profile!");
+                        _logger.LogTrace($"Received Prof. => {_profile?.Email}");
                        
                         break;
                     }
                     case "instruments": {
                         var result = x.JsonAs<WsRequestMessageBase<InstrumentsResult>>().Message;
-                        _logger.LogInformation($"Recevied -> instruments ({result.Type.ToString()})");
+                        _logger.LogTrace($"Received Inst. => instruments ({result.Type.ToString()})");
                         _instrumentResultSet[result.Type] = result.Instruments;
                         _instrumentResultSetSubject.OnNext(_instrumentResultSet);
 
@@ -135,14 +135,17 @@ namespace iqoptionapi.ws {
                     case "listinfodata": {
                         var result = x.JsonAs<WsRequestMessageBase<InfoData[]>>();
                         _infoDataSubject.OnNext(result?.Message);
+                        var first = result?.Message.FirstOrDefault();
+                        if (first != null) 
+                            _logger.LogInformation($"info-received  => {first.UserId} {first.Win} {first.Direction} {first.Sum} {first.Active} @{first.Value}");
                         break;
                     }
 
                     case "buycomplete": {
                         var result = x.JsonAs<WsRequestMessageBase<WsMsgResult<object>>>().Message;
                         if (result.IsSuccessful) {
-                            _logger.LogInformation("Buy Completed!");
                             var buyResult = x.JsonAs<WsRequestMessageBase<WsMsgResult<BuyResult>>>().Message.Result;
+                            _logger.LogInformation($"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair)buyResult.Act} @{buyResult.Value} ");
                             _buyResulSjSubject.OnNext(buyResult);
                         }
                         else {
@@ -163,7 +166,7 @@ namespace iqoptionapi.ws {
 
         public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator) {
             if (await OpenWebSocketAsync()) {
-                _logger.LogTrace($"send msge => :\t{messageCreator.CreateIqOptionMessage()}");
+                _logger.LogTrace($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
                 Client.Send(messageCreator.CreateIqOptionMessage());
             }
         }
@@ -245,6 +248,7 @@ namespace iqoptionapi.ws {
         private Task OpenSecuredSocketAsync() {
             return SendMessageAsync(new SsidWsRequestMessageBase(SecureToken));
         }
+
 
 
     }
