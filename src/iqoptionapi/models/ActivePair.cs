@@ -1,6 +1,5 @@
 ﻿namespace iqoptionapi.models {
-    public enum ActivePair : int{
-    
+    public enum ActivePair : int {
         EURUSD = 1,
         EURGBP = 2,
         GBPJPY = 3,
@@ -112,7 +111,5 @@
         NTDOY = 218,
         USDSEK = 219,
         USDTRY = 220,
-
-
     }
 }

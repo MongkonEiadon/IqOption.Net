@@ -16,18 +16,19 @@ namespace iqoptionapi.sample
         {
 
             var provider = ConfigureServices(new ServiceCollection());
-            var logger = provider.GetService<ILogger<Program>>();
 
             try {
-                logger.LogInformation("Application start!");
 
-                var app = provider.GetService<Startup>().Run();
+                Console.WriteLine("IqOption.NET Sample");
+
+                var app = provider.GetService<Startup>().RunSample();
 
 
                 Console.ReadLine();
             }
-            catch (Exception ex) {
-                logger.LogCritical("App Error!", ex);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
         }
@@ -35,7 +36,7 @@ namespace iqoptionapi.sample
         private static IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile($"appsettings.json", optional: true)
                 .Build();
@@ -47,17 +48,14 @@ namespace iqoptionapi.sample
                         c.SetMinimumLevel(LogLevel.Trace)
                         .AddConsole()
                         .AddConfiguration(configuration.GetSection("Logging")));
-
-            services
-                .AddSingleton(configuration)
-                .AddSingleton<IqOptionConfiguration>(s => s.GetService<IOptions<IqOptionConfiguration>>().Value)
-                .AddSingleton<Startup>();
-
+            
 
             // Support typed Options
             services
+                .AddSingleton(configuration)
+                .AddSingleton<Startup>()
                 .AddOptions()
-                .Configure<IqOptionConfiguration>(o => configuration.GetSection("iqoption").Bind(o));
+                .Configure<IqOptionConfiguration>(o => configuration.GetSection("iqoption").Bind(o)) ;
 
             return services.BuildServiceProvider();
         }

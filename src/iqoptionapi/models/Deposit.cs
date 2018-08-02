@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 namespace iqoptionapi.models {
-    public partial class Deposit
-    {
+    public partial class Deposit {
         [JsonProperty("min")]
         public long Min { get; set; }
 
@@ -10,7 +9,6 @@ namespace iqoptionapi.models {
         public long Max { get; set; }
     }
 
-    public partial class Socials
-    {
+    public partial class Socials {
     }
 }

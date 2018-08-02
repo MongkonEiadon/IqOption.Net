@@ -39,6 +39,5 @@ namespace iqoptionapi.extensions {
                 return () => target.PropertyChanged -= eventHandler;
             });
         }
-        
     }
 }

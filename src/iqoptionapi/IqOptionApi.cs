@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Diagnostics.Tracing;
-using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -15,41 +13,23 @@ using iqoptionapi.ws;
 using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi {
-
-    public interface IIqOptionApi  : IDisposable {
-        IqOptionWebSocketClient WsClient { get;  }
-        IqOptionHttpClient HttpClient { get; }
-
-        Task<bool> ConnectAsync();
-        Task<Profile> GetProfileAsync();
-        Task<bool> ChangeBalanceAsync(long balanceId);
-
-        IObservable<Profile> ProfileObservable { get; }
-        IObservable<InfoData[]> InfoDatasObservable { get; }
-
-        Profile Profile { get; }
-
-        bool IsConnected { get; }
-
-        IObservable<bool> IsConnectedObservable { get; }
-
-        Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
-            DateTime expiration = default(DateTime));
-
-
-    }
-
-
     public class IqOptionApi : IIqOptionApi {
-        private readonly IqOptionConfiguration _configuration;
+
+        #region [Privates]
         private readonly ILogger _logger;
-
-        public IObservable<InfoData[]> InfoDatasObservable { get; private set; }
-        public IqOptionHttpClient HttpClient { get; }
-        public IqOptionWebSocketClient WsClient { get; private set; }
-
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
+
+        private readonly Subject<bool> connectedSubject = new Subject<bool>();
         private Profile _profile;
+
+        #endregion
+
+        #region [Publics]
+
+        public string Username { get; }
+        public string Password { get; }
+        public string SecureToken => WsClient?.SecureToken;
+        public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
         public Profile Profile {
             get => _profile;
             private set {
@@ -57,65 +37,89 @@ namespace iqoptionapi {
                 _profile = value;
             }
         }
-
-        public IObservable<Profile> ProfileObservable => _profileSubject;
-
-        public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
         public bool IsConnected { get; private set; }
 
-        public IObservable<bool> IsConnectedObservable => connectedSubject;
+        //clients
+        public IqOptionHttpClient HttpClient { get; }
+        public IqOptionWebSocketClient WsClient { get; private set; }
 
-        #region [Ctor]
-
-        public IqOptionApi(string username, string password, string host = "iqoption.com")
-            : this(new IqOptionConfiguration {Email = username, Password = password, Host = host}) {
-        }
-
-        public IqOptionApi(IqOptionConfiguration configuration) {
-            _configuration = configuration;
-
-            //set up client
-            HttpClient = new IqOptionHttpClient(configuration.Email, configuration.Password);
-
-            //set log
-            _logger = IqOptionLoggerFactory.CreateLogger();
-        }
-
+        //obs
+        public IObservable<InfoData[]> InfoDatasObservable { get; private set; }
+        public IObservable<Profile> ProfileObservable => _profileSubject.Publish().RefCount();
+        public IObservable<bool> IsConnectedObservable => connectedSubject.Publish().RefCount();
+        
         #endregion
 
-        private Subject<bool> connectedSubject = new Subject<bool>();
-        public async Task<bool> ConnectAsync() {
 
+        public async Task<Profile> LoginAsync()
+        {
+
+            var result = HttpClient.LoginAsync();
+
+
+        }
+
+        public Task<bool> ConnectAsync() {
             connectedSubject.OnNext(false);
             IsConnected = false;
 
+            var tcs = new TaskCompletionSource<bool>();
+            try {
+                LoginAsync()
+                    .ContinueWith(t => {
+                        if (t.Result != null) {
 
-            var result = await HttpClient.LoginAsync();
-            if (result.StatusCode == HttpStatusCode.OK) {
+                            _logger.LogInformation($"{Username} logged in success!");
 
-                _logger.LogInformation($"{_configuration.Email} logged in to {_configuration.Host} success!");
-                WsClient = new IqOptionWebSocketClient(HttpClient.SecuredToken, _configuration.Host);
+                            WsClient = new IqOptionWebSocketClient(HttpClient.SecuredToken);
 
-                if (await WsClient.OpenWebSocketAsync())
-                    SubscribeWebSocket();
+                            WsClient.OpenWebSocketAsync().Wait();
+                            SubscribeWebSocket();
 
-                var profile = await GetProfileAsync();
-                _logger.LogInformation($"WebSocket for {profile.Email}({profile.UserId}) Connected!");
+                            var profile = GetProfileAsync().Result;
 
-                IsConnected = true;
-                connectedSubject.OnNext(true);
+                            _logger.LogInformation($"WebSocket for {profile.Email}({profile.UserId}) Connected!");
 
+                            IsConnected = true;
+                            connectedSubject.OnNext(true);
+                            tcs.TrySetResult(true);
+                        }
+
+                        tcs.TrySetResult(false);
+                    });
+            }
+            catch (Exception ex) {
+                tcs.TrySetException(ex);
             }
 
-            return IsConnected;
+            return tcs.Task;
         }
 
-        public async Task<Profile> GetProfileAsync() {
-            var result = await HttpClient.GetProfileAsync();
-            var profile = result.Content.JsonAs<IqHttpResult<models.Profile>>()?.Result;
-            _logger.LogTrace($"Get Profile!: \t{profile.Email}");
+        public Task<Profile> GetProfileAsync() {
+            var tcs = new TaskCompletionSource<Profile>();
 
-            return profile;
+            try {
+                HttpClient
+                    .GetProfileAsync()
+                    .ContinueWith(async t => {
+                        if ((await t).StatusCode == HttpStatusCode.OK) {
+                            if ((await t).Content.TryParseJson(out IqHttpResult<Profile> content)) {
+                                tcs.TrySetResult(content.Result);
+                            }
+                        }
+
+                        tcs.TrySetException(
+                            new IqOptionApiGetProfileFailedException($"token = '' & content = '{(await t).Content}'"));
+
+                        return tcs.Task;
+                    });
+            }
+            catch (Exception ex) {
+                _logger.LogCritical(ex, nameof(GetProfileAsync));
+                tcs.TrySetException(ex);
+            }
+
+            return tcs.Task;
         }
 
         public async Task<bool> ChangeBalanceAsync(long balanceId) {
@@ -129,38 +133,10 @@ namespace iqoptionapi {
             return true;
         }
 
-
-        public Task<InstrumentResultSet> GetInstrumentsAsync() => WsClient.SendInstrumentsRequestAsync();
-
-        public async Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTime expiration = default (DateTime)) {
-            return await WsClient.BuyAsync(pair, size, direction, expiration);
+        public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
+            DateTime expiration = default(DateTime)) {
             
-        }
-
-
-
-        private void SubscribeWebSocket() {
-            Contract.Requires(WsClient != null);
-            Contract.Requires(HttpClient != null);
-
-            //subscribe profile
-            WsClient.ProfileObservable
-                .Merge(HttpClient.ProfileObservable())
-                .DistinctUntilChanged()
-                .Subscribe(x => {
-                    _logger.LogTrace($"Profile Updated : {x?.ToString()}");
-                    this.Profile = x;
-                });
-
-            WsClient.InstrumentResultSetObservable
-                .Subscribe(x => {
-                    _logger.LogTrace($"Instrument Updated!");
-                    this.Instruments = x;
-                });
-
-            this.InfoDatasObservable = WsClient.InfoDataObservable;
-
-
+            return WsClient?.BuyAsync(pair, size, direction, expiration);
         }
 
 
@@ -168,13 +144,58 @@ namespace iqoptionapi {
             connectedSubject?.Dispose();
             WsClient?.Dispose();
         }
-    }
-        public enum OrderDirection {
 
-            [EnumMember(Value = "put")]
-            Put = 1,
 
-            [EnumMember(Value = "call")]
-            Call = 2
+      
+
+
+        private void SubscribeWebSocket() {
+
+            //subscribe profile
+            WsClient.ProfileObservable
+                .Merge(HttpClient.ProfileObservable())
+                .DistinctUntilChanged()
+                .Where(x => x!=null)
+                .Subscribe(x => {
+                    _logger.LogTrace($"Profile Updated : {x?.UserId.ToString()}");
+                    Profile = x;
+                });
+
+            WsClient.InstrumentResultSetObservable
+                .Subscribe(x => {
+                    _logger.LogTrace($"Instrument Updated!");
+                    Instruments = x;
+                });
+
+            InfoDatasObservable = WsClient.InfoDataObservable;
         }
+
+        #region [Ctor]
+
+        public IqOptionApi(string username, string password, string host = "iqoption.com")
+        {
+            Username = username;
+            Password = password;
+
+            //set up client
+            HttpClient = new IqOptionHttpClient(username, password);
+        }
+
+      
+
+        #endregion
+    }
+
+    public enum OrderDirection {
+        [EnumMember(Value = "put")] Put = 1,
+
+        [EnumMember(Value = "call")] Call = 2
+    }
+
+
+    public class IqOptionApiGetProfileFailedException : Exception {
+        public IqOptionApiGetProfileFailedException(object receivedContent) : base(
+            $"received incorrect content : {receivedContent}") {
+        }
+    }
 }

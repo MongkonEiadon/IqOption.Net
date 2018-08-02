@@ -1,9 +1,7 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace iqoptionapi.ws {
-    public class BuyResult  {
-
+    public class BuyResult {
         [JsonProperty("user_id")]
         public long UserId { get; set; }
 
@@ -59,7 +57,7 @@ namespace iqoptionapi.ws {
         public object[] ErrorMessage { get; set; }
 
         public static BuyResult BuyResultError(object[] msg) {
-            return new BuyResult() { ErrorMessage = msg };
+            return new BuyResult() {ErrorMessage = msg};
         }
     }
 }

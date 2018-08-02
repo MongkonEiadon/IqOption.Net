@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using iqoptionapi.converters.JsonConverters;
 using Newtonsoft.Json;
 
@@ -17,7 +16,7 @@ namespace iqoptionapi.models {
         [JsonProperty("currency")]
         public string Currency { get; set; }
 
-        [JsonProperty("currency_char")] 
+        [JsonProperty("currency_char")]
         public string CurrencyChar { get; set; }
 
         [JsonProperty("active_id")]

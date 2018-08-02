@@ -1,5 +1,4 @@
-﻿using iqoptionapi.http;
-using iqoptionapi.models;
+﻿using iqoptionapi.models;
 using RestSharp;
 
 namespace iqoptionapi.http {
@@ -7,7 +6,6 @@ namespace iqoptionapi.http {
         public LoginV2Request(LoginModel loginModel) : base("login", Method.POST) {
             this.AddParameter("email", loginModel.Email);
             this.AddParameter("password", loginModel.Password);
-           
         }
     }
 }

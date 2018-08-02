@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using iqoptionapi.models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace iqoptionapi.sample {
     public class Startup {
@@ -9,12 +11,14 @@ namespace iqoptionapi.sample {
         private readonly ILoggerFactory _loggerFactory;
 
 
-        public Startup(IqOptionConfiguration config, ILogger<Startup> logger) {
-            _config = config;
+        public Startup(IOptions<IqOptionConfiguration> config, ILogger<Startup> logger)
+        {
+            _config = config.Value;
             _logger = logger;
         }
 
-        public async Task Run() {
+        public async Task RunSample() {
+
             var api = new IqOptionApi(_config.Email, _config.Password);
             _logger.LogInformation($"Connecting to {_config.Host} for {_config.Email}");
 
@@ -26,18 +30,16 @@ namespace iqoptionapi.sample {
                 var profile = await api.GetProfileAsync();
                 _logger.LogInformation($"Success Get Profile for {_config.Email}");
 
-                //get updated instruments
-                var instruments = await api.GetInstrumentsAsync();
 
                 //_logger.LogInformation($"Change balance to {profile.Balances[0].Id}");
                 //if (await api.ChangeBalanceAsync(profile.Balances[0].Id)) {
                 //}
                 while (true) {
-                    var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call);
+
+                    // open order here
+                    var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, DateTime.Now);
 
                 }
-
-                await api.GetInstrumentsAsync();
 
 
             }

@@ -1,103 +1,162 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using iqoptionapi.exceptions;
 using iqoptionapi.extensions;
 using iqoptionapi.models;
 using iqoptionapi.ws;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace iqoptionapi.http {
     public class IqOptionHttpClient : ObservableObject {
+        private readonly ILogger _logger;
 
-        public LoginModel LoginModel { get; }
-
-        private ILogger _logger;
-        protected static Uri ApiEndPoint(string host) => new Uri($"https://{host}/api");
-        public string SecuredToken { get; private set; }
-        public IRestClient Client { get; private set; }
-
-        private Profile _profile;
-        public Profile Profile {
-            get => _profile;
-            private set {
-                _profile = value;
-                this.OnPropertyChanged(nameof(Profile));
-            }
-        }
-
-        public IObservable<Profile> ProfileObservable() {
-            return this.ToObservable(x => x.Profile);
-        }
-
-        public IqOptionHttpClient(string username, string password, string host = "iqoption.com")
-        {
+        public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
             Client = new RestClient(ApiEndPoint(host));
-            LoginModel = new LoginModel() {Email = username, Password = password};
-
+            LoginModel = new LoginModel {Email = username, Password = password};
             _logger = IqOptionLoggerFactory.CreateLogger();
         }
 
-        #region Web-Methods
-        public async Task<IRestResponse> LoginAsync()
-        {
-            var result = await  Client.ExecuteTaskAsync(new LoginV2Request(LoginModel));
+        public LoginModel LoginModel { get; }
 
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                var loginResult = result.Content.JsonAs<IqHttpResult<Profile>>();
-                if (loginResult.IsSuccessful)
-                {
-                    this.Client.CookieContainer = new CookieContainer();
-                    foreach (var c in result.Cookies)
-                    {
-                        if (c.Name.ToLower() == "ssid")
-                        {
-                            SecuredToken = c.Value;
-                        }
-                        this.Client.CookieContainer?.Add(new Cookie(c.Name, c.Value, c.Path, c.Domain));
-                    }
 
-                    this.Profile = loginResult.Result;
+        public string SecuredToken { get; private set; }
+        public IRestClient Client { get; }
 
-                }
+        protected static Uri ApiEndPoint(string host) {
+            return new Uri($"https://{host}/api");
+        }
 
-                else {
-                    var exception = result.Content.JsonAs<IqHttpResult<LoginFailedResultMessage>>();
-                    throw new LoginLimitExceededException(exception.Result.Ttl);
-                }
+        #region [Profile]
+
+        private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
+        private Profile _profile;
+
+        public Profile Profile {
+            get => _profile;
+            private set {
+                _profileSubject.OnNext(value);
+                _profile = value;
             }
-
-            return result;
         }
 
-        public async Task<IRestResponse> GetProfileAsync()
-        {
-            var result = await Client.ExecuteTaskAsync(new GetProfileRequest());
-            return result;
-        }
-
-        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
-            var result = await Client.ExecuteTaskAsync(new ChangeBalanceRequest(balanceId));
-
-            if (result.StatusCode == HttpStatusCode.OK) {
-                return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
-            }
-            
-            return null;
-        }
-
+        public IObservable<Profile> ProfileObservable() => _profileSubject.Publish().RefCount();
 
         #endregion
 
 
+        #region Web-Methods
 
+        public Task<LoginResult> LoginAsync() {
+
+            var tcs = new TaskCompletionSource<LoginResult>();
+            try
+            {
+                var client = new RestClient("https://auth.iqoption.com/api/v1.0/login");
+                var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json }
+                    .AddHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .AddHeader("content-type", "multipart/form-data")
+                    .AddHeader("Accept", "application/json")
+                    .AddParameter("email", this.LoginModel.Email, ParameterType.QueryString)
+                    .AddParameter("password", this.LoginModel.Password, ParameterType.QueryString);
+
+                client.ExecuteTaskAsync(request)
+                    .ContinueWith(t => {
+                        switch (t.Result.StatusCode)
+                        {
+                            case HttpStatusCode.OK:
+                                {
+                                    var result = t.Result.Content.JsonAs<LoginResult>();
+                                    tcs.TrySetResult(result);
+                                    break;
+                                }
+
+                            case HttpStatusCode.BadRequest:
+                                {
+                                    //var error = t.Result.Content.JsonAs<LoginErrorCommandResult>();
+                                    //tcs.TrySetResult(new IqLoginCommandResult(null, false, string.Join(",",
+                                    //    error.Errors?.Select(x => x.Title)?.ToList())));
+
+                                    break;
+                                }
+
+                            case HttpStatusCode.Forbidden:
+                                {
+                                    //var error = t.Result.Content.JsonAs<LoginErrorCommandResult>();
+                                    //tcs.TrySetResult(new IqLoginCommandResult(null, false, string.Join(",",
+                                    //    error.Errors?.Select(x => x.Title)?.ToList())));
+
+                                    break;
+                                }
+                        }
+
+                        tcs.TrySetException(new Exception($"Error when get token with {t.Result.Content}"));
+                    });
+            }
+            catch (Exception ex)
+            {
+                tcs.TrySetException(ex);
+            }
+
+
+
+            return tcs.Task;
+        }
+
+        public Task<IRestResponse> GetProfileAsync() {
+            return ExecuteHttpClientAsync(new GetProfileRequest());
+        }
+
+        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
+            var result = await ExecuteHttpClientAsync(new ChangeBalanceRequest(balanceId));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+                return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
+
+            return null;
+        }
+
+        private Task<IRestResponse> ExecuteHttpClientAsync(IRestRequest request) {
+            var result = Client.ExecuteTaskAsync(request);
+            return result;
+        }
+
+        #endregion
+    }
+
+
+    public class LoginResult : HttpCommandResult<SsidResult>
+    {
+    }
+
+    public class IqHttpResult<T> where T : class
+    {
+        [JsonProperty("isSuccessful")]
+        public bool IsSuccessful { get; set; }
+
+        [JsonProperty("message")]
+        public object Message { get; set; }
+
+        [JsonProperty("result")]
+        public T Result { get; set; }
+
+        [JsonProperty("location")]
+        public string Location { get; set; }
+    }
+
+    internal class HttpCommandResult<T>
+    {
+        [JsonProperty("data")]
+        public T Result { get; set; }
+    }
+
+    internal class SsidResult
+    {
+        [JsonProperty("ssid")]
+        public string Ssid { get; set; }
     }
 }
-
-    
