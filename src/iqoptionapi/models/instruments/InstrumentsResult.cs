@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using iqoptionapi.converters.JsonConverters;
+﻿using iqoptionapi.converters.JsonConverters;
 using Newtonsoft.Json;
 
 namespace iqoptionapi.models {

@@ -6,7 +6,6 @@ using Newtonsoft.Json.Converters;
 
 namespace iqoptionapi.ws.request {
     internal class BuyV2RequestModel {
-
         [JsonProperty("price", Required = Required.Always)]
         public long Price { get; set; }
 
@@ -31,12 +30,10 @@ namespace iqoptionapi.ws.request {
         [JsonProperty("time")]
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTime Time { get; set; }
-
     }
 
 
     internal class BuyV2WsRequestMessage : WsRequestMessageBase<BuyV2RequestModel> {
-
         public BuyV2WsRequestMessage(ActivePair pair, int price, OrderDirection direction, DateTime expiration, DateTime now) {
             Message = new BuyV2RequestModel() {
                 ActivePair = pair,
@@ -49,7 +46,5 @@ namespace iqoptionapi.ws.request {
 
 
         public override string Name => "buyV2";
-
-        public BuyV2RequestModel Message { get; set; }
     }
 }

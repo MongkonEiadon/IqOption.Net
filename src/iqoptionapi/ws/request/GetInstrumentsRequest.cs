@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace iqoptionapi.ws.request {
     internal class GetInstrumentsRequest {
-
         [JsonProperty("name")]
         public string Name => "get-instruments";
 
@@ -16,7 +15,6 @@ namespace iqoptionapi.ws.request {
 
 
         internal class Body {
-
             [JsonProperty("type")]
             [JsonConverter(typeof(InstrumentTypeJsonConverter))]
             public InstrumentType Type { get; set; }
@@ -24,7 +22,6 @@ namespace iqoptionapi.ws.request {
     }
 
     internal class GetInstrumentWsRequestMessageBase : WsRequestSendMessageBase<GetInstrumentsRequest> {
-
         public static IWsRequestMessage<GetInstrumentsRequest> CreateRequest(InstrumentType type) =>
             new GetInstrumentWsRequestMessageBase() {
                 Message = new GetInstrumentsRequest() {

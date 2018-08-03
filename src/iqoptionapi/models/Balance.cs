@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 namespace iqoptionapi.models {
-    public partial class Balance
-    {
+    public partial class Balance {
         [JsonProperty("id")]
         public long Id { get; set; }
 

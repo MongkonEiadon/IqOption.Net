@@ -2,8 +2,7 @@
 using Newtonsoft.Json;
 
 namespace iqoptionapi.models {
-    public partial class Money
-    {
+    public partial class Money {
         [JsonProperty("deposit")]
         public Deposit Deposit { get; set; }
 
@@ -13,7 +12,6 @@ namespace iqoptionapi.models {
 
     public class ServerTime {
         public DateTime ServerTimeStamp { get; set; }
-
     }
 
     public class Candles {
