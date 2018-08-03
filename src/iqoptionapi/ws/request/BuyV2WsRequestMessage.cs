@@ -1,4 +1,5 @@
 ﻿using System;
+using iqoptionapi.converters.JsonConverters;
 using iqoptionapi.models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -33,8 +34,7 @@ namespace iqoptionapi.ws.request {
 
 
     internal class BuyV2WsRequestMessage : WsRequestMessageBase<BuyV2RequestModel> {
-        public BuyV2WsRequestMessage(ActivePair pair, int price, OrderDirection direction, DateTime expiration,
-            DateTime now) {
+        public BuyV2WsRequestMessage(ActivePair pair, int price, OrderDirection direction, DateTime expiration, DateTime now) {
             Message = new BuyV2RequestModel() {
                 ActivePair = pair,
                 Price = price,

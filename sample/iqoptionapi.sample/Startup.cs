@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using iqoptionapi.models;
 using Microsoft.Extensions.Logging;
@@ -30,16 +32,10 @@ namespace iqoptionapi.sample {
                 var profile = await api.GetProfileAsync();
                 _logger.LogInformation($"Success Get Profile for {_config.Email}");
 
-
-                //_logger.LogInformation($"Change balance to {profile.Balances[0].Id}");
-                //if (await api.ChangeBalanceAsync(profile.Balances[0].Id)) {
-                //}
-                while (true) {
-
-                    // open order here
-                    var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, DateTime.Now);
-
-                }
+                
+                // open order EurUsd in smallest period (1min) 
+                var exp = DateTime.Now.AddMinutes(1);
+                var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
 
 
             }

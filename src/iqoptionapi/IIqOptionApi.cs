@@ -13,13 +13,12 @@ namespace iqoptionapi {
         Profile Profile { get; }
         bool IsConnected { get; }
         IObservable<bool> IsConnectedObservable { get; }
+
         Task<bool> ConnectAsync();
         Task<Profile> GetProfileAsync();
         Task<bool> ChangeBalanceAsync(long balanceId);
 
-        Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
-            DateTime expiration = default(DateTime));
+        Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTime expiration = default(DateTime));
 
-        Task<Profile> LoginAsync();
     }
 }

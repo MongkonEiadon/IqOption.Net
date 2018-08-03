@@ -2,6 +2,7 @@
 using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using iqoptionapi.exceptions;
 using iqoptionapi.extensions;
@@ -24,7 +25,7 @@ namespace iqoptionapi.http {
         public LoginModel LoginModel { get; }
 
 
-        public string SecuredToken { get; private set; }
+        public SsidResultMessage SecuredToken { get; private set; }
         public IRestClient Client { get; }
 
         protected static Uri ApiEndPoint(string host) {
@@ -51,9 +52,9 @@ namespace iqoptionapi.http {
 
         #region Web-Methods
 
-        public Task<LoginResult> LoginAsync() {
+        public Task<IqHttpResult<SsidResultMessage>> LoginAsync() {
 
-            var tcs = new TaskCompletionSource<LoginResult>();
+            var tcs = new TaskCompletionSource<IqHttpResult<SsidResultMessage>>();
             try
             {
                 var client = new RestClient("https://auth.iqoption.com/api/v1.0/login");
@@ -70,7 +71,13 @@ namespace iqoptionapi.http {
                         {
                             case HttpStatusCode.OK:
                                 {
-                                    var result = t.Result.Content.JsonAs<LoginResult>();
+                                    var result = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
+                                    result.IsSuccessful = true;
+                                    SecuredToken = result.Data;
+
+                                    Client.CookieContainer = new CookieContainer();
+                                    Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
+
                                     tcs.TrySetResult(result);
                                     break;
                                 }
@@ -94,7 +101,6 @@ namespace iqoptionapi.http {
                                 }
                         }
 
-                        tcs.TrySetException(new Exception($"Error when get token with {t.Result.Content}"));
                     });
             }
             catch (Exception ex)
@@ -107,8 +113,15 @@ namespace iqoptionapi.http {
             return tcs.Task;
         }
 
-        public Task<IRestResponse> GetProfileAsync() {
-            return ExecuteHttpClientAsync(new GetProfileRequest());
+        public Task<IqHttpResult<Profile>> GetProfileAsync()
+        {
+            return ExecuteHttpClientAsync(new GetProfileRequest()).ContinueWith(t => {
+                if (t.Result != null && t.Result.StatusCode == HttpStatusCode.OK) {
+                    return t.Result.Content.JsonAs<IqHttpResult<Profile>>();
+                }
+
+                return null;
+            });
         }
 
         public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
@@ -129,34 +142,5 @@ namespace iqoptionapi.http {
     }
 
 
-    public class LoginResult : HttpCommandResult<SsidResult>
-    {
-    }
-
-    public class IqHttpResult<T> where T : class
-    {
-        [JsonProperty("isSuccessful")]
-        public bool IsSuccessful { get; set; }
-
-        [JsonProperty("message")]
-        public object Message { get; set; }
-
-        [JsonProperty("result")]
-        public T Result { get; set; }
-
-        [JsonProperty("location")]
-        public string Location { get; set; }
-    }
-
-    internal class HttpCommandResult<T>
-    {
-        [JsonProperty("data")]
-        public T Result { get; set; }
-    }
-
-    internal class SsidResult
-    {
-        [JsonProperty("ssid")]
-        public string Ssid { get; set; }
-    }
+  
 }

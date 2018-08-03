@@ -11,6 +11,9 @@ namespace iqoptionapi.http {
         [JsonProperty("result")]
         public T Result { get; set; }
 
+        [JsonProperty("data")]
+        public T Data { get; set; }
+
         [JsonProperty("location")]
         public string Location { get; set; }
     }
@@ -42,5 +45,11 @@ namespace iqoptionapi.http {
 
         [JsonProperty("ttl")]
         public int Ttl { get; set; }
+    }
+
+    public class SsidResultMessage : IHttpResultMessage
+    {
+        [JsonProperty("ssid")]
+        public string Ssid { get; set; }
     }
 }

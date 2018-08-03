@@ -105,8 +105,7 @@ namespace iqoptionapi.ws {
                             _infoDataSubject.OnNext(result?.Message);
                             var info = result?.Message.FirstOrDefault();
                             if (info != null)
-                                _logger.LogInformation(
-                                    $"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value}");
+                                _logger.LogInformation($"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value} exp {info.ExpTime}({info.Expired.ToShortTimeString()})");
                             break;
                         }
 
@@ -116,15 +115,14 @@ namespace iqoptionapi.ws {
                             if (result.IsSuccessful)
                             {
                                 var buyResult = x.JsonAs<WsRequestMessageBase<WsMsgResult<BuyResult>>>().Message.Result;
-                                _logger.LogInformation(
-                                    $"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair)buyResult.Act} @{buyResult.Value} ");
+                                _logger.LogInformation($"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair)buyResult.Act} @{buyResult.Value} ");
                                 _buyResulSjSubject.OnNext(buyResult);
                             }
                             else
                             {
                                 var ex = string.Join(", ", result.Message?.ToList());
-                                _logger.LogError($"{this.Profile?.UserId}\t{ex}", ex);
-                                //_buyResulSjSubject.OnNext(BuyResult.BuyResultError(result.Message));
+                                _logger.LogWarning($"{this.Profile?.UserId}\t{ex}", ex);
+                                _buyResulSjSubject.OnNext(BuyResult.BuyResultError(result.Message));
                             }
 
                             break;
@@ -152,7 +150,7 @@ namespace iqoptionapi.ws {
 
         public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator) {
             if (await OpenWebSocketAsync()) {
-                _logger.LogTrace($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
+                _logger.LogInformation($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
                 Client.Send(messageCreator.CreateIqOptionMessage());
             }
         }
@@ -190,11 +188,11 @@ namespace iqoptionapi.ws {
             OrderDirection direction,
             DateTime expiration = default(DateTime)) {
             var tcs = new TaskCompletionSource<BuyResult>();
-            try {
+            try
+            {
                 var obs = BuyResultObservable
                     .Where(x => x != null)
-                    .Subscribe(x => { tcs.TrySetResult(x); },
-                        ex => { tcs.TrySetException(ex); });
+                    .Subscribe(x =>  tcs.TrySetResult(x));
 
                 tcs.Task.ContinueWith(t => {
                     if (t.Result != null) {
@@ -202,8 +200,10 @@ namespace iqoptionapi.ws {
                     }
                 });
 
-                SendMessageAsync(new BuyV2WsRequestMessage(pair, size, direction, expiration,
-                    TimeSync.ToLocalTime())).ConfigureAwait(false);
+                //reduce second to 00s 
+                expiration = expiration.AddSeconds(60 - expiration.Second);
+
+                SendMessageAsync(new BuyV2WsRequestMessage(pair, size, direction, expiration, DateTime.Now)).ConfigureAwait(false);
             }
             catch (Exception ex) {
                 tcs.TrySetException(ex);
