@@ -29,7 +29,6 @@ namespace iqoptionapi {
 
         public string Username { get; }
         public string Password { get; }
-        public string SecureToken => WsClient?.SecureToken;
         public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
         public Profile Profile {
             get => _profile;
@@ -76,7 +75,7 @@ namespace iqoptionapi {
                             return;
                         }
 
-                        _logger.LogInformation($"{Username} logged in failed due to {t.Result?.Message?.ToString()}");
+                        _logger.LogInformation($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
                         tcs.TrySetResult(false);
                     });
             }

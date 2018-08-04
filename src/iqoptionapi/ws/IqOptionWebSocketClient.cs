@@ -20,11 +20,6 @@ namespace iqoptionapi.ws {
         public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null, string host = "iqoption.com") {
 
             Client = new WebSocket($"wss://{host}/echo/websocket");
-           
-
-            //set up shred obs.
-            InstrumentResultSetObservable = _instrumentResultSetSubject.PublishLast().RefCount();
-            BuyResultObservable = _buyResulSjSubject.Publish().RefCount();
 
             MessageReceivedObservable =
                 Observable.Using(
@@ -225,6 +220,9 @@ namespace iqoptionapi.ws {
             var tcs = new TaskCompletionSource<bool>();
             try {
 
+                if (string.IsNullOrEmpty(ssid))
+                    tcs.TrySetResult(false);
+
                 SecureToken = ssid;
                 var count = 0;
                 var sub = ProfileObservable.Select(x => "Profile")
@@ -292,7 +290,8 @@ namespace iqoptionapi.ws {
         private InstrumentResultSet _instrumentResultSet = new InstrumentResultSet();
         private readonly Subject<InstrumentResultSet> _instrumentResultSetSubject = new Subject<InstrumentResultSet>();
 
-        public IObservable<InstrumentResultSet> InstrumentResultSetObservable { get; }
+        public IObservable<InstrumentResultSet> InstrumentResultSetObservable =>
+            _instrumentResultSetSubject.Publish().RefCount();
 
         #endregion
 
@@ -306,7 +305,7 @@ namespace iqoptionapi.ws {
         #region [BuyV2]
 
         private readonly Subject<BuyResult> _buyResulSjSubject = new Subject<BuyResult>();
-        public IObservable<BuyResult> BuyResultObservable { get; }
+        public IObservable<BuyResult> BuyResultObservable => _buyResulSjSubject.Publish().RefCount();
 
         #endregion
 

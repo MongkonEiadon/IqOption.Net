@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace iqoptionapi.http {
     public class IqHttpResult<T> where T : IHttpResultMessage {
@@ -16,8 +19,24 @@ namespace iqoptionapi.http {
 
         [JsonProperty("location")]
         public string Location { get; set; }
+
+        [JsonProperty("errors")]
+        public Errors Errors { get; set; }
     }
 
+    public class Errors : List<ErrorResult> {
+
+        public string GetErrorMessage() {
+            return string.Join(", ", this.Select(x => x.Message));
+        }
+    }
+
+    public class ErrorResult {
+        [JsonProperty("code")]
+    public int Code { get; set; }
+        [JsonProperty("title")]
+        public string Message { get; set; }
+    }
     public class LoginFailedResultMessage {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }

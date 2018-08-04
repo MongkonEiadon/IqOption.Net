@@ -93,9 +93,9 @@ namespace iqoptionapi.http {
 
                             case HttpStatusCode.Forbidden:
                                 {
-                                    //var error = t.Result.Content.JsonAs<LoginErrorCommandResult>();
-                                    //tcs.TrySetResult(new IqLoginCommandResult(null, false, string.Join(",",
-                                    //    error.Errors?.Select(x => x.Title)?.ToList())));
+                                    var error = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
+                                    error.IsSuccessful = false;
+                                    tcs.TrySetResult(error);
 
                                     break;
                                 }
