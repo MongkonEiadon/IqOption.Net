@@ -1,6 +1,11 @@
 # iqoption.net
 iqoption api to connect to www.iqoption.com (unofficial)
 
+
+# Milestone
+- Get Candles information
+- BuyBack Position
+
 # How to use
 ```csharp
 var client = new IqOptionApi("emailaddress", "password");
