@@ -11,7 +11,6 @@ PM> Install-Package iqoptionapi
 
 
 # Milestone
-- Get Candles information
 - BuyBack Position
 
 # How to use
