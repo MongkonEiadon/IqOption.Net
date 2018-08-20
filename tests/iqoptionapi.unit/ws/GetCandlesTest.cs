@@ -22,7 +22,7 @@ namespace iqoptionapi.unit.ws
         [Fact]
         public async Task GetCandles() {
 
-            var getCandleRequest = new GetCandleItemRequestMessage(ActivePair.EURAUD, 5, 100, DateTimeOffset.Now);
+            var getCandleRequest = new GetCandleItemRequestMessage(ActivePair.EURAUD, TimeFrame.Min5, 100, DateTimeOffset.Now);
             var ws = new IqOptionWebSocketClient("ce9e2de1cb04bc4d06c8a5707976783f");
             
             await ws.SendMessageAsync(getCandleRequest);
@@ -33,7 +33,7 @@ namespace iqoptionapi.unit.ws
 
             Thread.Sleep(1000);
 
-            ws.Candles.ShouldNotBeNull();
+            ws.CandleCollections.ShouldNotBeNull();
 
 
 

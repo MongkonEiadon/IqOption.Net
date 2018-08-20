@@ -111,8 +111,24 @@ namespace iqoptionapi {
         }
 
 
-        public Task<Candles> GetCandlesAsync(ActivePair pair, int size, int count, DateTimeOffset to) {
-            return WsClient?.GetCandlesAsync(pair, size, count, to);
+        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to) {
+            return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
+        }
+
+        public Task<IObservable<CurrentCandle>> GetRealtimeCandlesInfoAsync(ActivePair pair, TimeFrame tf) {
+
+            WsClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
+
+            var stream = WsClient?
+                .RealTimeCandleInfoObservable
+                .Where(x => x.ActivePair == pair && x.TimeFrame == tf);
+            
+
+            return Task.FromResult(stream);
+        }
+
+        public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf) {
+            return WsClient?.UnsubscribeCandlesAsync(pair, tf);
         }
 
         public void Dispose() {

@@ -19,6 +19,7 @@ namespace iqoptionapi.ws {
     public class IqOptionWebSocketClient : IDisposable {
         //privates
         private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
+        private  WebSocket Client { get; }
 
         public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null, string host = "iqoption.com") {
 
@@ -126,8 +127,19 @@ namespace iqoptionapi.ws {
 
                         var result = x.JsonAs<GetCandleItemsResultMessage>();
                         if (result != null) {
-                            Candles = result.Message;
+                            CandleCollections = result.Message;
                         }
+                        break;
+                    }
+
+                    case "candle-generated": {
+
+                        var candle = x.JsonAs<CurrentCandleInfoResultMessage>();
+                        if (candle != null) {
+                            _candleInfoSubject.OnNext(candle.Message);
+                            CurrentCandleInfo = candle.Message;
+                        }
+
                         break;
                     }
 
@@ -144,14 +156,8 @@ namespace iqoptionapi.ws {
 
         public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") : this(x => x.OpenSecuredSocketAsync(secureToken), host) { }
 
-        private WebSocket Client { get; }
 
-        public async Task<bool> OpenWebSocketAsync() {
-            if (Client.State == WebSocketState.Open)
-                return true;
-
-            return await Client.OpenAsync();
-        }
+        #region [Public's]
 
         public Task<bool> OpenSecuredSocketAsync(string ssid) {
 
@@ -194,12 +200,27 @@ namespace iqoptionapi.ws {
 
             return tcs.Task;
         }
+        public async Task<bool> OpenWebSocketAsync() {
+            if (Client.State == WebSocketState.Open)
+                return true;
 
-        #region [Public's]
-
+            return await Client.OpenAsync();
+        }
         public IObservable<string> MessageReceivedObservable { get; }
         
         public string SecureToken { get; set; }
+
+        public bool IsConnected { get; private set; }
+
+        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
+        {
+            if (await OpenWebSocketAsync())
+            {
+                _logger.LogInformation($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
+                Client.Send(messageCreator.CreateIqOptionMessage());
+            }
+        }
+
 
         #endregion
 
@@ -315,32 +336,35 @@ namespace iqoptionapi.ws {
 
         #endregion
 
-        #region [Candles]
+        #region [CandleCollections]
 
-        private readonly Subject<Candles> _candlesSubject = new Subject<Candles>();
-        private Candles _candles;
-        public Candles Candles {
-            get => _candles;
+        private readonly Subject<CandleCollections> _candlesCollectionsSubject = new Subject<CandleCollections>();
+        private CandleCollections _candleCollections;
+        public CandleCollections CandleCollections {
+            get => _candleCollections;
             set {
-                _candles = value;
-                _candlesSubject.OnNext(value);
+                _candleCollections = value;
+                _candlesCollectionsSubject.OnNext(value);
             }
         }
-        public IObservable<Candles> CandlesObservable => _candlesSubject.Publish().RefCount();
+        public IObservable<CandleCollections> CandlesObservable => _candlesCollectionsSubject.Publish().RefCount();
 
-        public Task<Candles> GetCandlesAsync(ActivePair pair, int size, int count, DateTimeOffset to) {
+        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to) {
 
-            var tcs = new TaskCompletionSource<Candles>();
+            var tcs = new TaskCompletionSource<CandleCollections>();
             try {
 
-                var sub = CandlesObservable.Subscribe(x => { tcs.TrySetResult(x); });
+                var sub = CandlesObservable.Subscribe(x => {
+
+                    tcs.TrySetResult(x);
+                });
                 tcs.Task.ContinueWith(t => {
                     sub.Dispose();
 
                     return t.Result;
                 });
 
-                this.SendMessageAsync(new GetCandleItemRequestMessage(pair, size, count, to)).ConfigureAwait(false);
+                this.SendMessageAsync(new GetCandleItemRequestMessage(pair, tf, count, to)).ConfigureAwait(false);
 
             }
             catch (Exception ex) {
@@ -353,17 +377,22 @@ namespace iqoptionapi.ws {
 
         #endregion
 
-        public bool IsConnected { get; private set; }
 
-        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
-        {
-            if (await OpenWebSocketAsync())
-            {
-                _logger.LogInformation($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
-                Client.Send(messageCreator.CreateIqOptionMessage());
-            }
+        #region [CurrentCandleInfo]
+
+        private Subject<CurrentCandle> _candleInfoSubject=new Subject<CurrentCandle>();
+        public CurrentCandle CurrentCandleInfo { get; set; }
+        public IObservable<CurrentCandle> RealTimeCandleInfoObservable => _candleInfoSubject.Publish().RefCount();
+
+        public Task SubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame) {
+            return this.SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
         }
 
+        public Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame) {
+            return this.SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));
+        }
+
+        #endregion
 
         public void Dispose() {
             Client?.Dispose();

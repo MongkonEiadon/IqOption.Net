@@ -6,11 +6,11 @@ using Newtonsoft.Json.Converters;
 namespace iqoptionapi.ws.request {
     public class GetCandleItemRequestMessage : WsMessageBase<GetCandlesRequestModel> {
 
-        public GetCandleItemRequestMessage(ActivePair pair, int size, int count, DateTimeOffset to) {
+        public GetCandleItemRequestMessage(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to) {
             base.Message = new GetCandlesRequestModel() {
                RequestBody = new GetCandlesRequestModel.GetCandlesRequestBody() {
                    ActivePair = pair,
-                   Size = size,
+                   TimeFrame = tf,
                    Count = count,
                    To = to.ToUniversalTime() // servertime should set here
                }
@@ -39,7 +39,7 @@ namespace iqoptionapi.ws.request {
             public ActivePair ActivePair { get; set; }
 
             [JsonProperty("size")]
-            public int Size { get; set; }
+            public TimeFrame TimeFrame { get; set; }
 
             [JsonProperty("to")]
             [JsonConverter(typeof(UnixDateTimeConverter))]
