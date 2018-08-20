@@ -1,6 +1,14 @@
 # iqoption.net
 iqoption api to connect to www.iqoption.com (unofficial)
 
+[![NuGet](https://img.shields.io/badge/nuget-v0.0.1-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
+
+# Package Installation
+``` javascript
+PM> Install-Package iqoptionapi
+
+```
+
 
 # Milestone
 - Get Candles information
