@@ -11,21 +11,21 @@ namespace iqoptionapi.ws.request {
         public string Version => "1.0";
 
         [JsonProperty("body")]
-        public Body InstrumentBody { get; set; }
+        public GetInstrumentsRequestBody InstrumentGetInstrumentsRequestBody { get; set; }
 
 
-        internal class Body {
+        internal class GetInstrumentsRequestBody {
             [JsonProperty("type")]
             [JsonConverter(typeof(InstrumentTypeJsonConverter))]
             public InstrumentType Type { get; set; }
         }
     }
 
-    internal class GetInstrumentWsRequestMessageBase : WsRequestSendMessageBase<GetInstrumentsRequest> {
+    internal class GetInstrumentWsMessageBase : WsSendMessageBase<GetInstrumentsRequest> {
         public static IWsRequestMessage<GetInstrumentsRequest> CreateRequest(InstrumentType type) =>
-            new GetInstrumentWsRequestMessageBase() {
+            new GetInstrumentWsMessageBase() {
                 Message = new GetInstrumentsRequest() {
-                    InstrumentBody = new GetInstrumentsRequest.Body() {
+                    InstrumentGetInstrumentsRequestBody = new GetInstrumentsRequest.GetInstrumentsRequestBody() {
                         Type = type
                     }
                 }

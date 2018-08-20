@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using RestSharp;
 
 namespace iqoptionapi.http {
-    public class IqOptionHttpClient : ObservableObject {
+    public class IqOptionHttpClient  {
         private readonly ILogger _logger;
 
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {

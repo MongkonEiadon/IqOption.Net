@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 
 namespace iqoptionapi.ws {
-    public class WsMsgResult<T> where T : class, new() {
+
+    public class WsMessageWithSuccessfulResult<T> where T : class, new() {
+
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
 

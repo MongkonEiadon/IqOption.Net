@@ -5,18 +5,22 @@ using iqoptionapi.converters.JsonConverters;
 using iqoptionapi.models;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Shouldly;
+using Xunit;
 
 namespace iqoptionapi.unit.converters.JsonConverters
 {
-    [TestFixture()]
-    public class ActivePairJsonConverterTest : BaseUnitTest
+    public class ActivePairJsonConverterTest : IClassFixture<BaseUnitTest>
     {
+        private readonly BaseUnitTest _baseUnitTest;
+
+        public ActivePairJsonConverterTest(BaseUnitTest baseUnitTest) {
+            _baseUnitTest = baseUnitTest;
+        }
 
         #region [WriteJsonTest]
 
-        [Test]
+        [Fact]
         public void JsonReader_ReadValueAsString_ActivePairCanBeConverted() {
 
             //arrange
@@ -32,7 +36,7 @@ namespace iqoptionapi.unit.converters.JsonConverters
             result.ShouldBe(ActivePair.EURUSD_OTC);
 
         }
-        [Test]
+        [Fact]
         public void JsonReader_ReadValueAsInt_ActivePairCanBeConverted()
         {
 
@@ -54,7 +58,7 @@ namespace iqoptionapi.unit.converters.JsonConverters
 
         #endregion
 
-        [Test]
+        [Fact]
         public void ConvertToJson_WithEnumeratorSet_ValueAsIntMustSet() {
            
             //arrange
@@ -68,7 +72,7 @@ namespace iqoptionapi.unit.converters.JsonConverters
 
         }
 
-        [Test]
+        [Fact]
         public void ConvertFromJson_With76ValueSet_EurUsdOtdMustSet() {
         
             var json = "{\"pair\":76}";

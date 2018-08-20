@@ -10,6 +10,7 @@ using iqoptionapi.extensions;
 using iqoptionapi.http;
 using iqoptionapi.models;
 using iqoptionapi.ws;
+using iqoptionapi.ws.request;
 using Microsoft.Extensions.Logging;
 
 namespace iqoptionapi {
@@ -47,7 +48,8 @@ namespace iqoptionapi {
         public IObservable<InfoData[]> InfoDatasObservable => WsClient?.InfoDataObservable;
         public IObservable<Profile> ProfileObservable => _profileSubject.Publish().RefCount();
         public IObservable<bool> IsConnectedObservable => connectedSubject.Publish().RefCount();
-        
+        public IObservable<BuyResult> BuyResultObservable => WsClient?.BuyResultObservable;
+
         #endregion
 
 
@@ -109,6 +111,10 @@ namespace iqoptionapi {
         }
 
 
+        public Task<Candles> GetCandlesAsync(ActivePair pair, int size, int count, DateTimeOffset to) {
+            return WsClient?.GetCandlesAsync(pair, size, count, to);
+        }
+
         public void Dispose() {
             connectedSubject?.Dispose();
             WsClient?.Dispose();
@@ -117,7 +123,9 @@ namespace iqoptionapi {
 
       
 
-
+        /// <summary>
+        /// listen to all obs, for make all properties updated
+        /// </summary>
         private void SubscribeWebSocket() {
 
             //subscribe profile
@@ -127,8 +135,10 @@ namespace iqoptionapi {
                 .Where(x => x!=null)
                 .Subscribe(x => Profile = x);
 
+            //subscribe for instrument updated
             WsClient.InstrumentResultSetObservable
                 .Subscribe(x => Instruments = x);
+
 
         }
 

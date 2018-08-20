@@ -32,10 +32,17 @@ namespace iqoptionapi.sample {
                 var profile = await api.GetProfileAsync();
                 _logger.LogInformation($"Success Get Profile for {_config.Email}");
 
-                
+
                 // open order EurUsd in smallest period (1min) 
                 var exp = DateTime.Now.AddMinutes(1);
                 var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+
+
+                // get candles data
+                var candles = await api.GetCandlesAsync(ActivePair.EURUSD, 1, 100, DateTimeOffset.Now);
+                _logger.LogInformation($"Candles received {candles.Count}");
+
+                
 
 
             }

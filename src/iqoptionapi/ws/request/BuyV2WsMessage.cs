@@ -33,8 +33,8 @@ namespace iqoptionapi.ws.request {
     }
 
 
-    internal class BuyV2WsRequestMessage : WsRequestMessageBase<BuyV2RequestModel> {
-        public BuyV2WsRequestMessage(ActivePair pair, int price, OrderDirection direction, DateTime expiration, DateTime now) {
+    internal class BuyV2WsMessage : WsMessageBase<BuyV2RequestModel> {
+        public BuyV2WsMessage(ActivePair pair, int price, OrderDirection direction, DateTime expiration, DateTime now) {
             Message = new BuyV2RequestModel() {
                 ActivePair = pair,
                 Price = price,

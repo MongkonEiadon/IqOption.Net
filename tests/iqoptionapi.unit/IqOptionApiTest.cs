@@ -2,13 +2,13 @@ using System.Threading.Tasks;
 using Autofac;
 using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace iqoptionapi.unit
 {
-    [TestFixture]
     public class IqOptionApiTest : BaseUnitTest {
 
-        [Test]
+        [Fact]
         public async Task ConnectAsyncTask_WithValidUserId_ConnectMustBeTrue() {
             
 

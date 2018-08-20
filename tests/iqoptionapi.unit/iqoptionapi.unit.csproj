@@ -1,19 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
-    <IsPackable>false</IsPackable>
-
-    <AssemblyName>8iy[</AssemblyName>
+    
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Json\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fluentassertions" Version="5.4.1" />
+    <PackageReference Include="fluentvalidation" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.1.66" />
     <PackageReference Include="shouldly" Version="3.0.0" />
-    <PackageReference Include="NUnit" Version="3.10.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="microsoft.extensions.dependencyinjection" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,13 +28,10 @@
     <ProjectReference Include="..\AutofacContrib.Nsubstitute\AutofacContrib.Nsubstitute.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.DependencyInjection">
-      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.dependencyinjection\2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
   <ItemGroup>
+    
+
     <None Update="appsettings.Debug.json">
       <IsTransformFile>true</IsTransformFile>
       <DependentUpon>appsettings.json</DependentUpon>

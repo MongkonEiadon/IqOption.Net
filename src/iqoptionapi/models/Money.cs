@@ -10,11 +10,5 @@ namespace iqoptionapi.models {
         public Deposit Withdraw { get; set; }
     }
 
-    public class ServerTime {
-        public DateTime ServerTimeStamp { get; set; }
-    }
-
-    public class Candles {
-        public object Data { get; set; }
-    }
+   
 }

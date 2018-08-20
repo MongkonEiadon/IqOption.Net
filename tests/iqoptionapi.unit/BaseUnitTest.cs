@@ -9,13 +9,12 @@ using NUnit.Framework;
 using Shouldly;
 
 namespace iqoptionapi.unit {
-    [TestFixture]
     public class BaseUnitTest
     {
         protected AutoSubstitute AutoSubstitute { get; private set; }
         protected IqOptionConfiguration Configuration { get; set; }
+        
 
-        [OneTimeSetUp]
         public void SetUpFixture() {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")

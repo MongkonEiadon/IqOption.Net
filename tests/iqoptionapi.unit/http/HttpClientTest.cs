@@ -5,21 +5,20 @@ using AutofacContrib.NSubstitute;
 using iqoptionapi.http;
 using NUnit.Framework;
 using RestSharp;
+using Xunit;
 
 namespace iqoptionapi.unit.http
 {
-    [TestFixture]
     public class HttpClientTest {
 
         public AutoSubstitute AutoSubstitute { get; private set; }
-
-        [SetUp]
-        public void Setup() {
+        
+        public HttpClientTest() {
             AutoSubstitute = new AutoSubstitute();
         }
 
 
-        [Test]
+        [Fact]
         public void LoginAsync_WithResponse200_SsidMustReturn() {
             
             // arrange
@@ -28,7 +27,7 @@ namespace iqoptionapi.unit.http
             
 
             // act
-            var result = AutoSubstitute.Resolve<IqOptionHttpClient>()
+            var result = AutoSubstitute.Resolve<IqOptionHttpClient>();
 
 
 
