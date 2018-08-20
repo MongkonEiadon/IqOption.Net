@@ -1,6 +1,14 @@
 # iqoption.net
 iqoption api to connect to www.iqoption.com (unofficial)
 
+[![NuGet](https://img.shields.io/badge/nuget-v0.0.1-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
+
+# Package Installation
+``` javascript
+PM> Install-Package iqoptionapi
+
+```
+
 
 # Milestone
 - Get Candles information
@@ -19,6 +27,10 @@ if(await client.ConnectAsync()){
   // open order EurUsd in smallest period (1min) 
   var exp = DateTime.Now.AddMinutes(1);
   var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+  
+  // get candles data with 100 candles size till now
+  var candles = await api.GetCandlesAsync(ActivePair.EURUSD, 1, 100, DateTimeOffset.Now);
+  _logger.LogInformation($"Candles received {candles.Count}");
 
 }
 
