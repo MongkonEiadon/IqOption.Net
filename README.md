@@ -8,7 +8,8 @@ iqoption api to connect to www.iqoption.com (unofficial)
 PM> Install-Package iqoptionapi
 
 ```
-
+# How it work
+This api using websocket to communicate realtime-data to Iqoption server through secured websocket channel, so the realtime meta data that come on this channel will be handles by .net reactive programming called "Rx.NET", cause of a haundred of data type stream on only one channle so we need to selected subscribe on specific topic.
 
 # Milestone
 - BuyBack Position
