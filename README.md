@@ -1,5 +1,5 @@
 # iqoption.net
-iqoption api to connect to www.iqoption.com (unofficial)
+iqoption api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
 
 [![NuGet](https://img.shields.io/badge/nuget-1.0.0.0-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
 
