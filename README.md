@@ -1,17 +1,18 @@
 # iqoption.net
-iqoption api to connect to www.iqoption.com (unofficial)
+iqoption api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
 
-[![NuGet](https://img.shields.io/badge/nuget-v0.0.1-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
+[![Build status](https://ci.appveyor.com/api/projects/status/sueidsbt13avwvoc/branch/master?svg=true)](https://ci.appveyor.com/project/MongkonEiadon/iqoption-net/branch/master)
+[![NuGet](https://img.shields.io/badge/nuget-1.0.0.0-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
 
 # Package Installation
 ``` javascript
 PM> Install-Package iqoptionapi
 
 ```
-
+# How it work
+This api using websocket to communicate realtime-data to Iqoption server through secured websocket channel, so the realtime meta data that come on this channel will be handles by .net reactive programming called "Rx.NET", cause of a haundred of data type stream on only one channle so we need to selected subscribe on specific topic.
 
 # Milestone
-- Get Candles information
 - BuyBack Position
 
 # How to use
@@ -28,9 +29,22 @@ if(await client.ConnectAsync()){
   var exp = DateTime.Now.AddMinutes(1);
   var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
   
-  // get candles data with 100 candles size till now
-  var candles = await api.GetCandlesAsync(ActivePair.EURUSD, 1, 100, DateTimeOffset.Now);
-  _logger.LogInformation($"Candles received {candles.Count}");
+  // get candles data
+  var candles = await api.GetCandlesAsync(ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
+  _logger.LogInformation($"CandleCollections received {candles.Count}");
+
+
+  // subscribe to pair to get real-time data for tf1min and tf5min
+  var streamMin1 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min1);
+  var streamMin5 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min5);
+
+  streamMin5.Merge(streamMin1)
+      .Subscribe(candleInfo => {
+          _logger.LogInformation($"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
+  });
+
+  // after this line no-more realtime data for min5 print on console
+  await api.UnSubscribeRealtimeData(ActivePair.EURUSD, TimeFrame.Min5);
 
 }
 
