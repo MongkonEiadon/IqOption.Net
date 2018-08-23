@@ -115,7 +115,7 @@ namespace iqoptionapi {
             return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
         }
 
-        public Task<IObservable<CurrentCandle>> GetRealtimeCandlesInfoAsync(ActivePair pair, TimeFrame tf) {
+        public Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf) {
 
             WsClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
 
