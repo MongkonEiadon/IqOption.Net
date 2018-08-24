@@ -1,0 +1,10 @@
+version: 1.0.{build}
+configuration: Release
+platform: Any CPU
+build:
+  project: iqoptionapi.net.sln
+  verbosity: minimal
+before_package:
+- cmd: nuget restore
+test_script:
+- cmd: dotnet test tests\iqoptionapi.unit\iqoptionapi.unit.csproj
