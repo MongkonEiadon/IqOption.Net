@@ -1,9 +1,9 @@
 ﻿using System;
-using iqoptionapi.ws.request;
+using IqOptionApi.ws.request;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public class HeartBeat  : WsMessageBase<long>, IResponseMessage {
 
         [JsonProperty("msg")]

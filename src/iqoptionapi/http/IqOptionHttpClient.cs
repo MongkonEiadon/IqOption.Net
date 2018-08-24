@@ -4,17 +4,19 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using iqoptionapi.exceptions;
-using iqoptionapi.extensions;
-using iqoptionapi.models;
-using iqoptionapi.ws;
-using Microsoft.Extensions.Logging;
+using IqOptionApi.exceptions;
+using IqOptionApi.extensions;
+using IqOptionApi.ws;
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 using RestSharp;
+using Serilog;
 
-namespace iqoptionapi.http {
+namespace IqOptionApi.http {
     public class IqOptionHttpClient  {
+
         private readonly ILogger _logger;
+
 
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
             Client = new RestClient(ApiEndPoint(host));
@@ -32,7 +34,7 @@ namespace iqoptionapi.http {
             return new Uri($"https://{host}/api");
         }
 
-        #region [Profile]
+#region [Profile]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
         private Profile _profile;
@@ -47,10 +49,10 @@ namespace iqoptionapi.http {
 
         public IObservable<Profile> ProfileObservable() => _profileSubject.Publish().RefCount();
 
-        #endregion
+#endregion
 
 
-        #region Web-Methods
+#region Web-Methods
 
         public Task<IqHttpResult<SsidResultMessage>> LoginAsync() {
 
@@ -138,7 +140,7 @@ namespace iqoptionapi.http {
             return result;
         }
 
-        #endregion
+#endregion
     }
 
 

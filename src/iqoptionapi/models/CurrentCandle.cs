@@ -4,7 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.models
+namespace IqOptionApi.Models
 {
     public class CurrentCandle : CandleInfo
     {

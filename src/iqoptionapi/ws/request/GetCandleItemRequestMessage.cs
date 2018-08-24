@@ -1,9 +1,9 @@
 ﻿using System;
-using iqoptionapi.models;
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.ws.request {
+namespace IqOptionApi.ws.request {
     public class GetCandleItemRequestMessage : WsMessageBase<GetCandlesRequestModel> {
 
         public GetCandleItemRequestMessage(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to) {

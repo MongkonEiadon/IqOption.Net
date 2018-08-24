@@ -1,8 +1,9 @@
 ﻿using System;
+using IqOptionApi.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.converters.JsonConverters {
+namespace IqOptionApi.Converters.JsonConverters {
     internal class UnixDateTimeJsonConverter : DateTimeConverterBase {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             writer.WriteRawValue(((DateTime) value).ToUnixTimeSecounds()

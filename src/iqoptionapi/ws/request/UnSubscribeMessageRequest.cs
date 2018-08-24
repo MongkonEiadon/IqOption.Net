@@ -1,6 +1,6 @@
-﻿using iqoptionapi.models;
+﻿using IqOptionApi.Models;
 
-namespace iqoptionapi.ws.request {
+namespace IqOptionApi.ws.request {
     internal class UnSubscribeMessageRequest : SubscribeMessageRequest {
         public override string Name => "unsubscribeMessage";
 

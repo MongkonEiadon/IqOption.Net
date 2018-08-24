@@ -1,4 +1,4 @@
-﻿namespace iqoptionapi.models {
+﻿namespace IqOptionApi.Models {
     public enum ActivePair : int {
         EURUSD = 1,
         EURGBP = 2,

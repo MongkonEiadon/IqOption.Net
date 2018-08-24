@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public class CandleInfo {
         private DateTimeOffset _from;
         private DateTimeOffset _to;

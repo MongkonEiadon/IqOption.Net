@@ -1,4 +1,4 @@
-﻿namespace iqoptionapi.ws.request {
+﻿namespace IqOptionApi.ws.request {
     public interface IWsIqOptionMessageCreator {
         string CreateIqOptionMessage();
     }

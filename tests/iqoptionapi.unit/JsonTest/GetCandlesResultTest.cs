@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using iqoptionapi.ws;
+using IqOptionApi.ws;
 using Newtonsoft.Json;
 using Shouldly;
 using Xunit;
 
-namespace iqoptionapi.unit.JsonTest {
+namespace IqOptionApi.unit.JsonTest {
     public class GetCandlesResultTest : IClassFixture<LoadJsonFileTest> {
         public GetCandlesResultTest(LoadJsonFileTest loadJsonFileTest) {
             _loadJsonFileTest = loadJsonFileTest;

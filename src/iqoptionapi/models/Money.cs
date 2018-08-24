@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public partial class Money {
         [JsonProperty("deposit")]
         public Deposit Deposit { get; set; }

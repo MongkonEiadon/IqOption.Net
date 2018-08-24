@@ -2,11 +2,11 @@
 using System.IO;
 using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
+using IqOptionApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace iqoptionapi.sample
 {
@@ -17,18 +17,22 @@ namespace iqoptionapi.sample
 
             var provider = ConfigureServices(new ServiceCollection());
 
-            try {
+            try
+            {
 
                 Console.WriteLine("IqOption.NET Sample");
 
                 var app = provider.GetService<Startup>().RunSample();
 
 
-                Console.ReadLine();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.ReadLine();
             }
 
         }
@@ -41,21 +45,20 @@ namespace iqoptionapi.sample
                 .AddJsonFile($"appsettings.json", optional: true)
                 .Build();
 
-            services
-                .AddSingleton<ILoggerFactory, LoggerFactory>()
-                .AddSingleton(typeof(ILogger<>), typeof(Logger<>)) // Add first my already configured instance
-                .AddLogging(c =>
-                        c.SetMinimumLevel(LogLevel.Trace)
-                        .AddConsole()
-                        .AddConfiguration(configuration.GetSection("Logging")));
-            
+            var logging = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
 
-            // Support typed Options
+
             services
+                .AddSingleton<Serilog.ILogger>(logging)
                 .AddSingleton(configuration)
-                .AddSingleton<Startup>()
-                .AddOptions()
-                .Configure<IqOptionConfiguration>(o => configuration.GetSection("iqoption").Bind(o)) ;
+                .AddSingleton(new IqOptionConfiguration()
+                {
+                    Email = configuration["iqoption:email"],
+                    Password = configuration["iqoption:password"]
+                })
+                .AddSingleton<Startup>();
 
             return services.BuildServiceProvider();
         }

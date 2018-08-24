@@ -1,10 +1,10 @@
-﻿using iqoptionapi.models;
-using iqoptionapi.ws;
+﻿using IqOptionApi.Models;
+using IqOptionApi.ws;
 using Newtonsoft.Json;
 using Shouldly;
 using Xunit;
 
-namespace iqoptionapi.unit.JsonTest {
+namespace IqOptionApi.unit.JsonTest {
     public class CurrentCandleTest : IClassFixture<LoadJsonFileTest> {
         public CurrentCandleTest(LoadJsonFileTest loadJsonFileTest) {
             _loadJsonFileTest = loadJsonFileTest;

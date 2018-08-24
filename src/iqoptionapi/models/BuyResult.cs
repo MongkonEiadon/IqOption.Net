@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
 
     public class BuyResult {
         [JsonProperty("user_id")]
