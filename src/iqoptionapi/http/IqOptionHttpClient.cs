@@ -8,13 +8,17 @@ using iqoptionapi.exceptions;
 using iqoptionapi.extensions;
 using iqoptionapi.models;
 using iqoptionapi.ws;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
 
 namespace iqoptionapi.http {
     public class IqOptionHttpClient  {
-        private readonly ILogger _logger;
+
+#if NETCOREAPP
+        private readonly Microsoft.Extensions.Logging.ILogger _logger;
+#else
+
+#endif
 
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
             Client = new RestClient(ApiEndPoint(host));
@@ -32,7 +36,7 @@ namespace iqoptionapi.http {
             return new Uri($"https://{host}/api");
         }
 
-        #region [Profile]
+#region [Profile]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
         private Profile _profile;
@@ -47,10 +51,10 @@ namespace iqoptionapi.http {
 
         public IObservable<Profile> ProfileObservable() => _profileSubject.Publish().RefCount();
 
-        #endregion
+#endregion
 
 
-        #region Web-Methods
+#region Web-Methods
 
         public Task<IqHttpResult<SsidResultMessage>> LoginAsync() {
 
@@ -138,7 +142,7 @@ namespace iqoptionapi.http {
             return result;
         }
 
-        #endregion
+#endregion
     }
 
 

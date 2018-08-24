@@ -1,6 +1,10 @@
 ﻿using System.IO;
+
+#if NETCOREAPP
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+#endif
+
+using ILogger = Serilog.ILogger;
 
 namespace iqoptionapi {
     internal static class IqOptionLoggerFactory {
@@ -11,6 +15,9 @@ namespace iqoptionapi {
         }
 
         public static ILogger CreateLogger() {
+
+#if NETCOREAPP
+
             if (_loggerInstance == null) {
                 var configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
@@ -24,8 +31,9 @@ namespace iqoptionapi {
                     .AddDebug(LogLevel.Trace);
 
 
-                _loggerInstance = loggerFactory.CreateLogger(nameof(IqOptionApi));
+                _loggerInstance = loggerFactory.CreateLogger<IqOptionApi>();
             }
+#endif
 
             return _loggerInstance;
         }
