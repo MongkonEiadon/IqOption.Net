@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.http {
+namespace IqOptionApi.http {
     public class IqHttpResult<T> where T : IHttpResultMessage {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }

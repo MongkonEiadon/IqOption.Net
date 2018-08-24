@@ -4,23 +4,23 @@ using NUnit.Framework;
 using Shouldly;
 using Xunit;
 
-namespace iqoptionapi.unit
+namespace IqOptionApi.unit
 {
     public class IqOptionApiTest : BaseUnitTest {
 
-        [Fact]
-        public async Task ConnectAsyncTask_WithValidUserId_ConnectMustBeTrue() {
+        //[Fact]
+        //public async Task ConnectAsyncTask_WithValidUserId_ConnectMustBeTrue() {
             
 
-            //arrange
-            var api = new IqOptionApi(Configuration.Email, Configuration.Password);
+        //    //arrange
+        //    var api = new IqOptionApi(Configuration.Email, Configuration.Password);
 
-            //act
-            var result = await api.ConnectAsync();
+        //    //act
+        //    var result = await api.ConnectAsync();
 
-            //assert
-            result.ShouldBeTrue();
-        }
+        //    //assert
+        //    result.ShouldBeTrue();
+        //}
     }
 }
 

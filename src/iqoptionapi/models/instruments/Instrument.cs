@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public partial class Instrument {
         [JsonProperty("ticker")]
         public string Ticker { get; set; }

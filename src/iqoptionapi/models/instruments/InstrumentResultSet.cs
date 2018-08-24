@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public partial class InstrumentResultSet : Dictionary<InstrumentType, Instrument[]> {
         public InstrumentResultSet() : base() {
             this[InstrumentType.CFD] = new Instrument[] { };

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.extensions {
+namespace IqOptionApi.extensions {
     internal static class JsonMixins {
         public static string AsJson(this object This) {
             return JsonConvert.SerializeObject(This);
@@ -16,7 +16,7 @@ namespace iqoptionapi.extensions {
                 value = This.JsonAs<T>();
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 value = default(T);
             }
 

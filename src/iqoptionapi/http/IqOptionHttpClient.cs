@@ -4,21 +4,19 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using iqoptionapi.exceptions;
-using iqoptionapi.extensions;
-using iqoptionapi.models;
-using iqoptionapi.ws;
+using IqOptionApi.exceptions;
+using IqOptionApi.extensions;
+using IqOptionApi.ws;
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 using RestSharp;
+using Serilog;
 
-namespace iqoptionapi.http {
+namespace IqOptionApi.http {
     public class IqOptionHttpClient  {
 
-#if NETCOREAPP
-        private readonly Microsoft.Extensions.Logging.ILogger _logger;
-#else
+        private readonly ILogger _logger;
 
-#endif
 
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
             Client = new RestClient(ApiEndPoint(host));

@@ -2,35 +2,33 @@
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using iqoptionapi.models;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using IqOptionApi;
+using IqOptionApi.Models;
+using Serilog;
 
 namespace iqoptionapi.sample {
     public class Startup {
         private readonly IqOptionConfiguration _config;
         private readonly ILogger _logger;
-        private readonly ILoggerFactory _loggerFactory;
 
-
-        public Startup(IOptions<IqOptionConfiguration> config, ILogger<Startup> logger)
+        public Startup(IqOptionConfiguration config, Serilog.ILogger logger)
         {
-            _config = config.Value;
+            _config = config;
             _logger = logger;
         }
 
         public async Task RunSample() {
 
-            var api = new IqOptionApi(_config.Email, _config.Password);
-            _logger.LogInformation($"Connecting to {_config.Host} for {_config.Email}");
+            var api = new IqOptionApi.IqOptionApi(_config.Email, _config.Password);
+            _logger.Information($"Connecting to {_config.Host} for {_config.Email}");
 
 
             if (await api.ConnectAsync()) {
-                _logger.LogInformation("Connect Success");
+                _logger.Information("Connect Success");
 
                 //get profile
                 var profile = await api.GetProfileAsync();
-                _logger.LogInformation($"Success Get Profile for {_config.Email}");
+                _logger.Information($"Success Get Profile for {_config.Email}");
 
 
                 // open order EurUsd in smallest period (1min) 
@@ -40,7 +38,7 @@ namespace iqoptionapi.sample {
 
                 // get candles data
                 var candles = await api.GetCandlesAsync(ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
-                _logger.LogInformation($"CandleCollections received {candles.Count}");
+                _logger.Information($"CandleCollections received {candles.Count}");
 
                 
                 // subscribe to pair to get real-time data for tf1min and tf5min
@@ -49,7 +47,7 @@ namespace iqoptionapi.sample {
 
                 streamMin5.Merge(streamMin1)
                     .Subscribe(candleInfo => {
-                        _logger.LogInformation($"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
+                        _logger.Information($"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
                 });
 
                 // after this line no-more realtime data for min5 print on console

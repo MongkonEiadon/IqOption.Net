@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iqoptionapi.unit.JsonTest {
+namespace IqOptionApi.unit.JsonTest {
     public class LoadJsonFileTest : IDisposable {
 
 

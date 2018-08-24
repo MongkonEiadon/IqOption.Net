@@ -1,9 +1,10 @@
-﻿using iqoptionapi.models;
+﻿
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 using Shouldly;
 using Xunit;
 
-namespace iqoptionapi.unit.JsonTest {
+namespace IqOptionApi.unit.JsonTest {
     public class HeartBeatTest : IClassFixture<LoadJsonFileTest>
     {
         private readonly LoadJsonFileTest _loadTest;

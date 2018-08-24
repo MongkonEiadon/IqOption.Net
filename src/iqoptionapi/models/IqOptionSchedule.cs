@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public partial class IqOptionSchedule {
         [JsonProperty("open")]
         public long Open { get; set; }

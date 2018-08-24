@@ -1,10 +1,10 @@
 ﻿using System;
-using iqoptionapi.converters.JsonConverters;
-using iqoptionapi.models;
+using IqOptionApi.Converters.JsonConverters;
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace iqoptionapi.ws.request {
+namespace IqOptionApi.ws.request {
     internal class BuyV2RequestModel {
         [JsonProperty("price", Required = Required.Always)]
         public long Price { get; set; }

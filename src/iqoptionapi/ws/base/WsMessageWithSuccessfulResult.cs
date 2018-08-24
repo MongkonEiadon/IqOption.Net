@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iqoptionapi.ws {
+namespace IqOptionApi.ws {
 
     public class WsMessageWithSuccessfulResult<T> where T : class, new() {
 

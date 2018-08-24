@@ -6,14 +6,14 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using iqoptionapi.extensions;
-using iqoptionapi.http;
-using iqoptionapi.models;
-using iqoptionapi.ws;
-using iqoptionapi.ws.request;
-using Microsoft.Extensions.Logging;
+using IqOptionApi.extensions;
+using IqOptionApi.ws.request;
+using IqOptionApi.http;
+using IqOptionApi.Models;
+using IqOptionApi.ws;
+using Serilog;
 
-namespace iqoptionapi {
+namespace IqOptionApi {
     public class IqOptionApi : IIqOptionApi {
 
         #region [Privates]
@@ -65,7 +65,7 @@ namespace iqoptionapi {
                     .ContinueWith(t => {
                         if (t.Result != null && t.Result.IsSuccessful) {
                            
-                            _logger.LogInformation($"{Username} logged in success!");
+                            _logger.Information($"{Username} logged in success!");
 
                             WsClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
 
@@ -77,7 +77,7 @@ namespace iqoptionapi {
                             return;
                         }
 
-                        _logger.LogInformation($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
+                        _logger.Information($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
                         tcs.TrySetResult(false);
                     });
             }
@@ -97,7 +97,7 @@ namespace iqoptionapi {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
 
             if (result?.Message == null && !result.IsSuccessful) {
-                _logger.LogError($"Change balance ({balanceId}) error : {result.Message}");
+                _logger.Error($"Change balance ({balanceId}) error : {result.Message}");
                 return false;
             }
 

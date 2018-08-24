@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public class LoginModel {
         [JsonProperty("email")]
         public string Email { get; set; }

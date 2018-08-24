@@ -1,8 +1,8 @@
 ﻿using System;
-using iqoptionapi.ws.request;
+using IqOptionApi.ws.request;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public class ServerTime : WsMessageBase<long>, IResponseMessage {
 
         [JsonProperty("msg")]

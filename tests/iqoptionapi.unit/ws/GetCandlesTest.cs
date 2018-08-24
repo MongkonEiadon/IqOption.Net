@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using iqoptionapi.models;
-using iqoptionapi.ws;
-using iqoptionapi.ws.request;
+using IqOptionApi.Models;
+using IqOptionApi.Models;
+using IqOptionApi.ws;
+using IqOptionApi.ws.request;
 using Shouldly;
 using Xunit;
 
-namespace iqoptionapi.unit.ws
+namespace IqOptionApi.unit.ws
 {
     public class GetCandlesTest : IClassFixture<BaseUnitTest> {
         private readonly BaseUnitTest _baseTest;

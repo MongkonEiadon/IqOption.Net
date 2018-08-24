@@ -1,7 +1,7 @@
-﻿using iqoptionapi.ws;
+﻿using IqOptionApi.ws;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
 
     public class CandleCollections {
 

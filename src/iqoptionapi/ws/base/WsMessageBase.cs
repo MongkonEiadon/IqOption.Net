@@ -1,7 +1,7 @@
-﻿using iqoptionapi.extensions;
+﻿using IqOptionApi.extensions;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.ws.request {
+namespace IqOptionApi.ws.request {
 
 
     public class WsMessageBase<T> : IWsRequestMessage<T>, IWsIqOptionMessageCreator

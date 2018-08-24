@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reactive.Linq;
 
-namespace iqoptionapi.extensions {
+namespace IqOptionApi.extensions {
     internal static class ObservableMixins {
         public static IObservable<R> ToObservable<T, R>(this T target, string name, Func<T, R> func)
             where T : INotifyPropertyChanged {

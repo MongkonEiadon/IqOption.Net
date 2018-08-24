@@ -1,8 +1,8 @@
 ﻿using System;
-using iqoptionapi.converters.JsonConverters;
+using IqOptionApi.Converters.JsonConverters;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public partial class InfoData {
         [JsonProperty("amount")]
         public long Amount { get; set; }

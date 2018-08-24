@@ -1,4 +1,4 @@
-﻿namespace iqoptionapi.models {
+﻿namespace IqOptionApi.Models {
     public enum TimeFrame : int {
 
         Min1 = 1,

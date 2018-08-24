@@ -1,8 +1,8 @@
-﻿using iqoptionapi.models;
-using iqoptionapi.ws.request;
+﻿using IqOptionApi.Models;
+using IqOptionApi.ws.request;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.ws {
+namespace IqOptionApi.ws {
 
 
     public class GetCandleItemsResultMessage : WsMessageBase<CandleCollections> {

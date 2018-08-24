@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iqoptionapi {
+namespace IqOptionApi.Extensions {
     internal static class DateTimeExtensions {
         public static DateTime FromUnixToDateTime(this object This) {
             return DateTimeOffset.FromUnixTimeMilliseconds(Convert.ToInt64(This)).DateTime.ToLocalTime();

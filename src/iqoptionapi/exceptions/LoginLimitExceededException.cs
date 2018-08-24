@@ -1,8 +1,8 @@
 ﻿using System;
-using iqoptionapi.extensions;
-using iqoptionapi.http;
+using IqOptionApi.extensions;
+using IqOptionApi.http;
 
-namespace iqoptionapi.exceptions {
+namespace IqOptionApi.exceptions {
     public class LoginLimitExceededException : Exception {
         public LoginLimitExceededException(int ttl) :
             base($"Login limit exceeded, you can re-login in next {ttl} secs.") {

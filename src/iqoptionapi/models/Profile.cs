@@ -1,9 +1,9 @@
 ﻿using System;
-using iqoptionapi.converters.JsonConverters;
-using iqoptionapi.http;
+using IqOptionApi.Converters.JsonConverters;
+using IqOptionApi.http;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.models {
+namespace IqOptionApi.Models {
     public partial class Profile : IHttpResultMessage {
         [JsonProperty("avatar")]
         public string Avatar { get; set; }

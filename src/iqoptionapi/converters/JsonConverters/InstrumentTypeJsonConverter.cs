@@ -1,8 +1,8 @@
 ﻿using System;
-using iqoptionapi.models;
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 
-namespace iqoptionapi.converters.JsonConverters {
+namespace IqOptionApi.Converters.JsonConverters {
     public sealed class InstrumentTypeJsonConverter : JsonConverter {
         public override bool CanConvert(Type objectType) {
             return objectType == typeof(string);

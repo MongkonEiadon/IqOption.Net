@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using iqoptionapi.http;
-using iqoptionapi.models;
-using iqoptionapi.ws;
+using IqOptionApi.http;
+using IqOptionApi.Models;
+using IqOptionApi.ws;
 
-namespace iqoptionapi {
+namespace IqOptionApi {
     public interface IIqOptionApi : IDisposable {
         IqOptionWebSocketClient WsClient { get; }
         IqOptionHttpClient HttpClient { get; }
