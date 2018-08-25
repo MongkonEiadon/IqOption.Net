@@ -44,13 +44,13 @@ namespace IqOptionApi.ws {
                 {
                     case "heartbeat": {
                         var value = x.JsonAs<HeartBeat>();
-                        _heartbeat.OnNext(value.HearBeatDateTime);
+                        _heartbeat.OnNext(value.Message);
                         break;
                     }
 
                     case "timesync": {
                         var value = x.JsonAs<ServerTime>();
-                        ServerTime = value.ServerDateTime;
+                        ServerTime = value.Message;
                         break;
                     }
                     case "profile": {

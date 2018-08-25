@@ -8,7 +8,4 @@ namespace IqOptionApi.Models {
         [JsonProperty("max")]
         public long Max { get; set; }
     }
-
-    public partial class Socials {
-    }
 }

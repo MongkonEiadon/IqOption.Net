@@ -1,11 +1,10 @@
 ﻿using System;
+using IqOptionApi.Converters.JsonConverters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models {
     public class CandleInfo {
-        private DateTimeOffset _from;
-        private DateTimeOffset _to;
 
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -27,18 +26,12 @@ namespace IqOptionApi.Models {
 
 
         [JsonProperty("from")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTimeOffset From {
-            get => _from;
-            set => _from = value.ToLocalTime();
-        }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset From { get; set; }
 
 
         [JsonProperty("to")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTimeOffset To {
-            get => _to;
-            set => _to = value.ToLocalTime();
-        }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset To { get; set; }
     }
 }

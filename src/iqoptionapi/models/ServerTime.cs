@@ -1,13 +1,14 @@
 ﻿using System;
+using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.ws.request;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
-    public class ServerTime : WsMessageBase<long>, IResponseMessage {
+    public class ServerTime : WsMessageBase<DateTimeOffset>, IResponseMessage {
 
         [JsonProperty("msg")]
-        public override long Message { get; set; }
-
-        public DateTimeOffset ServerDateTime => DateTimeOffset.FromUnixTimeMilliseconds(Message).ToLocalTime();
+        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        public override DateTimeOffset Message { get; set; }
+        
     }
 }
