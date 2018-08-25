@@ -20,15 +20,15 @@ deploy:
     on:
       branch: master
 
-  - provider: GitHub
-    artifact: /.*\.(nupkg|zip)/
-    auth_token:
-      secure: f+y+1670d0857ea05ca8d273a2e0fd47d92e28dda0f8
-    tag: v$(appveyor_build_version)
-    draft: true
-    prerelease: false
-    on:
-      branch: master
+  # - provider: GitHub
+  #   artifact: /.*\.(nupkg|zip)/
+  #   auth_token:
+  #     secure: f+y+1670d0857ea05ca8d273a2e0fd47d92e28dda0f8
+  #   tag: v$(appveyor_build_version)
+  #   draft: true
+  #   prerelease: false
+  #   on:
+  #     branch: master
 
 test_script:
 - cmd: dotnet test tests\iqoptionapi.unit\iqoptionapi.unit.csproj
