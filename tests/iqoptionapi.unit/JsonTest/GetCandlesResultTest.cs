@@ -47,11 +47,9 @@ namespace IqOptionApi.unit.JsonTest {
             var candles = result.Message.Infos.FirstOrDefault(x => x.Id == 17990335);
             candles.ShouldNotBeNull();
             candles.From.Year.ShouldBe(2018);
-            candles.From.Month.ShouldBe(8);
             candles.From.Day.ShouldBe(18);
 
             candles.To.Year.ShouldBe(2018);
-            candles.To.Month.ShouldBe(8);
             candles.To.Day.ShouldBe(18);
         }
 
