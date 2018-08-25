@@ -1,15 +1,15 @@
 ﻿using System;
+using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.ws.request;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models {
-    public class HeartBeat  : WsMessageBase<long>, IResponseMessage {
+    public class HeartBeat  : WsMessageBase<DateTimeOffset>, IResponseMessage {
 
         [JsonProperty("msg")]
-        public override long Message { get; set; }
-
-        public DateTimeOffset HearBeatDateTime => DateTimeOffset.FromUnixTimeMilliseconds(Message).ToLocalTime();
+        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        public override DateTimeOffset Message { get; set; }
 
     }
 }

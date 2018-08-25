@@ -94,7 +94,7 @@ namespace IqOptionApi.Models {
 
         [JsonProperty("created")]
         [JsonConverter(typeof(UnixDateTimeJsonConverter))]
-        public DateTime? Created { get; set; }
+        public DateTimeOffset? Created { get; set; }
 
         [JsonProperty("last_visit")]
         public bool LastVisit { get; set; }

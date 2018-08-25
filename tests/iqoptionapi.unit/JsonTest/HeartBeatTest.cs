@@ -1,4 +1,5 @@
 ﻿
+using System;
 using IqOptionApi.Models;
 using Newtonsoft.Json;
 using Shouldly;
@@ -22,9 +23,11 @@ namespace IqOptionApi.unit.JsonTest {
 
 
             // assert
+
+            var dt = DateTimeOffset.FromUnixTimeMilliseconds(1534749247713);
+
             result.ShouldNotBeNull();
-            result.Message.ShouldBe(1534749247713);
-            result.HearBeatDateTime.ShouldNotBeNull();
+            result.Message.ShouldBe(dt);
         }
     }
 }
