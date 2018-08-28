@@ -16,11 +16,14 @@
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>UPDATED BY BUILD</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug Fix
+- Use DateTimeOffset for InfoData 
+- Use DateTimeOffset for buyComplete
+- Add more unit tests to cover the result/ buy-failed-result</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0</Version>
+    <Version>1.1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

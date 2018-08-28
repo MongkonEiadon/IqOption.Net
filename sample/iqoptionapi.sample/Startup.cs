@@ -31,11 +31,6 @@ namespace iqoptionapi.sample {
                 _logger.Information($"Success Get Profile for {_config.Email}");
 
 
-                // received when expiration occured
-                api.InfoDatasObservable.Select(x => x.FirstOrDefault()).Subscribe(x => {
-                    _logger.Information($"Buy result is {x.Win} with {x.ActiveId}");
-                });
-
                 // open order EurUsd in smallest period (1min) 
                 var exp = DateTime.Now.AddMinutes(1);
                 var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);

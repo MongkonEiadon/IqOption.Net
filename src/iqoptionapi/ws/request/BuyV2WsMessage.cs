@@ -15,8 +15,8 @@ namespace IqOptionApi.ws.request {
 
 
         [JsonProperty("exp", Required = Required.Always)]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime Expiration { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset Expiration { get; set; }
 
 
         [JsonProperty("type")]
@@ -29,19 +29,19 @@ namespace IqOptionApi.ws.request {
 
 
         [JsonProperty("time")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime Time { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset Time { get; set; }
     }
 
 
     internal class BuyV2WsMessage : WsMessageBase<BuyV2RequestModel> {
-        public BuyV2WsMessage(ActivePair pair, int price, OrderDirection direction, DateTime expiration, DateTime now) {
+        public BuyV2WsMessage(ActivePair pair, int price, OrderDirection direction, DateTimeOffset expiration, DateTimeOffset now) {
             Message = new BuyV2RequestModel() {
                 ActivePair = pair,
                 Price = price,
                 Direction = direction,
-                Expiration = expiration,
-                Time = now
+                Expiration = expiration.ToUniversalTime(),
+                Time = now.ToUniversalTime()
             };
         }
 

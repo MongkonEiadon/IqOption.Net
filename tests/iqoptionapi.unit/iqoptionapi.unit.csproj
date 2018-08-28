@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <None Remove="Json\buycomplete.json" />
+    <None Remove="Json\BuyResult\buyFailed.json" />
     <None Remove="Json\heartbeat.json" />
     <None Remove="Json\subscribeMessage\candle-generated.json" />
     <None Remove="Json\timesync.json" />

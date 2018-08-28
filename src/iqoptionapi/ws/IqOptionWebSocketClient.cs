@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using iqoptionapi.ws.@base;
+using iqoptionapi.ws.result;
 using IqOptionApi.extensions;
 using IqOptionApi.Models;
 using IqOptionApi.ws.request;
 using Serilog;
 using WebSocket4Net;
 
-
 namespace IqOptionApi.ws {
-
     public class IqOptionWebSocketClient : IDisposable {
         //privates
         private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
-        private  WebSocket Client { get; }
+        private WebSocket Client { get; }
 
-        public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null, string host = "iqoption.com") {
-
+        public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null,
+            string host = "iqoption.com") {
             Client = new WebSocket($"wss://{host}/echo/websocket");
 
             MessageReceivedObservable =
@@ -41,8 +37,7 @@ namespace IqOptionApi.ws {
 
             MessageReceivedObservable.Subscribe(x => {
                 var a = x.JsonAs<WsMessageBase<object>>();
-                switch (a.Name?.ToLower())
-                {
+                switch (a.Name?.ToLower()) {
                     case "heartbeat": {
                         var value = x.JsonAs<HeartBeat>();
                         _heartbeat.OnNext(value.Message);
@@ -73,66 +68,57 @@ namespace IqOptionApi.ws {
                         break;
                     }
 
-                    case "profit-top-user-moved-up":
-                        {
-                            break;
-                        }
+                    case "profit-top-user-moved-up": {
+                        break;
+                    }
 
-                    case "activecommissionchange":
-                        {
-                            break;
-                        }
+                    case "activecommissionchange": {
+                        break;
+                    }
 
-                    case "user-tournament-position-changed":
-                        {
-                            break;
-                        }
+                    case "user-tournament-position-changed": {
+                        break;
+                    }
 
-                    case "chat-state-updated":
-                        {
-                            break;
-                        }
-                    case "front":
-                        {
-                            break;
-                        }
+                    case "chat-state-updated": {
+                        break;
+                    }
+                    case "front": {
+                        break;
+                    }
 
                     case "listinfodata": {
                         var result = x.JsonAs<WsMessageBase<InfoData[]>>();
                         _infoDataSubject.OnNext(result?.Message);
                         var info = result?.Message.FirstOrDefault();
                         if (info != null)
-                            _logger.Verbose($"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value} exp {info.ExpTime}({info.Expired})");
+                            _logger.Verbose(
+                                $"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value} exp {info.ExpTime}({info.Expired})");
                         break;
                     }
 
                     case "buycomplete": {
-                        var result = x.JsonAs<WsMessageBase<WsMessageWithSuccessfulResult<object>>>().Message;
+                        var result = x.JsonAs<BuyCompleteResultMessage>().Message;
                         if (result.IsSuccessful) {
-                            var buyResult = x.JsonAs<WsMessageBase<WsMessageWithSuccessfulResult<BuyResult>>>().Message
-                                .Result;
-                            _logger.Verbose($"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair) buyResult.Act} @{buyResult.Value} ");
-                            _buyResulSjSubject.OnNext(buyResult);
+                            var buyResult = x.JsonAs<BuyCompleteResultMessage>().Message.Result;
+                            _logger.Verbose(
+                                $"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair) buyResult.Act} @{buyResult.Value} ");
                         }
                         else {
-                            var ex = string.Join(", ", result.Message?.ToList());
-                            _logger.Warning($"{this.Profile?.UserId}\t{ex}", ex);
-                            _buyResulSjSubject.OnNext(BuyResult.BuyResultError(result.Message));
+                            _logger.Warning($"{Profile?.UserId}\t{result.GetMessageDescription()}");
                         }
+
+                        _buyResultSubject.OnNext(result.Result);
 
                         break;
                     }
                     case "candles": {
-
                         var result = x.JsonAs<GetCandleItemsResultMessage>();
-                        if (result != null) {
-                            CandleCollections = result.Message;
-                        }
+                        if (result != null) CandleCollections = result.Message;
                         break;
                     }
 
                     case "candle-generated": {
-
                         var candle = x.JsonAs<CurrentCandleInfoResultMessage>();
                         if (candle != null) {
                             _candleInfoSubject.OnNext(candle.Message);
@@ -149,20 +135,19 @@ namespace IqOptionApi.ws {
                 }
             }, ex => { _logger.Error(ex.Message); });
 
-            
+
             initialSetup?.Invoke(this);
         }
 
-        public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") : this(x => x.OpenSecuredSocketAsync(secureToken), host) { }
+        public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") : this(
+            x => x.OpenSecuredSocketAsync(secureToken), host) { }
 
 
         #region [Public's]
 
         public Task<bool> OpenSecuredSocketAsync(string ssid) {
-
             var tcs = new TaskCompletionSource<bool>();
             try {
-
                 if (string.IsNullOrEmpty(ssid))
                     tcs.TrySetResult(false);
 
@@ -176,21 +161,17 @@ namespace IqOptionApi.ws {
                             tcs.TrySetResult(false);
                         }
 
-                        if (x == "Profile") {
-                            tcs.TrySetResult(true);
-                        }
+                        if (x == "Profile") tcs.TrySetResult(true);
 
                         count++;
-
                     });
 
                 SendMessageAsync(new SsidWsMessageBase(ssid)).ConfigureAwait(false);
 
                 tcs.Task.ContinueWith(t => {
-                    this.IsConnected = t.Result;
+                    IsConnected = t.Result;
                     sub.Dispose();
                 });
-
             }
             catch (Exception ex) {
                 IsConnected = false;
@@ -199,6 +180,7 @@ namespace IqOptionApi.ws {
 
             return tcs.Task;
         }
+
         public Task<bool> OpenWebSocketAsync() {
             if (Client.State == WebSocketState.Open)
                 return Task.FromResult(true);
@@ -211,25 +193,23 @@ namespace IqOptionApi.ws {
             return Client.OpenAsync();
 #endif
         }
+
         public IObservable<string> MessageReceivedObservable { get; }
-        
+
         public string SecureToken { get; set; }
 
         public bool IsConnected { get; private set; }
 
-        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
-        {
-            if (await OpenWebSocketAsync())
-            {
+        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator) {
+            if (await OpenWebSocketAsync()) {
                 _logger.Information($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
                 Client.Send(messageCreator.CreateIqOptionMessage());
             }
         }
 
+        #endregion
 
-#endregion
-
-#region [Profile]
+        #region [Profile]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 
@@ -237,9 +217,9 @@ namespace IqOptionApi.ws {
 
         public IObservable<Profile> ProfileObservable => _profileSubject;
 
-#endregion
+        #endregion
 
-#region [Instruments]
+        #region [Instruments]
 
         private InstrumentResultSet _instrumentResultSet = new InstrumentResultSet();
         private readonly Subject<InstrumentResultSet> _instrumentResultSetSubject = new Subject<InstrumentResultSet>();
@@ -248,11 +228,9 @@ namespace IqOptionApi.ws {
             _instrumentResultSetSubject.Publish().RefCount();
 
 
-        public Task<InstrumentResultSet> SendInstrumentsRequestAsync()
-        {
+        public Task<InstrumentResultSet> SendInstrumentsRequestAsync() {
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
-            try
-            {
+            try {
                 _logger.Verbose(nameof(SendInstrumentsRequestAsync));
 
                 //subscribe for the lastest result
@@ -270,80 +248,74 @@ namespace IqOptionApi.ws {
                 );
             }
 
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 tcs.TrySetException(ex);
             }
 
             return tcs.Task;
         }
 
+        #endregion
 
-#endregion
-
-#region [InfoData]
+        #region [InfoData]
 
         private readonly Subject<InfoData[]> _infoDataSubject = new Subject<InfoData[]>();
         public IObservable<InfoData[]> InfoDataObservable => _infoDataSubject.Publish().RefCount();
 
-#endregion
+        #endregion
 
-#region [BuyV2]
+        #region [BuyV2]
 
-        private readonly Subject<BuyResult> _buyResulSjSubject = new Subject<BuyResult>();
-        public IObservable<BuyResult> BuyResultObservable => _buyResulSjSubject.Publish().RefCount();
+        private readonly Subject<BuyResult> _buyResultSubject = new Subject<BuyResult>();
+        public IObservable<BuyResult> BuyResultObservable => _buyResultSubject.Publish().RefCount();
+
         public Task<BuyResult> BuyAsync(
             ActivePair pair,
             int size,
             OrderDirection direction,
-            DateTime expiration = default(DateTime))
-        {
+            DateTimeOffset expiration = default(DateTimeOffset)) {
             var tcs = new TaskCompletionSource<BuyResult>();
-            try
-            {
+            try {
                 var obs = BuyResultObservable
                     .Where(x => x != null)
                     .Subscribe(x => tcs.TrySetResult(x));
 
                 tcs.Task.ContinueWith(t => {
-                    if (t.Result != null)
-                    {
-                        obs.Dispose();
-                    }
+                    if (t.Result != null) obs.Dispose();
                 });
 
                 //reduce second to 00s 
                 expiration = expiration.AddSeconds(60 - expiration.Second);
 
-                SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTime.Now)).ConfigureAwait(false);
+                SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTimeOffset.Now)).ConfigureAwait(false);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 tcs.TrySetException(ex);
             }
 
             return tcs.Task;
         }
 
-#endregion
+        #endregion
 
-#region [HeartBeat]
-        private Subject<DateTimeOffset> _heartbeat = new Subject<DateTimeOffset>();
+        #region [HeartBeat]
+
+        private readonly Subject<DateTimeOffset> _heartbeat = new Subject<DateTimeOffset>();
         public IObservable<DateTimeOffset> HeartbeatObservable => _heartbeat.Publish().RefCount();
 
+        #endregion
 
-#endregion
+        #region [ServerTimes]
 
-#region [ServerTimes]
-        
         public static DateTimeOffset ServerTime { get; private set; }
 
-#endregion
+        #endregion
 
-#region [CandleCollections]
+        #region [CandleCollections]
 
         private readonly Subject<CandleCollections> _candlesCollectionsSubject = new Subject<CandleCollections>();
         private CandleCollections _candleCollections;
+
         public CandleCollections CandleCollections {
             get => _candleCollections;
             set {
@@ -351,57 +323,49 @@ namespace IqOptionApi.ws {
                 _candlesCollectionsSubject.OnNext(value);
             }
         }
+
         public IObservable<CandleCollections> CandlesObservable => _candlesCollectionsSubject.Publish().RefCount();
 
         public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to) {
-
             var tcs = new TaskCompletionSource<CandleCollections>();
             try {
-
-                var sub = CandlesObservable.Subscribe(x => {
-
-                    tcs.TrySetResult(x);
-                });
+                var sub = CandlesObservable.Subscribe(x => { tcs.TrySetResult(x); });
                 tcs.Task.ContinueWith(t => {
                     sub.Dispose();
 
                     return t.Result;
                 });
 
-                this.SendMessageAsync(new GetCandleItemRequestMessage(pair, tf, count, to)).ConfigureAwait(false);
-
+                SendMessageAsync(new GetCandleItemRequestMessage(pair, tf, count, to)).ConfigureAwait(false);
             }
             catch (Exception ex) {
-
                 tcs.TrySetException(ex);
             }
 
             return tcs.Task;
         }
 
-#endregion
+        #endregion
 
 
-#region [CurrentCandleInfo]
+        #region [CurrentCandleInfo]
 
-        private Subject<CurrentCandle> _candleInfoSubject=new Subject<CurrentCandle>();
+        private readonly Subject<CurrentCandle> _candleInfoSubject = new Subject<CurrentCandle>();
         public CurrentCandle CurrentCandleInfo { get; set; }
         public IObservable<CurrentCandle> RealTimeCandleInfoObservable => _candleInfoSubject.Publish().RefCount();
 
         public Task SubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame) {
-            return this.SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
+            return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
         }
 
         public Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame) {
-            return this.SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));
+            return SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));
         }
 
-#endregion
+        #endregion
 
         public void Dispose() {
             Client?.Dispose();
         }
     }
-
-    
 }
