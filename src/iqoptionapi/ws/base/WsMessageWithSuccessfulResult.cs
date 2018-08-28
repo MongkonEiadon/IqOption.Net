@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace IqOptionApi.ws {
 
@@ -15,5 +17,9 @@ namespace IqOptionApi.ws {
 
         [JsonProperty("location", Required = Required.Default)]
         public string Location { get; set; }
+
+        public string GetMessageDescription() {
+            return String.Join(", ", Message ?? Enumerable.Empty<object>());
+        }
     }
 }

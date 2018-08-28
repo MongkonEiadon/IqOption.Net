@@ -1,4 +1,5 @@
 ﻿using System;
+using iqoptionapi.ws.@base;
 using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.ws.request;
 using Newtonsoft.Json;

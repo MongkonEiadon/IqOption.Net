@@ -36,11 +36,11 @@ namespace IqOptionApi.Models {
 
         [JsonProperty("created")]
         [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
 
         [JsonProperty("expired")]
         [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
-        public DateTime Expired { get; set; }
+        public DateTimeOffset Expired { get; set; }
 
         [JsonProperty("exp_time")]
         public long ExpTime { get; set; }
