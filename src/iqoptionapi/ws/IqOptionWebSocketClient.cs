@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using iqoptionapi.ws.@base;
 using IqOptionApi.extensions;
 using IqOptionApi.Models;
 using IqOptionApi.ws.request;
@@ -101,8 +102,7 @@ namespace IqOptionApi.ws {
                         _infoDataSubject.OnNext(result?.Message);
                         var info = result?.Message.FirstOrDefault();
                         if (info != null)
-                            _logger.Information(
-                                $"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value} exp {info.ExpTime}({info.Expired.ToShortTimeString()})");
+                            _logger.Verbose($"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value} exp {info.ExpTime}({info.Expired})");
                         break;
                     }
 
@@ -111,13 +111,12 @@ namespace IqOptionApi.ws {
                         if (result.IsSuccessful) {
                             var buyResult = x.JsonAs<WsMessageBase<WsMessageWithSuccessfulResult<BuyResult>>>().Message
                                 .Result;
-                            _logger.Information(
-                                $"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair) buyResult.Act} @{buyResult.Value} ");
+                            _logger.Verbose($"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair) buyResult.Act} @{buyResult.Value} ");
                             _buyResulSjSubject.OnNext(buyResult);
                         }
                         else {
                             var ex = string.Join(", ", result.Message?.ToList());
-                            _logger.Information($"{this.Profile?.UserId}\t{ex}", ex);
+                            _logger.Warning($"{this.Profile?.UserId}\t{ex}", ex);
                             _buyResulSjSubject.OnNext(BuyResult.BuyResultError(result.Message));
                         }
 

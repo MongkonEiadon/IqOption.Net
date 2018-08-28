@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using IqOptionApi.Converters.JsonConverters;
+using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
 
@@ -13,13 +15,16 @@ namespace IqOptionApi.Models {
         public long Price { get; set; }
 
         [JsonProperty("exp")]
-        public long Exp { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset Exp { get; set; }
 
         [JsonProperty("created")]
-        public long Created { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset Created { get; set; }
 
         [JsonProperty("time_rate")]
-        public long TimeRate { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset TimeRate { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }
