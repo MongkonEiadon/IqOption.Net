@@ -18,7 +18,7 @@ namespace IqOptionApi {
         Task<Profile> GetProfileAsync();
         Task<bool> ChangeBalanceAsync(long balanceId);
 
-        Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTime expiration = default(DateTime));
+        Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTimeOffset expiration = default(DateTimeOffset));
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf);
         Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf);

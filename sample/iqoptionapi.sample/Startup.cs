@@ -17,6 +17,8 @@ namespace iqoptionapi.sample {
             _logger = logger;
         }
 
+        
+
         public async Task RunSample() {
 
             var api = new IqOptionApi.IqOptionApi(_config.Email, _config.Password);

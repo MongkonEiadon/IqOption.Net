@@ -278,14 +278,16 @@ namespace IqOptionApi.ws {
             try {
                 var obs = BuyResultObservable
                     .Where(x => x != null)
-                    .Subscribe(x => tcs.TrySetResult(x));
+                    .Subscribe(x => 
+                        tcs.TrySetResult(x));
 
                 tcs.Task.ContinueWith(t => {
                     if (t.Result != null) obs.Dispose();
                 });
 
                 //reduce second to 00s 
-                expiration = expiration.AddSeconds(60 - expiration.Second);
+                if(expiration.Second % 60 != 0)
+                    expiration = expiration.AddSeconds(60 - expiration.Second);
 
                 SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTimeOffset.Now)).ConfigureAwait(false);
             }
