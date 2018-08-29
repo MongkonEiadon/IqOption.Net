@@ -51,7 +51,7 @@ if(await client.ConnectAsync()){
 ```
 
 
-## Example Use Case
+## Example Use Cases
 This is example use cases that this api could solve your problems
 
 ### Trading follower
@@ -59,7 +59,7 @@ This is example use cases that this api could solve your problems
 public async Task RunSample() {
 
     var trader = new IqOptionApi.IqOptionApi("trader@gmail.com", "passcode");
-    var follower = new IqOptionApi.IqOptionApi("follower@excelbangkok.com", "passcode");
+    var follower = new IqOptionApi.IqOptionApi("follower@gmail.com", "passcode");
 
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
