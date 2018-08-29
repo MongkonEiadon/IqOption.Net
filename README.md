@@ -56,17 +56,17 @@ This is example use cases that this api could solve your problems
 
 ### Trading follower
 ```csharp
-public async Task RunSample() {
+public async Task TradingFollower_ExampleAsync() {
 
-    var trader = new IqOptionApi.IqOptionApi("trader@gmail.com", "passcode");
-    var follower = new IqOptionApi.IqOptionApi("follower@gmail.com", "passcode");
+    var trader = new IqOptionApi("trader@gmail.com", "passcode");
+    var follower = new IqOptionApi("follower@gmail.com", "passcode");
 
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
     trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
         follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
     });
-
+    
 }
 ```
 
