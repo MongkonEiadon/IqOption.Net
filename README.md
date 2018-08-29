@@ -2,7 +2,7 @@
 iqoption api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
 
 [![Build status](https://ci.appveyor.com/api/projects/status/sueidsbt13avwvoc/branch/master?svg=true)](https://ci.appveyor.com/project/MongkonEiadon/iqoption-net/branch/master)
-[![NuGet](https://img.shields.io/badge/nuget-1.1.0-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
+[![NuGet](https://img.shields.io/badge/nuget-1.1.0.2-blue.svg)](https://www.nuget.org/packages/iqoptionapi/)
 
 # Package Installation
 ``` javascript
@@ -49,3 +49,25 @@ if(await client.ConnectAsync()){
 }
 
 ```
+
+
+## Example Use Cases
+This is example use cases that this api could solve your problems
+
+### Trading follower
+```csharp
+public async Task TradingFollower_ExampleAsync() {
+
+    var trader = new IqOptionApi("trader@gmail.com", "passcode");
+    var follower = new IqOptionApi("follower@gmail.com", "passcode");
+
+    await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
+
+    trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
+        follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
+    });
+    
+}
+```
+
+
