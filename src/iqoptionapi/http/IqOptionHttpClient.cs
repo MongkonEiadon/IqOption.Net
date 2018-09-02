@@ -83,17 +83,7 @@ namespace IqOptionApi.http {
                                     tcs.TrySetResult(result);
                                     break;
                                 }
-
-                            case HttpStatusCode.BadRequest:
-                                {
-                                    //var error = t.Result.Content.JsonAs<LoginErrorCommandResult>();
-                                    //tcs.TrySetResult(new IqLoginCommandResult(null, false, string.Join(",",
-                                    //    error.Errors?.Select(x => x.Title)?.ToList())));
-
-                                    break;
-                                }
-
-                            case HttpStatusCode.Forbidden:
+                            default :
                                 {
                                     var error = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
                                     error.IsSuccessful = false;

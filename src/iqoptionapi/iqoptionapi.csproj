@@ -16,11 +16,11 @@
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Fix when OpenBuy Async the Expired incorrected</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix Http Login</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0.2</Version>
+    <Version>1.1.0.4</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
