@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
-using IqOptionApi.Models;
 using IqOptionApi.ws;
 using IqOptionApi.ws.request;
 using Shouldly;
@@ -20,7 +19,7 @@ namespace IqOptionApi.unit.ws
         }
 
 
-        [Fact]
+        //[Fact]
         public async Task GetCandles() {
 
             var getCandleRequest = new GetCandleItemRequestMessage(ActivePair.EURAUD, TimeFrame.Min5, 100, DateTimeOffset.Now);
