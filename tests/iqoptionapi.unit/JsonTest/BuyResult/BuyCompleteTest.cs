@@ -1,81 +1,61 @@
-﻿using System;
+﻿using FluentAssertions;
 using iqoptionapi.ws.result;
-using IqOptionApi.Models;
-using Newtonsoft.Json;
-using Shouldly;
-using Xunit;
+using IqOptionApi.unit.JsonTest;
+using NUnit.Framework;
+using System;
 
-namespace IqOptionApi.unit.JsonTest
+namespace iqoptionapi.unit.JsonTest.BuyResult
 {
-    public class BuyCompleteTest : IClassFixture<LoadJsonFileTest> {
-        private readonly LoadJsonFileTest _jsonLoader;
+    [TestFixture]
+    public class BuyCompleteTest : LoadJsonFileTest<BuyCompleteResultMessage> {
+        public override string JsonSourceFileName => "BuyResult\\buycomplete.json";
 
-        public readonly string Json;
-
-        public BuyCompleteTest(LoadJsonFileTest jsonLoader) {
-            _jsonLoader = jsonLoader;
-
-            Json = _jsonLoader.LoadJson("BuyResult\\buycomplete.json");
-        }
-
-
-        [Fact]
+        [Test]
         public void LoadBuyComplete_WithSuccessResult_DateTimeConverted() {
 
             // act
-            var result = JsonConvert.DeserializeObject<BuyCompleteResultMessage>(Json);
+            var result = ReadFileSource();
 
             // assert
-            result.ShouldNotBeNull();
-            result.Message.ShouldNotBeNull();
+            result.Should().NotBeNull();
+            result.Message.Should().NotBeNull();
 
             var msg = result.Message;
-            msg.IsSuccessful.ShouldBeTrue();
-            msg.GetMessageDescription().ShouldBe("Successful");
+            msg.IsSuccessful.Should().BeTrue();
+            msg.GetMessageDescription().Should().Be("Successful");
 
             var buy = msg.Result;
-
-            buy.Created.ShouldNotBeNull();
-            buy.Exp.ShouldNotBeNull();
-
-            buy.UserId.ShouldBe(1234);
+            buy.UserId.Should().Be(1234);
         }
 
-
-        [Fact]
+        [Test]
         public void LoadBuyComplete_ValidateUserData() {
 
             // act
-            var result = JsonConvert.DeserializeObject<BuyCompleteResultMessage>(Json);
+            var result = ReadFileSource();
 
             // assert
             var buy = result.Message.Result;
-
-            buy.Created.ShouldNotBeNull();
-            buy.Exp.ShouldNotBeNull();
-
-            buy.UserId.ShouldBe(1234);
+            buy.UserId.Should().Be(1234);
         }
 
-        [Fact]
+        [Test]
         public void LoadBuyComplete_ValidateDate()
         {
-
             // act
-            var result = JsonConvert.DeserializeObject<BuyCompleteResultMessage>(Json);
+            var result = ReadFileSource();
 
             // assert
             var buy = result.Message.Result;
-
-            buy.Created.ShouldNotBeNull();
+            
             var exp = DateTimeOffset.FromUnixTimeSeconds(1535448900);
-            buy.Exp.ShouldBe(exp);
+            buy.Exp.Should().Be(exp);
 
             var created = DateTimeOffset.FromUnixTimeSeconds(1535448820);
-            buy.Created.ShouldBe(created);
+            buy.Created.Should().Be(created);
 
             var timeRate  = DateTimeOffset.FromUnixTimeSeconds(1535448820);
-            buy.TimeRate.ShouldBe(timeRate);
+            buy.TimeRate.Should().Be(timeRate);
         }
     }
 }

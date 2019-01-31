@@ -1,43 +1,28 @@
-﻿using System;
+﻿using FluentAssertions;
 using iqoptionapi.ws.result;
-using IqOptionApi.Models;
-using Newtonsoft.Json;
-using Shouldly;
-using Xunit;
+using IqOptionApi.unit.JsonTest;
+using NUnit.Framework;
 
-
-namespace IqOptionApi.unit.JsonTest
+namespace iqoptionapi.unit.JsonTest.BuyResult
 {
-    public class BuyFailedTest : IClassFixture<LoadJsonFileTest>
+    [TestFixture]
+    public class BuyFailedTest : LoadJsonFileTest<BuyCompleteResultMessage> 
     {
-        private readonly LoadJsonFileTest _jsonLoader;
-
-        public readonly string Json;
-
-        public BuyFailedTest(LoadJsonFileTest jsonLoader)
-        {
-            _jsonLoader = jsonLoader;
-
-            Json = _jsonLoader.LoadJson("BuyResult\\buyFailed.json");
-        }
-
-        [Fact]
+        public override string JsonSourceFileName => "BuyResult\\buyFailed.json";
+        
+        [Test]
         public void LoadBuyComplete_WithSuccessResult_DateTimeConverted()
         {
-
             // act
-            var result = JsonConvert.DeserializeObject<BuyCompleteResultMessage>(Json);
+            var result = ReadFileSource();
 
             // assert
-            result.ShouldNotBeNull();
-            result.Message.ShouldNotBeNull();
+            result.Should().NotBeNull();
+            result.Message.Should().NotBeNull();
 
             var msg = result.Message;
-            msg.IsSuccessful.ShouldBeFalse();
-            msg.GetMessageDescription().ShouldBe("หมดเวลาสำหรับการซื้อออปชันแล้ว โปรดลองอีกครั้งภายหลัง");
-
+            msg.IsSuccessful.Should().BeFalse();
+            msg.GetMessageDescription().Should().Be("หมดเวลาสำหรับการซื้อออปชันแล้ว โปรดลองอีกครั้งภายหลัง");
         }
-
-
     }
 }

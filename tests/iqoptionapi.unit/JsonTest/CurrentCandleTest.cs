@@ -1,53 +1,47 @@
-﻿using IqOptionApi.Models;
+﻿using FluentAssertions;
+using IqOptionApi.Models;
 using IqOptionApi.ws;
 using Newtonsoft.Json;
-using Shouldly;
-using Xunit;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace IqOptionApi.unit.JsonTest {
-    public class CurrentCandleTest : IClassFixture<LoadJsonFileTest> {
-        public CurrentCandleTest(LoadJsonFileTest loadJsonFileTest) {
-            _loadJsonFileTest = loadJsonFileTest;
 
-            Json = _loadJsonFileTest.LoadJson("subscribeMessage\\candle-generated.json");
-        }
+    [TestFixture]
+    public class CurrentCandleTest : LoadJsonFileTest<CurrentCandleInfoResultMessage>
+    {
+        public override string JsonSourceFileName => "subscribeMessage\\candle-generated.json";
 
-        private readonly LoadJsonFileTest _loadJsonFileTest;
-
-        private string Json { get; }
-
-        [Fact]
+        [Test]
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
 
             //act
-            var result = JsonConvert.DeserializeObject<CurrentCandleInfoResultMessage>(Json);
+            var result = base.ReadFileSource();
 
             // assert
-            result.ShouldNotBeNull();
+            result.Should().NotBeNull();
 
             var candles = result.Message;
-            candles.ShouldNotBeNull();
-            candles.ActivePair.ShouldBe(ActivePair.EURUSD);
+            candles.Should().NotBeNull();
+            candles.ActivePair.Should().Be(ActivePair.EURUSD);
 
-            candles.Max.ShouldBe(1.14107);
-            candles.Min.ShouldBe(1.141035);
+            candles.Max.Should().Be(1.14107);
+            candles.Min.Should().Be(1.141035);
 
-            candles.Bid.ShouldBe(1.14099);
-            candles.Ask.ShouldBe(1.14115);
+            candles.Bid.Should().Be(1.14099);
+            candles.Ask.Should().Be(1.14115);
 
-            candles.Open.ShouldBe(1.141055);
-            candles.Close.ShouldBe(1.14107);
+            candles.Open.Should().Be(1.141055);
+            candles.Close.Should().Be(1.14107);
 
-            candles.From.Year.ShouldBe(2018);
-            candles.From.Month.ShouldBe(08);
-            candles.From.Day.ShouldBe(20);
-
-
-            candles.To.Year.ShouldBe(2018);
-            candles.To.Month.ShouldBe(08);
-            candles.To.Day.ShouldBe(20);
+            candles.From.Year.Should().Be(2018);
+            candles.From.Month.Should().Be(08);
+            candles.From.Day.Should().Be(20);
 
 
+            candles.To.Year.Should().Be(2018);
+            candles.To.Month.Should().Be(08);
+            candles.To.Day.Should().Be(20);
         }
     }
 }

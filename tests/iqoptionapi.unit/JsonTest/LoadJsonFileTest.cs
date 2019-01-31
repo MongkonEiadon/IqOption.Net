@@ -1,21 +1,30 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
+using Newtonsoft.Json;
+using TestsFor;
 
 namespace IqOptionApi.unit.JsonTest {
-    public class LoadJsonFileTest : IDisposable {
 
+    [TestFixture]
+    public abstract class LoadJsonFileTest<TType> : Test {
 
+        public abstract string JsonSourceFileName { get; }
 
-        public LoadJsonFileTest() {
+        private Lazy<TType> _LazySource => new Lazy<TType>(() => JsonConvert.DeserializeObject<TType>(LoadJson()));
+
+        public TType ReadFileSource() => _LazySource.Value;
+
+        [SetUp]
+        public void SetUp()
+        {
 
         }
-        public string LoadJson(string fileName) {
 
-            var JSON = System.IO.File.ReadAllText($"Json\\{fileName}");
+        public string LoadJson() {
+
+            var JSON = System.IO.File.ReadAllText($"Json\\{JsonSourceFileName}");
             return JSON;
         }
-
-        public void Dispose() {
-
-        }
+        
     }
 }
