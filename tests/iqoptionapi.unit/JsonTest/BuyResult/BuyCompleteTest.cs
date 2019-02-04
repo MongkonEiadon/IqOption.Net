@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
-using iqoptionapi.ws.result;
-using IqOptionApi.unit.JsonTest;
+using IqOptionApi.Unit.JsonTest;
 using NUnit.Framework;
 using System;
+using IqOptionApi.ws.result;
 
-namespace iqoptionapi.unit.JsonTest.BuyResult
+namespace IqOptionApi.Unit.JsonTest.BuyResult
 {
     [TestFixture]
     public class BuyCompleteTest : LoadJsonFileTest<BuyCompleteResultMessage> {

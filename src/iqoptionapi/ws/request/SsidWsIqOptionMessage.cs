@@ -1,4 +1,4 @@
-﻿using iqoptionapi.ws.@base;
+﻿using IqOptionApi.ws.@base;
 
 namespace IqOptionApi.ws.request {
     internal class SsidWsMessageBase : WsMessageBase<string> {

@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using IqOptionApi.extensions;
+using IqOptionApi.Extensions;
 using IqOptionApi.ws.request;
 using IqOptionApi.http;
 using IqOptionApi.Models;

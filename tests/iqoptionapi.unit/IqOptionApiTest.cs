@@ -1,5 +1,5 @@
 
-namespace IqOptionApi.unit
+namespace IqOptionApi.Unit
 {
 }
 

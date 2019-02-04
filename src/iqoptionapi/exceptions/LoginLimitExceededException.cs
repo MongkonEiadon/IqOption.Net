@@ -1,5 +1,5 @@
 ﻿using System;
-using IqOptionApi.extensions;
+using IqOptionApi.Extensions;
 using IqOptionApi.http;
 
 namespace IqOptionApi.exceptions {

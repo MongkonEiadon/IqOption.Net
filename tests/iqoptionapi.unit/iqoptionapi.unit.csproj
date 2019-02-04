@@ -21,9 +21,9 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
     <PackageReference Include="TestAutoFixture" Version="1.0.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IqOptionApi\IqOptionApi.csproj" />
+    <ProjectReference Include="..\..\src\iqoptionapi\IqOptionApi.csproj" />
   </ItemGroup>
 
 
@@ -37,10 +37,6 @@
     <None Update="appsettings.json">
       <TransformOnBuild>true</TransformOnBuild>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="appsettings.Release.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
     </None>
   </ItemGroup>
 

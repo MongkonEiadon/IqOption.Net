@@ -5,7 +5,7 @@ using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using IqOptionApi.exceptions;
-using IqOptionApi.extensions;
+using IqOptionApi.Extensions;
 using IqOptionApi.ws;
 using IqOptionApi.Models;
 using Newtonsoft.Json;
