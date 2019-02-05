@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using iqoptionapi.ws.@base;
+using Newtonsoft.Json;
 
 namespace IqOptionApi.ws.request {
     public interface IWsRequestMessage<T> : IWsIqOptionMessageCreator {
@@ -8,6 +9,8 @@ namespace IqOptionApi.ws.request {
 
         [JsonProperty("msg")]
         T Message { get; set; }
+
+        EnumMessageType MessageType { get; }
     }
 
 

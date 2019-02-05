@@ -10,6 +10,7 @@ using IqOptionApi.extensions;
 using IqOptionApi.Models;
 using IqOptionApi.ws.request;
 using Serilog;
+using Websocket.Client;
 using WebSocket4Net;
 
 namespace IqOptionApi.ws {
@@ -17,6 +18,14 @@ namespace IqOptionApi.ws {
         //privates
         private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
         private WebSocket Client { get; }
+
+        private Websocket.Client.WebsocketClient _ws;
+
+        public IqOptionWebSocketClient()
+        {
+            _ws = new WebsocketClient(new Uri("$wss://iqoption.com/echo/websocket"));
+            
+        }
 
         public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null,
             string host = "iqoption.com") {
@@ -190,7 +199,8 @@ namespace IqOptionApi.ws {
             return Task.FromResult(true);
 
 #else
-            return Client.OpenAsync();
+            return null;
+            //return Client.OpenAsync();
 #endif
         }
 

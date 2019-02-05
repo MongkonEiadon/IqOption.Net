@@ -51,9 +51,7 @@ namespace IqOptionApi {
         public IObservable<BuyResult> BuyResultObservable => WsClient?.BuyResultObservable;
 
         #endregion
-
-
-
+               
         public Task<bool> ConnectAsync() {
             connectedSubject.OnNext(false);
             IsConnected = false;

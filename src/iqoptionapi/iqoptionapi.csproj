@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -37,6 +37,7 @@
     <PackageReference Include="restsharp" Version="106.6.7" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
+    <PackageReference Include="Websocket.Client" Version="1.0.6" />
     <PackageReference Include="WebSocket4Net" Version="0.15.2" />
   </ItemGroup>
 
