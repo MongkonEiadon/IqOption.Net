@@ -8,7 +8,7 @@ using IqOptionApi.ws;
 using IqOptionApi.ws.request;
 using NUnit.Framework;
 
-namespace IqOptionApi.Unit.ws
+namespace IqOptionApi.Tests.ws
 {
     //public class GetCandlesTest : IClassFixture<BaseUnitTest> {
     //    private readonly BaseUnitTest _baseTest;

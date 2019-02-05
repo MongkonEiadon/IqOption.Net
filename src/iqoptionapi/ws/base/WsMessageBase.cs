@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using IqOptionApi.extensions;
+using IqOptionApi.Extensions;
 using IqOptionApi.ws.request;
 using Newtonsoft.Json;
 

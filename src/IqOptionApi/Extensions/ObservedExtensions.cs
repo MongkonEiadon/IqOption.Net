@@ -15,10 +15,10 @@ namespace IqOptionApi.Extensions {
         public static IObservable<R> ToObservable<T, R>(this T target, string name, Func<T, R> func)
             where T : INotifyPropertyChanged {
             return Observable.Create<R>(o => {
-                PropertyChangedEventHandler eventHandler = new PropertyChangedEventHandler((s, pce) => {
+                PropertyChangedEventHandler eventHandler = (s, pce) => {
                     if (pce.PropertyName == null || pce.PropertyName == name)
                         o.OnNext(func(target));
-                });
+                };
                 target.PropertyChanged += eventHandler;
                 return () => target.PropertyChanged -= eventHandler;
             });
@@ -26,7 +26,7 @@ namespace IqOptionApi.Extensions {
 
         public static IObservable<R> ToObservable<T, R>(this T target, Expression<Func<T, R>> property)
             where T : INotifyPropertyChanged {
-            var body = (property as LambdaExpression).Body;
+            var body = property.Body;
             var propertyName = "";
 
             if (body is MemberExpression)
@@ -38,10 +38,10 @@ namespace IqOptionApi.Extensions {
 
             var getValueFunc = property.Compile();
             return Observable.Create<R>(o => {
-                PropertyChangedEventHandler eventHandler = new PropertyChangedEventHandler((s, pce) => {
+                PropertyChangedEventHandler eventHandler = (s, pce) => {
                     if (pce.PropertyName == null || pce.PropertyName == propertyName)
                         o.OnNext(getValueFunc(target));
-                });
+                };
                 target.PropertyChanged += eventHandler;
                 return () => target.PropertyChanged -= eventHandler;
             });

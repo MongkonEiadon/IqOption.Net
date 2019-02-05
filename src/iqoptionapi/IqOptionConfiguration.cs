@@ -4,7 +4,7 @@ using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-[assembly:InternalsVisibleTo("iqoptionapi.unit")]
+[assembly:InternalsVisibleTo("IqOptionApi.Tests")]
 namespace IqOptionApi {
     public class IqOptionConfiguration {
         public string Email { get; set; }

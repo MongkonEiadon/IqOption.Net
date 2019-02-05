@@ -2,10 +2,9 @@
 using System.Reactive.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TestFixture;
 using ObservableExtensions = IqOptionApi.Extensions.ObservableExtensions;
 
-namespace IqOptionApi.Unit.Extensions
+namespace IqOptionApi.Tests.Extensions
 {
     [TestFixture]
     public class ObservableExtensionsTest : TestAutoFixture.TestAutoFixture

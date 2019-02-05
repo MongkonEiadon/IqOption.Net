@@ -7,7 +7,7 @@ using NUnit.Framework.Internal;
 using System;
 using System.Linq;
 
-namespace IqOptionApi.Unit.JsonTest {
+namespace IqOptionApi.Tests.JsonTest {
     [TestFixture]
     public class GetCandlesResultTest : LoadJsonFileTest<GetCandleItemsResultMessage> {
         public override string JsonSourceFileName => "candles\\GetCandles_Success.json";

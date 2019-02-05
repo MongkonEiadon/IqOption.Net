@@ -1,4 +1,4 @@
-﻿using iqoptionapi.ws.@base;
+﻿using IqOptionApi.ws.@base;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.ws.request {

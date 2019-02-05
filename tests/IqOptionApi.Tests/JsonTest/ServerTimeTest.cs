@@ -6,7 +6,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 
 
-namespace IqOptionApi.Unit.JsonTest {
+namespace IqOptionApi.Tests.JsonTest {
 
     [TestFixture]
     public class ServerTimeTest : LoadJsonFileTest<ServerTime>

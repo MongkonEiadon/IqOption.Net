@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace IqOptionApi.Unit.converters.JsonConverters {
+namespace IqOptionApi.Tests.converters.JsonConverters {
     internal class JsonWriterTest : JsonWriter
     {
         public string AssertionObject { get; private set; }

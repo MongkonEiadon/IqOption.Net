@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using iqoptionapi.ws.@base;
-using IqOptionApi.extensions;
+using IqOptionApi.Extensions;
 using IqOptionApi.Models;
+using IqOptionApi.ws.@base;
 using IqOptionApi.ws.request;
 using Websocket.Client;
 
+[assembly:InternalsVisibleTo("IqOptionApi.Unit", AllInternalsVisible = true)]
 namespace IqOptionApi.ws
 {
-    internal class WsClient : IClient<IWebsocketClient>, IDisposable
+    public class WsClient : IClient<IWebsocketClient>, IDisposable
     {
         public IWebsocketClient Client { get; }
-
 
         #region [Subjects and Public Obs.]
 
         private readonly Subject<ServerTime> _serverTime = new Subject<ServerTime>();
-        public IObservable<ServerTime> ServerTime() => _serverTime;
+        public IObservable<ServerTime> ServerTime() => _serverTime; 
 
         private readonly Subject<HeartBeat> _heartBeat = new Subject<HeartBeat>();
         public IObservable<HeartBeat> Heartbeat() => _heartBeat;
@@ -62,16 +63,9 @@ namespace IqOptionApi.ws
             return Client.Send(msg.CreateIqOptionMessage());
         }
 
-      
-        
-
-
         public void Dispose()
         {
             Client?.Dispose();
         }
-
-
-       
     }
 }

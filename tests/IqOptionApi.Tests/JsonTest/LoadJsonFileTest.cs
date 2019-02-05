@@ -2,7 +2,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.Unit.JsonTest {
+namespace IqOptionApi.Tests.JsonTest {
 
     [TestFixture]
     public abstract class LoadJsonFileTest<TType> {
