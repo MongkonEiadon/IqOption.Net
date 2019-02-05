@@ -4,9 +4,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using IqOptionApi.extensions;
 
-namespace IqOptionApi {
+namespace IqOptionApi.Extensions {
     internal static class WebSocketMixins {
         public static Task SendString(this ClientWebSocket ws, object data, CancellationToken cancellation) {
             return ws.SendString(data.AsJson(), cancellation);

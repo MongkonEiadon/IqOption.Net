@@ -5,7 +5,7 @@ using IqOptionApi.Models;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace IqOptionApi.unit.JsonTest {
+namespace IqOptionApi.Unit.JsonTest {
 
     [TestFixture]
     public class HeartBeatTest : LoadJsonFileTest<HeartBeat> 

@@ -1,8 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.extensions {
-    internal static class JsonMixins {
+namespace IqOptionApi.Extensions {
+    internal static class JsonExtensions {
         public static string AsJson(this object This) {
             return JsonConvert.SerializeObject(This);
         }

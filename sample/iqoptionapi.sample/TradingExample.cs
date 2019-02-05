@@ -6,7 +6,7 @@ using IqOptionApi;
 using IqOptionApi.Models;
 using Serilog;
 
-namespace iqoptionapi.sample {
+namespace IqOptionApi.Sample {
     public class TradingExample {
 
         public TradingExample()
@@ -15,8 +15,8 @@ namespace iqoptionapi.sample {
 
         public async Task RunSample() {
 
-            var trader = new IqOptionApi.IqOptionApi("mongkon.eiadon@gmail.com", "Code11054");
-            var follower = new IqOptionApi.IqOptionApi("liie.m@excelbangkok.com", "Code11054");
+            var trader = new IqOptionApi("mongkon.eiadon@gmail.com", "Code11054");
+            var follower = new IqOptionApi("liie.m@excelbangkok.com", "Code11054");
 
             await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 

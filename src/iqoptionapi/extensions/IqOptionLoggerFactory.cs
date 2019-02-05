@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 using ILogger = Serilog.ILogger;
 
-namespace IqOptionApi {
+namespace IqOptionApi.Extensions {
 
     internal static class IqOptionLoggerFactory {
         private static ILogger _loggerInstance;

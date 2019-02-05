@@ -4,9 +4,9 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using iqoptionapi.ws.@base;
-using iqoptionapi.ws.result;
-using IqOptionApi.extensions;
+using IqOptionApi.ws.@base;
+using IqOptionApi.ws.result;
+using IqOptionApi.Extensions;
 using IqOptionApi.Models;
 using IqOptionApi.ws.request;
 using Serilog;
@@ -199,8 +199,7 @@ namespace IqOptionApi.ws {
             return Task.FromResult(true);
 
 #else
-            return null;
-            //return Client.OpenAsync();
+            return null; // Client.OpenAsync();
 #endif
         }
 

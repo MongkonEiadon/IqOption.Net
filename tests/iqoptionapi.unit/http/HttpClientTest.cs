@@ -5,7 +5,7 @@ using IqOptionApi.http;
 using NUnit.Framework;
 using RestSharp;
 
-namespace IqOptionApi.unit.http
+namespace IqOptionApi.Unit.http
 {
    
     public class HttpClientTest {

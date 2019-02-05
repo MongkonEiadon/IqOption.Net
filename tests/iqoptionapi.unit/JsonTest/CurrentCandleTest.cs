@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace IqOptionApi.unit.JsonTest {
+namespace IqOptionApi.Unit.JsonTest {
 
     [TestFixture]
     public class CurrentCandleTest : LoadJsonFileTest<CurrentCandleInfoResultMessage>

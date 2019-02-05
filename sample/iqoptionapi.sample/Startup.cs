@@ -6,7 +6,7 @@ using IqOptionApi;
 using IqOptionApi.Models;
 using Serilog;
 
-namespace iqoptionapi.sample {
+namespace IqOptionApi.Sample {
     public class Startup {
         private readonly IqOptionConfiguration _config;
         private readonly ILogger _logger;
@@ -21,7 +21,7 @@ namespace iqoptionapi.sample {
 
         public async Task RunSample() {
 
-            var api = new IqOptionApi.IqOptionApi(_config.Email, _config.Password);
+            var api = new IqOptionApi(_config.Email, _config.Password);
             _logger.Information($"Connecting to {_config.Host} for {_config.Email}");
 
 

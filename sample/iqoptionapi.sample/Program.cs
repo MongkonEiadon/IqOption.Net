@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace iqoptionapi.sample
+namespace IqOptionApi.Sample
 {
     class Program
     {

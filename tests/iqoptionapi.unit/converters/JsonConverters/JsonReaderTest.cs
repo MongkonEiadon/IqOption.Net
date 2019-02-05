@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.unit.converters.JsonConverters {
+namespace IqOptionApi.Unit.converters.JsonConverters {
     internal class JsonReaderTest<T> : JsonReader {
 
         private Func<T> _func;
