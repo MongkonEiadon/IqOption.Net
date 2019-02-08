@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using IqOptionApi.Extensions;
 using IqOptionApi.Models;
+using Microsoft.Reactive.Testing;
 using Websocket.Client;
 
 namespace IqOptionApi.Tests.ws {
@@ -16,12 +17,9 @@ namespace IqOptionApi.Tests.ws {
 
         public MockWsClient() {
 
-            var fixture = new Fixture();
+            var scheduler = new TestScheduler();
+            scheduler.Schedule(TimeSpan.FromTicks(20), () => Start());
 
-            var obs = Observable.Interval(TimeSpan.FromMilliseconds(200), new EventLoopScheduler())
-                .Subscribe(x => {
-                    _subject.OnNext(fixture.Create<ServerTime>().AsJson());
-                });
         }
 
 

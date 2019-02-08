@@ -8,7 +8,7 @@ using Websocket.Client;
 namespace IqOptionApi.Tests.ws
 {
     [TestFixture]
-    public class WsClientTest : TestAutoFixtureFor<WsClient>
+    public class WsClientTest : TestAutoFixtureFor<IqWsClient>
     {
         [Test]
         public void WsClient_InitialInstant_ShouldNotBeNull() {
@@ -22,7 +22,7 @@ namespace IqOptionApi.Tests.ws
     }
 
     [TestFixture]
-    public class WsClientTestWithMockWebSocket : TestAutoFixtureFor<WsClient> {
+    public class WsClientTestWithMockWebSocket : TestAutoFixtureFor<IqWsClient> {
 
         [SetUp]
         public void SetUp() {

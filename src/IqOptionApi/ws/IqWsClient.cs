@@ -12,7 +12,11 @@ using Websocket.Client;
 [assembly:InternalsVisibleTo("IqOptionApi.Unit", AllInternalsVisible = true)]
 namespace IqOptionApi.ws
 {
-    public class WsClient : IClient<IWebsocketClient>, IDisposable
+    public interface IIqWsClient {
+
+    }
+
+    public class IqWsClient : IClient<IWebsocketClient>, IIqWsClient, IDisposable
     {
         public IWebsocketClient Client { get; }
 
@@ -30,7 +34,7 @@ namespace IqOptionApi.ws
 
         #endregion
 
-        public WsClient(IWebsocketClient customizeClient = null)
+        public IqWsClient(IWebsocketClient customizeClient = null)
         {
             Client = customizeClient ?? new WebsocketClient(new Uri("$wss://iqoption.com/echo/websocket"));
 
@@ -48,7 +52,6 @@ namespace IqOptionApi.ws
                         case EnumMessageType.Heartbeat:
                             _heartBeat.OnNext(x.JsonAs<HeartBeat>());
                             break;
-
                     }
 
                 });

@@ -41,14 +41,15 @@ namespace IqOptionApi {
         public bool IsConnected { get; private set; }
 
         //clients
-        public IqOptionHttpClient HttpClient { get; }
-        public IqOptionWebSocketClient WsClient { get; private set; }
+        public IqHttpClient HttpClient { get; }
+        public IqOptionWebSocketClient WebSocketClient { get; private set; }
+        public IIqWsClient IqWsClient { get; }
 
         //obs
-        public IObservable<InfoData[]> InfoDatasObservable => WsClient?.InfoDataObservable;
+        public IObservable<InfoData[]> InfoDatasObservable => WebSocketClient?.InfoDataObservable;
         public IObservable<Profile> ProfileObservable => _profileSubject.Publish().RefCount();
         public IObservable<bool> IsConnectedObservable => connectedSubject.Publish().RefCount();
-        public IObservable<BuyResult> BuyResultObservable => WsClient?.BuyResultObservable;
+        public IObservable<BuyResult> BuyResultObservable => WebSocketClient?.BuyResultObservable;
 
         #endregion
                
@@ -65,7 +66,7 @@ namespace IqOptionApi {
                            
                             _logger.Information($"{Username} logged in success!");
 
-                            WsClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
+                            WebSocketClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
 
                             SubscribeWebSocket();
 
@@ -105,19 +106,19 @@ namespace IqOptionApi {
         public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
             DateTimeOffset expiration = default(DateTimeOffset)) {
             
-            return WsClient?.BuyAsync(pair, size, direction, expiration);
+            return WebSocketClient?.BuyAsync(pair, size, direction, expiration);
         }
 
 
         public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to) {
-            return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
+            return WebSocketClient?.GetCandlesAsync(pair, timeFrame, count, to);
         }
 
         public Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf) {
 
-            WsClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
+            WebSocketClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
 
-            var stream = WsClient?
+            var stream = WebSocketClient?
                 .RealTimeCandleInfoObservable
                 .Where(x => x.ActivePair == pair && x.TimeFrame == tf);
             
@@ -126,12 +127,12 @@ namespace IqOptionApi {
         }
 
         public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf) {
-            return WsClient?.UnsubscribeCandlesAsync(pair, tf);
+            return WebSocketClient?.UnsubscribeCandlesAsync(pair, tf);
         }
 
         public void Dispose() {
             connectedSubject?.Dispose();
-            WsClient?.Dispose();
+            WebSocketClient?.Dispose();
         }
 
 
@@ -143,14 +144,14 @@ namespace IqOptionApi {
         private void SubscribeWebSocket() {
 
             //subscribe profile
-            WsClient.ProfileObservable
+            WebSocketClient.ProfileObservable
                 .Merge(HttpClient.ProfileObservable())
                 .DistinctUntilChanged()
                 .Where(x => x!=null)
                 .Subscribe(x => Profile = x);
 
             //subscribe for instrument updated
-            WsClient.InstrumentResultSetObservable
+            WebSocketClient.InstrumentResultSetObservable
                 .Subscribe(x => Instruments = x);
 
 
@@ -158,17 +159,26 @@ namespace IqOptionApi {
 
         #region [Ctor]
 
+        /// <summary>
+        /// This is for unit testable
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="iqWsClient"></param>
+        internal IqOptionApi(IqHttpClient httpClient, IIqWsClient iqWsClient) {
+            HttpClient = httpClient;
+            IqWsClient = iqWsClient;
+        }
+
         public IqOptionApi(string username, string password, string host = "iqoption.com")
         {
             Username = username;
             Password = password;
 
             //set up client
-            HttpClient = new IqOptionHttpClient(username, password);
-            WsClient = new IqOptionWebSocketClient("");
+            HttpClient = new IqHttpClient(username, password);
+            //WebSocketClient = new IqOptionWebSocketClient("");
+            IqWsClient = new IqWsClient();
         }
-
-      
 
         #endregion
     }

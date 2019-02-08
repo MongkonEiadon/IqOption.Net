@@ -6,8 +6,12 @@ using IqOptionApi.ws;
 
 namespace IqOptionApi {
     public interface IIqOptionApi : IDisposable {
-        IqOptionWebSocketClient WsClient { get; }
-        IqOptionHttpClient HttpClient { get; }
+        [Obsolete]
+        IqOptionWebSocketClient WebSocketClient { get; }
+        
+        IIqWsClient IqWsClient { get; }
+
+        IqHttpClient HttpClient { get; }
         IObservable<Profile> ProfileObservable { get; }
         IObservable<InfoData[]> InfoDatasObservable { get; }
         Profile Profile { get; }

@@ -13,18 +13,44 @@ using RestSharp;
 using Serilog;
 
 namespace IqOptionApi.http {
-    public class IqOptionHttpClient  {
+    public interface IIqHttpClient {
 
-        private readonly ILogger _logger;
+        LoginModel LoginModel { get; }
+
+        Task<IqHttpResult<SsidResultMessage>> LoginAsync();
+
+        
+    }
+
+    public class IqHttpClient : IIqHttpClient {
+        public LoginModel LoginModel { get; private set; }
+
+        internal IRestClient HttpClient { get; set; }
+        internal IRestClient AuthHttpClient { get; set; }
 
 
-        public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
-            Client = new RestClient(ApiEndPoint(host));
-            LoginModel = new LoginModel {Email = username, Password = password};
-            _logger = IqOptionLoggerFactory.CreateLogger();
+
+        public IqHttpClient(string username, string password) {
+
+            LoginModel = new LoginModel() {Email = username, Password = password};
+
+
+            HttpClient = new RestClient("https://iqoption.com/api");
+            AuthHttpClient = new RestClient("https://auth.iqoption.com/api/v1.0/login");
         }
 
-        public LoginModel LoginModel { get; }
+
+        //public IqHttpClient(string username, string password, string host = "iqoption.com") {
+
+        //    // set the httpClient
+        //    //HttpHttpClient = new RestClient(ApiEndPoint(host));
+
+
+        //    //Client = new RestClient(ApiEndPoint(host));
+        //    //LoginModel = new LoginModel {Email = username, Password = password};
+        //    //_logger = IqOptionLoggerFactory.CreateLogger();
+        //}
+        
 
 
         public SsidResultMessage SecuredToken { get; private set; }
@@ -59,7 +85,8 @@ namespace IqOptionApi.http {
             var tcs = new TaskCompletionSource<IqHttpResult<SsidResultMessage>>();
             try
             {
-                var client = new RestClient("https://auth.iqoption.com/api/v1.0/login");
+                //var client = new RestClient("https://auth.iqoption.com/api/v1.0/login");
+                
                 var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json }
                     .AddHeader("Content-Type", "application/x-www-form-urlencoded")
                     .AddHeader("content-type", "multipart/form-data")
@@ -67,7 +94,7 @@ namespace IqOptionApi.http {
                     .AddParameter("email", this.LoginModel.Email, ParameterType.QueryString)
                     .AddParameter("password", this.LoginModel.Password, ParameterType.QueryString);
 
-                client.ExecuteTaskAsync(request)
+                AuthHttpClient.ExecuteTaskAsync(request)
                     .ContinueWith(t => {
                         switch (t.Result.StatusCode)
                         {
