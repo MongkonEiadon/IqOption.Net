@@ -8,12 +8,18 @@
 
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="Json\**\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Json\CFD\cfd-long-closed.json" />
+    <None Remove="Json\CFD\cfd-long-open.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +30,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Linq" Version="4.1.2" />
-    <PackageReference Include="TestAutoFixture" Version="1.0.3" />
+    <PackageReference Include="TestAutoFixture" Version="1.0.4" />
     <PackageReference Include="Websocket.Client" Version="2.0.10" />
   </ItemGroup>
 

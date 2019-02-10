@@ -1,7 +1,9 @@
 ﻿using IqOptionApi.Converters.JsonConverters;
+using IqOptionApi.models.Instruments;
+using IqOptionApi.Models;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.Models {
+namespace IqOptionApi.models.instruments {
     public partial class InstrumentsResult {
         [JsonProperty("user_group_id")]
         public int UserGroupId { get; set; }

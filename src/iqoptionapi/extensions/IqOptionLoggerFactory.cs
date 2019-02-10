@@ -1,28 +1,26 @@
 ﻿using System.IO;
-using Serilog;
-using Serilog.Events;
+using IqOptionApi.Logging;
+
 #if NETCOREAPP
 using Microsoft.Extensions.Configuration;
 #endif
 
-using ILogger = Serilog.ILogger;
 
 namespace IqOptionApi.Extensions {
 
     internal static class IqOptionLoggerFactory {
-        private static ILogger _loggerInstance;
+        private static ILog _loggerInstance;
 
-        public static void SetLogger(ILogger logger) {
+        public static void SetLogger(ILog logger) {
             _loggerInstance = logger;
         }
 
-        public static ILogger CreateLogger() {
+        public static ILog CreateLogger() {
 
 
             if (_loggerInstance == null) {
 
-                _loggerInstance = new LoggerConfiguration()
-                    .CreateLogger();
+                _loggerInstance = LogProvider.GetCurrentClassLogger();
             }
 
             return _loggerInstance;

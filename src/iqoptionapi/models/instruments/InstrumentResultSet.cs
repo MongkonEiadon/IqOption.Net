@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IqOptionApi.models.Instruments;
+using IqOptionApi.Models;
 
-namespace IqOptionApi.Models {
+namespace IqOptionApi.models.instruments {
     public partial class InstrumentResultSet : Dictionary<InstrumentType, Instrument[]> {
         public InstrumentResultSet() : base() {
             this[InstrumentType.CFD] = new Instrument[] { };

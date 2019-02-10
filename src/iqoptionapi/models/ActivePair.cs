@@ -1,4 +1,6 @@
-﻿namespace IqOptionApi.Models {
+﻿using System.Runtime.Serialization;
+
+namespace IqOptionApi.Models {
     public enum ActivePair : int {
         EURUSD = 1,
         EURGBP = 2,
@@ -58,17 +60,18 @@
         BTCX = 73,
         XAUUSD = 74,
         XAGUSD = 75,
-        EURUSD_OTC = 76,
-        EURGBP_OTC = 77,
-        USDCHF_OTC = 78,
-        EURJPY_OTC = 79,
-        NZDUSD_OTC = 80,
-        GBPUSD_OTC = 81,
-        EURRUB_OTC = 82,
-        USDRUB_OTC = 83,
-        GBPJPY_OTC = 84,
-        USDJPY_OTC = 85,
-        AUDCAD_OTC = 86,
+
+        [EnumMember(Value = "EURUSD-OTC")] EURUSD_OTC = 76,
+        [EnumMember(Value = "EURGBP-OTC")] EURGBP_OTC = 77,
+        [EnumMember(Value = "USDCHF-OTC")] USDCHF_OTC = 78,
+        [EnumMember(Value = "EURJPY-OTC")] EURJPY_OTC = 79,
+        [EnumMember(Value = "NZDUSD-OTC")] NZDUSD_OTC = 80,
+        [EnumMember(Value = "GBPUSD-OTC")] GBPUSD_OTC = 81,
+        [EnumMember(Value = "EURRUB-OTC")] EURRUB_OTC = 82,
+        [EnumMember(Value = "USDRUB-OTC")] USDRUB_OTC = 83,
+        [EnumMember(Value = "GBPJPY-OTC")] GBPJPY_OTC = 84,
+        [EnumMember(Value = "USDJPY-OTC")] USDJPY_OTC = 85,
+        [EnumMember(Value = "AUDCAD-OTC")] AUDCAD_OTC = 86,
         ALIBABA = 87,
 
         YANDEX = 95,

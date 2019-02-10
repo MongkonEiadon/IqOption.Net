@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using IqOptionApi.Extensions;
-using IqOptionApi.ws.request;
 using IqOptionApi.http;
+using IqOptionApi.Logging;
+using IqOptionApi.models.instruments;
+using IqOptionApi.models.Instruments;
 using IqOptionApi.Models;
 using IqOptionApi.ws;
-using Serilog;
 
 namespace IqOptionApi {
     public class IqOptionApi : IIqOptionApi {
 
         #region [Privates]
 
-        private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
+        private readonly ILog _logger = LogProvider.GetCurrentClassLogger();
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 
         private readonly Subject<bool> connectedSubject = new Subject<bool>();
@@ -41,7 +39,7 @@ namespace IqOptionApi {
         public bool IsConnected { get; private set; }
 
         //clients
-        public IqHttpClient HttpClient { get; }
+        public IqHttpClient IqHttpClient { get; }
         public IqOptionWebSocketClient WebSocketClient { get; private set; }
         public IIqWsClient IqWsClient { get; }
 
@@ -59,16 +57,18 @@ namespace IqOptionApi {
 
             var tcs = new TaskCompletionSource<bool>();
             try {
-                this.HttpClient
+                this.IqHttpClient
                     .LoginAsync()
                     .ContinueWith(t => {
                         if (t.Result != null && t.Result.IsSuccessful) {
                            
-                            _logger.Information($"{Username} logged in success!");
+                            _logger.Info($"{Username} logged in success!");
 
-                            WebSocketClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
+                            //WebSocketClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
 
-                            SubscribeWebSocket();
+                            //SubscribeWebSocket();
+
+                            IqWsClient.OpenSecuredConnectionAsync(t.Result.Data.Ssid);
 
                             IsConnected = true;
                             connectedSubject.OnNext(true);
@@ -76,7 +76,7 @@ namespace IqOptionApi {
                             return;
                         }
 
-                        _logger.Information($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
+                        _logger.Info($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
                         tcs.TrySetResult(false);
                     });
             }
@@ -88,12 +88,12 @@ namespace IqOptionApi {
         }
 
         public async Task<Profile> GetProfileAsync() {
-            var result = await HttpClient.GetProfileAsync();
-            return result.Result;
+            var result = await IqHttpClient.GetProfileAsync();
+            return result;
         }
 
         public async Task<bool> ChangeBalanceAsync(long balanceId) {
-            var result = await HttpClient.ChangeBalanceAsync(balanceId);
+            var result = await IqHttpClient.ChangeBalanceAsync(balanceId);
 
             if (result?.Message == null && !result.IsSuccessful) {
                 _logger.Error($"Change balance ({balanceId}) error : {result.Message}");
@@ -145,7 +145,7 @@ namespace IqOptionApi {
 
             //subscribe profile
             WebSocketClient.ProfileObservable
-                .Merge(HttpClient.ProfileObservable())
+                .Merge(IqHttpClient.ProfileUpdated)
                 .DistinctUntilChanged()
                 .Where(x => x!=null)
                 .Subscribe(x => Profile = x);
@@ -159,34 +159,17 @@ namespace IqOptionApi {
 
         #region [Ctor]
 
-        /// <summary>
-        /// This is for unit testable
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="iqWsClient"></param>
-        internal IqOptionApi(IqHttpClient httpClient, IIqWsClient iqWsClient) {
-            HttpClient = httpClient;
-            IqWsClient = iqWsClient;
-        }
-
         public IqOptionApi(string username, string password, string host = "iqoption.com")
         {
             Username = username;
             Password = password;
 
             //set up client
-            HttpClient = new IqHttpClient(username, password);
-            //WebSocketClient = new IqOptionWebSocketClient("");
+            IqHttpClient = new IqHttpClient(username, password);
             IqWsClient = new IqWsClient();
         }
 
         #endregion
-    }
-
-    public enum OrderDirection {
-        [EnumMember(Value = "put")] Put = 1,
-
-        [EnumMember(Value = "call")] Call = 2
     }
 
 

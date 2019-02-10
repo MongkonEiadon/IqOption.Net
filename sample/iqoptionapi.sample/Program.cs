@@ -3,10 +3,10 @@ using System.IO;
 using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
 using IqOptionApi;
+using IqOptionApi.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace IqOptionApi.Sample
 {
@@ -21,8 +21,10 @@ namespace IqOptionApi.Sample
             {
 
                 Console.WriteLine("IqOption.NET Sample");
+                LogProvider.SetCurrentLogProvider(new ColoredConsoleLogProvider());
 
-                var app = provider.GetService<TradingExample>().RunSample();
+                var app = provider.GetService<IqClientExample>();
+                app.RunAsync().ConfigureAwait(false);
 
 
             }
@@ -45,13 +47,7 @@ namespace IqOptionApi.Sample
                 .AddJsonFile($"appsettings.json", optional: true)
                 .Build();
 
-            var logging = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
-
-
             services
-                .AddSingleton<Serilog.ILogger>(logging)
                 .AddSingleton(configuration)
                 .AddSingleton(new IqOptionConfiguration()
                 {
@@ -59,6 +55,7 @@ namespace IqOptionApi.Sample
                     Password = configuration["iqoption:password"]
                 })
                 .AddSingleton<TradingExample>()
+                .AddSingleton<IqClientExample>()
                 .AddSingleton<Startup>();
 
             return services.BuildServiceProvider();

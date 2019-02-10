@@ -8,13 +8,12 @@ using Websocket.Client;
 namespace IqOptionApi.Tests.ws
 {
     [TestFixture]
-    public class WsClientTest : TestAutoFixtureFor<IqWsClient>
-    {
+    public class WsClientTest : TestAutoFixtureFor<IqWsClient> {
         [Test]
         public void WsClient_InitialInstant_ShouldNotBeNull() {
 
             // arrange
-            var instant = CreateSut();
+            var instant = CreateCut();
 
             // assert
             instant.Should().NotBeNull();
@@ -22,17 +21,8 @@ namespace IqOptionApi.Tests.ws
     }
 
     [TestFixture]
-    public class WsClientTestWithMockWebSocket : TestAutoFixtureFor<IqWsClient> {
+    [Category("Integrations")]
+    public class WsClientIntegrationTest : TestAutoFixtureFor<IqWsClient> {
 
-        [SetUp]
-        public void SetUp() {
-
-            Fixture.Customize<IWebsocketClient>(cfg => cfg.FromSeed((x) => new MockWsClient()));
-        }
-
-        [Test]
-        public void TestCreateMock() {
-
-        }
     }
 }

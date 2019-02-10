@@ -1,4 +1,5 @@
 ﻿using System;
+using IqOptionApi.models.instruments;
 using IqOptionApi.Models;
 using Newtonsoft.Json;
 

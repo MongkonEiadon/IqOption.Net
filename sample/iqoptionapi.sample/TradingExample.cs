@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using IqOptionApi;
 using IqOptionApi.Models;
-using Serilog;
 
 namespace IqOptionApi.Sample {
     public class TradingExample {

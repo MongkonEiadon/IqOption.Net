@@ -39,7 +39,10 @@ namespace IqOptionApi.ws.@base {
                     case "timesync": return EnumMessageType.ServerTime;
                     case "profile": return EnumMessageType.Profile;
                     case "heartbeat": return EnumMessageType.Heartbeat;
-                    
+                    case "position-changed": return EnumMessageType.PositionChanged;
+                    case "order-changed": return EnumMessageType.OrderChanged;
+
+
 
                     default: return EnumMessageType.Unknown;
                 }
@@ -62,6 +65,8 @@ namespace IqOptionApi.ws.@base {
         BuyComplete,
         Candles,
         CandleGenerated,
+        PositionChanged,
+        OrderChanged,
 
         Unknown
     }

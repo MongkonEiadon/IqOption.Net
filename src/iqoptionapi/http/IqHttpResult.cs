@@ -22,6 +22,10 @@ namespace IqOptionApi.http {
 
         [JsonProperty("errors")]
         public Errors Errors { get; set; }
+
+        public T GetContent() {
+            return Data ?? Result;
+        }
     }
 
     public class Errors : List<ErrorResult> {

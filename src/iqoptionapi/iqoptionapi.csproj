@@ -20,6 +20,7 @@
     <AssemblyVersion>1.2.0.0</AssemblyVersion>
     <FileVersion>1.2.0.0</FileVersion>
     <Version>1.2.0</Version>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
@@ -29,13 +30,16 @@
 
   <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.8.0" />
+    <PackageReference Include="LibLog" Version="5.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="restsharp" Version="106.6.7" />
-    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
-    <PackageReference Include="Websocket.Client" Version="1.0.6" />
+    <PackageReference Include="Websocket.Client" Version="2.0.10" />
     <PackageReference Include="WebSocket4Net" Version="0.15.2" />
   </ItemGroup>
   
