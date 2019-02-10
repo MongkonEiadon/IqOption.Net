@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace IqOptionApi {
+namespace IqOptionApi.Models {
     public enum OrderDirection {
         [EnumMember(Value = "put")] Put = 1,
 

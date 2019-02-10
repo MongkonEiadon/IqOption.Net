@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using IqOptionApi.Extensions;
-using IqOptionApi.ws.request;
+using IqOptionApi.ws.Request;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.ws.@base {

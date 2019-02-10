@@ -3,7 +3,7 @@ using IqOptionApi.models.instruments;
 using IqOptionApi.Models;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.ws.request {
+namespace IqOptionApi.ws.Request {
     internal class GetInstrumentsRequest {
         [JsonProperty("name")]
         public string Name => "get-instruments";

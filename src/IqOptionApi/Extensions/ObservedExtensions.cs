@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 [assembly:InternalsVisibleTo(assemblyName: "IqOptionApi.Unit", AllInternalsVisible = true)]
 namespace IqOptionApi.Extensions {
 
-    internal static class ObservableExtensions
+    public static class ObservableExtensions
     {
         public static IObservable<R> ToObservable<T, R>(this T target, string name, Func<T, R> func)
             where T : INotifyPropertyChanged {

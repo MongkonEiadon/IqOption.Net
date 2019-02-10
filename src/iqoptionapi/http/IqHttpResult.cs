@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using IqOptionApi.Annotations;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.http {
@@ -23,8 +24,9 @@ namespace IqOptionApi.http {
         [JsonProperty("errors")]
         public Errors Errors { get; set; }
 
-        public T GetContent() {
-            return Data ?? Result;
+        [CanBeNull]
+        public T  GetContent() {
+            return (Data ?? Result) ?? default(T);
         }
     }
 

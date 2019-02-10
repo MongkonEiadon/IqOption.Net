@@ -10,7 +10,7 @@ using IqOptionApi.Extensions;
 using IqOptionApi.Logging;
 using IqOptionApi.models.instruments;
 using IqOptionApi.Models;
-using IqOptionApi.ws.request;
+using IqOptionApi.ws.Request;
 using Websocket.Client;
 using WebSocket4Net;
 
@@ -163,7 +163,7 @@ namespace IqOptionApi.ws {
 
                 SecureToken = ssid;
                 var count = 0;
-                var sub = ProfileObservable.Select(x => "ProfileUpdated")
+                var sub = ProfileObservable.Select(x => "Profile")
                     .Merge(HeartbeatObservable.Select(x => "Heartbeat"))
                     .Subscribe(x => {
                         if (count >= 2) {
@@ -171,7 +171,7 @@ namespace IqOptionApi.ws {
                             tcs.TrySetResult(false);
                         }
 
-                        if (x == "ProfileUpdated") tcs.TrySetResult(true);
+                        if (x == "Profile") tcs.TrySetResult(true);
 
                         count++;
                     });
@@ -219,7 +219,7 @@ namespace IqOptionApi.ws {
 
         #endregion
 
-        #region [ProfileUpdated]
+        #region [Profile]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 

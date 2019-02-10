@@ -27,6 +27,11 @@
     <DefineConstants>netcore2.0</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="IIqOptionApi.cs" />
+    <Compile Remove="IqOptionApi.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.8.0" />

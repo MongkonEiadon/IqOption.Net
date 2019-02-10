@@ -14,14 +14,14 @@ namespace IqOptionApi.Sample {
 
         public async Task RunSample() {
 
-            var trader = new IqOptionApi("mongkon.eiadon@gmail.com", "Code11054");
-            var follower = new IqOptionApi("liie.m@excelbangkok.com", "Code11054");
+            //var trader = new IqOptionApi("mongkon.eiadon@gmail.com", "Code11054");
+            //var follower = new IqOptionApi("liie.m@excelbangkok.com", "Code11054");
 
-            await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
+            //await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
-            trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
-                follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
-            });
+            //trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
+            //    follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
+            //});
 
         }
     }

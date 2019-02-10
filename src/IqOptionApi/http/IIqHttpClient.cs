@@ -1,40 +1,38 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
 
 namespace IqOptionApi.http {
-
     /// <summary>
-    /// The IqOption Http Client Wrapper
+    ///     The IqOption Http Client Wrapper
     /// </summary>
-    public interface IIqHttpClient : IDisposable {
-
+    public interface IIqHttpClient : IDisposable, INotifyPropertyChanged {
         /// <summary>
-        /// The token for using secured channel
+        ///     The token for using secured channel
         /// </summary>
         string SecuredToken { get; }
 
         /// <summary>
-        /// Login Model
+        ///     Login Model
         /// </summary>
         LoginModel LoginModel { get; }
 
         /// <summary>
-        /// Login to the server
+        ///     Profile Information
+        /// </summary>
+        Profile Profile { get; }
+
+        /// <summary>
+        ///     Login to the server
         /// </summary>
         /// <returns></returns>
         Task<IqHttpResult<SsidResultMessage>> LoginAsync();
 
         /// <summary>
-        /// Retrieved profile
+        ///     Retrieved profile
         /// </summary>
         /// <returns></returns>
         Task<Profile> GetProfileAsync();
-
-        /// <summary>
-        /// Stream for profile updated event
-        /// </summary>
-        /// <returns></returns>
-        IObservable<Profile> ProfileUpdated { get; }
     }
 }

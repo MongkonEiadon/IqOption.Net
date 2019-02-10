@@ -10,6 +10,7 @@ namespace IqOptionApi.models.CFD {
     /// Suported for CFD; (Contract-For-Differences) Options, This is kind of Futeres Products
     /// </summary>
     public class DigitalInfoData {
+
         [JsonProperty("id")]
         public int Id { get; set; }
         

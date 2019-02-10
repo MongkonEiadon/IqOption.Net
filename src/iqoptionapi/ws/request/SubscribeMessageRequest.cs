@@ -2,7 +2,7 @@
 using IqOptionApi.Models;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.ws.request {
+namespace IqOptionApi.ws.Request {
     internal class SubscribeMessageRequest : WsMessageBase<SubscribeRequestBody> {
 
         public override string Name => "subscribeMessage";

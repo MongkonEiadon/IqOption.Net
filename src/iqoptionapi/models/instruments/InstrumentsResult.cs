@@ -1,4 +1,5 @@
-﻿using IqOptionApi.Converters.JsonConverters;
+﻿using System;
+using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.models.Instruments;
 using IqOptionApi.Models;
 using Newtonsoft.Json;

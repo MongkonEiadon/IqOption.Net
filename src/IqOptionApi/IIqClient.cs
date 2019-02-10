@@ -1,64 +1,45 @@
 ﻿using System;
-using System.Net.Http.Headers;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using IqOptionApi.http;
-using IqOptionApi.Logging;
 using IqOptionApi.Models;
 using IqOptionApi.ws;
 
 namespace IqOptionApi {
-    public interface IIqClient : IDisposable {
-
+    public interface IIqOptionClient : IDisposable {
         IIqHttpClient HttpClient { get; }
         IIqWsClient WsClient { get; }
-
         Task<bool> ConnectAsync();
-    }
-
-    public class IqClient : IIqClient {
-
-        private readonly ILog _logger = LogProvider.GetLogger("[ API ]");
-
-        public IIqHttpClient HttpClient { get; }
-        public IIqWsClient WsClient { get; }
-
-        public IObservable<Profile> ProfileUpdated => 
-            HttpClient.ProfileUpdated
-                .Merge(WsClient.ProfileUpdated);
-
-        public IqClient(string email, string password) {
-
-            HttpClient = new IqHttpClient(email, password);
-            WsClient = new IqWsClient();
-        }
 
 
-        public async Task<bool> ConnectAsync() {
+        /*
+        #--------------------------------------------------------------------------------
+        #--------------------------subscribe&unsubscribe---------------------------------
+        #--------------------------------------------------------------------------------
+         */
 
-            _logger.Info(L("Tried to connect to server."));
-            var result = await HttpClient.LoginAsync();
+        #region [Subscribe&Unsubscribe]
 
-            if (result.IsSuccessful) {
+        /// <summary>
+        ///     The candles information after using <see cref="SubscribeCandlesAsync"/> onto specific <see cref="ActivePair"/>
+        /// </summary>
+        IObservable<CurrentCandle> CandleInfo { get; }
 
-                await WsClient.OpenSecuredConnectionAsync(result.Data.Ssid);
+        /// <summary>
+        ///     Subscribe candles information
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <param name="timeFrame"></param>
+        /// <returns></returns>
+        Task SubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame);
 
-                return true;
-            }
+        /// <summary>
+        ///     Unsubscribe candles information
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <param name="timeFrame"></param>
+        /// <returns></returns>
+        Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame);
 
-            return false;
-        }
-
-        private string L(string msg) {
-
-            return $"[API]  : {msg}";
-        }
-
-
-        public void Dispose() {
-            HttpClient?.Dispose();
-            WsClient?.Dispose();
-        }
-
+        #endregion
     }
 }

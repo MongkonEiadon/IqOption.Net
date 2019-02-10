@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
 using IqOptionApi.ws;
-using IqOptionApi.ws.request;
+using IqOptionApi.ws.Request;
 using NUnit.Framework;
 
 namespace IqOptionApi.Tests.ws

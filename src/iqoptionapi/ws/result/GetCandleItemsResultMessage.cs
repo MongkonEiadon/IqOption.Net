@@ -1,6 +1,6 @@
 ﻿using IqOptionApi.ws.@base;
 using IqOptionApi.Models;
-using IqOptionApi.ws.request;
+using IqOptionApi.ws.Request;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.ws {

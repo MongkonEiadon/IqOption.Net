@@ -1,17 +1,30 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using IqOptionApi.Annotations;
 using IqOptionApi.Extensions;
 using IqOptionApi.http.commands;
 using IqOptionApi.Logging;
 using IqOptionApi.Models;
+using IqOptionApi.ws;
 using RestSharp;
 
 namespace IqOptionApi.http {
     public class IqHttpClient : IIqHttpClient {
-        public string SecuredToken { get; private set; }
+
+        private string _securedToken;
+        public string SecuredToken {
+            get => _securedToken;
+            private set {
+                _securedToken = value;
+                OnPropertyChanged(nameof(SecuredToken));
+            }
+        }
+
         public LoginModel LoginModel { get; }
 
         internal IRestClient HttpClient { get; set; }
@@ -21,12 +34,21 @@ namespace IqOptionApi.http {
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 
 
+        private Profile _profile;
+        public Profile Profile {
+            get => _profile;
+            set {
+                _profile = value;
+                OnPropertyChanged(nameof(Profile));
+            }
+        }
+
 
         /// <summary>
         /// Stream for profile updated event
         /// </summary>
         /// <returns></returns>
-        public IObservable<Profile> ProfileUpdated => _profileSubject.AsQbservable();
+        public IObservable<Profile> ProfileUpdated => this.ToObservable(x => x.Profile);
         
 
         public IqHttpClient(string username, string password) {
@@ -82,7 +104,7 @@ namespace IqOptionApi.http {
                 var data = result.Content.JsonAs<IqHttpResult<Profile>>().GetContent();
 
                 // log
-                _logger.Trace(L($"Client ProfileUpdated Updated UserId :{data.UserId}"));
+                _logger.Trace(L($"Client Profile Updated UserId :{data.UserId}"));
 
                 // published
                 _profileSubject.OnNext(data);
@@ -120,6 +142,14 @@ namespace IqOptionApi.http {
 
         public void Dispose() {
             _profileSubject?.Dispose();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         }
     }
 }

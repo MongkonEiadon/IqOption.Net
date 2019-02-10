@@ -1,7 +1,7 @@
 ﻿using System;
 using IqOptionApi.ws.@base;
 using IqOptionApi.Converters.JsonConverters;
-using IqOptionApi.ws.request;
+using IqOptionApi.ws.Request;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
