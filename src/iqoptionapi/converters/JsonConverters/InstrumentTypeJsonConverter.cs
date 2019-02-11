@@ -1,6 +1,5 @@
 ﻿using System;
 using IqOptionApi.models.instruments;
-using IqOptionApi.Models;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Converters.JsonConverters {
@@ -27,7 +26,7 @@ namespace IqOptionApi.Converters.JsonConverters {
 
         public override void WriteJson(JsonWriter writer, object value,
             JsonSerializer serializer) {
-            var _value = (InstrumentType) (value);
+            var _value = (InstrumentType) value;
 
             switch (value) {
                 case InstrumentType.Forex:

@@ -7,11 +7,10 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-[assembly:InternalsVisibleTo(assemblyName: "IqOptionApi.Unit", AllInternalsVisible = true)]
-namespace IqOptionApi.Extensions {
+[assembly: InternalsVisibleTo("IqOptionApi.Unit", AllInternalsVisible = true)]
 
-    public static class ObservableExtensions
-    {
+namespace IqOptionApi.Extensions {
+    public static class ObservableExtensions {
         public static IObservable<R> ToObservable<T, R>(this T target, string name, Func<T, R> func)
             where T : INotifyPropertyChanged {
             return Observable.Create<R>(o => {
@@ -47,31 +46,26 @@ namespace IqOptionApi.Extensions {
             });
         }
 
-        public static Task<TResult> WaitForNextObservedResultAsync<TResult>(this IObservable<TResult> This, Action action) {
-
+        public static Task<TResult> WaitForNextObservedResultAsync<TResult>(this IObservable<TResult> This,
+            Action action) {
             var tcs = new TaskCompletionSource<TResult>();
             try {
-
                 var obs = This
                     .Merge(AsyncStart().Select(x => default(TResult)))
                     .SubscribeOn(ThreadPoolScheduler.Instance)
                     .Subscribe(
-                        onNext: x => { tcs.TrySetResult(x); },
-                        onCompleted: () => { tcs.TrySetResult(default(TResult)); });
+                        x => { tcs.TrySetResult(x); },
+                        () => { tcs.TrySetResult(default); });
 
                 // invoke action
                 action();
 
                 // destroy obs
                 tcs.Task.ContinueWith(t => {
-                    if (t.IsCompleted) {
-                        obs.Dispose();
-                    }
+                    if (t.IsCompleted) obs.Dispose();
                 });
-
             }
             catch (Exception ex) {
-
                 tcs.TrySetException(ex);
             }
 
@@ -79,9 +73,7 @@ namespace IqOptionApi.Extensions {
         }
 
         public static IObservable<Unit> AsyncStart(TimeSpan? delay = null) {
-            if (delay == null) {
-                delay = TimeSpan.FromSeconds(3);
-            }
+            if (delay == null) delay = TimeSpan.FromSeconds(3);
 
             return Observable.Timer(delay.Value).Select(x => Unit.Default);
         }

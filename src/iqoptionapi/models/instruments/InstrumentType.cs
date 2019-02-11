@@ -4,8 +4,7 @@ namespace IqOptionApi.models.instruments {
     public enum InstrumentType {
         Forex,
 
-        [EnumMember(Value = "digital-option")]
-        CFD,
+        [EnumMember(Value = "digital-option")] CFD,
 
         Crypto,
 

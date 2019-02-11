@@ -1,5 +1,4 @@
-﻿using System.IO;
-using IqOptionApi.Logging;
+﻿using IqOptionApi.Logging;
 
 #if NETCOREAPP
 using Microsoft.Extensions.Configuration;
@@ -7,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 
 
 namespace IqOptionApi.Extensions {
-
     internal static class IqOptionLoggerFactory {
         private static ILog _loggerInstance;
 
@@ -16,12 +14,7 @@ namespace IqOptionApi.Extensions {
         }
 
         public static ILog CreateLogger() {
-
-
-            if (_loggerInstance == null) {
-
-                _loggerInstance = LogProvider.GetCurrentClassLogger();
-            }
+            if (_loggerInstance == null) _loggerInstance = LogProvider.GetCurrentClassLogger();
 
             return _loggerInstance;
         }

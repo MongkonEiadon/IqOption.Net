@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using FluentAssertions;
-using IqOptionApi.http.commands;
+using IqOptionApi.http.Commands;
 using IqOptionApi.Models;
 using NUnit.Framework;
 using RestSharp;

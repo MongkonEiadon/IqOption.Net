@@ -17,7 +17,7 @@ namespace IqOptionApi.Extensions {
                 return true;
             }
             catch (Exception) {
-                value = default(T);
+                value = default;
             }
 
             return false;

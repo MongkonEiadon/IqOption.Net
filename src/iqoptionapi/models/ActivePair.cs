@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 namespace IqOptionApi.Models {
-    public enum ActivePair : int {
+    public enum ActivePair {
         EURUSD = 1,
         EURGBP = 2,
         GBPJPY = 3,
@@ -113,6 +113,6 @@ namespace IqOptionApi.Models {
 
         NTDOY = 218,
         USDSEK = 219,
-        USDTRY = 220,
+        USDTRY = 220
     }
 }

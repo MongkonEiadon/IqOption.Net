@@ -1,9 +1,9 @@
 ﻿using RestSharp;
 
-namespace IqOptionApi.http.commands {
+namespace IqOptionApi.http.Commands {
     public class IqOptionCommand : RestRequest {
         protected IqOptionCommand(string action, Method method = Method.GET) : base(action, method) {
-            this.AddHeader("Accept", "application/json");
+            AddHeader("Accept", "application/json");
         }
     }
 }

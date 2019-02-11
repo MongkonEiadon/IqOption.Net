@@ -4,8 +4,6 @@ namespace IqOptionApi.Models {
     public enum OrderDirection {
         [EnumMember(Value = "put")] Put = 1,
 
-        [EnumMember(Value = "call")] Call = 2,
-
+        [EnumMember(Value = "call")] Call = 2
     }
-    
 }

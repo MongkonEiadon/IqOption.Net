@@ -1,31 +1,20 @@
-﻿using System.Diagnostics;
-using IqOptionApi.Extensions;
+﻿using IqOptionApi.Extensions;
 using IqOptionApi.ws.Request;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.ws.@base {
-    public class WsMessageBase<T> : IWsRequestMessage<T>, IWsIqOptionMessageCreator
-    {
-        [JsonProperty("name")]
-        public virtual string Name { get; set; }
-        
-        [JsonProperty("msg")]
-        public virtual T Message { get; set; }
+    public class WsMessageBase<T> : IWsRequestMessage<T>, IWsIqOptionMessageCreator {
+        [JsonProperty("name")] public virtual string Name { get; set; }
+
+        [JsonProperty("msg")] public virtual T Message { get; set; }
 
         public virtual string CreateIqOptionMessage() {
             return this.AsJson();
         }
 
-        public override string ToString() {
-            return this.AsJson();
-        }
-
-        public EnumMessageType MessageType
-        {
-            get
-            {
-                switch (Name.ToLower())
-                {
+        public EnumMessageType MessageType {
+            get {
+                switch (Name.ToLower()) {
                     case "candles": return EnumMessageType.Candles;
                     case "candle-generated": return EnumMessageType.CandleGenerated;
                     case "buycomplete": return EnumMessageType.BuyComplete;
@@ -43,15 +32,17 @@ namespace IqOptionApi.ws.@base {
                     case "order-changed": return EnumMessageType.OrderChanged;
 
 
-
                     default: return EnumMessageType.Unknown;
                 }
             }
         }
+
+        public override string ToString() {
+            return this.AsJson();
+        }
     }
 
-    public enum EnumMessageType
-    {
+    public enum EnumMessageType {
         Heartbeat,
         ServerTime,
         Profile,

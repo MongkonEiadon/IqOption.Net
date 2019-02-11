@@ -1,65 +1,59 @@
 ﻿using System;
-using System.IO;
-using System.Net.Mime;
-using System.Security.Cryptography.X509Certificates;
-using IqOptionApi;
+using System.Threading.Tasks;
 using IqOptionApi.Logging;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Memory;
-using Microsoft.Extensions.DependencyInjection;
+using IqOptionApi.Models;
 
-namespace IqOptionApi.Sample
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+namespace IqOptionApi.Sample {
+    internal class Program {
+        private static IIqOptionClient api;
 
-            var provider = ConfigureServices(new ServiceCollection());
+        private static void Main(string[] args) {
 
-            try
-            {
+            LogProvider.SetCurrentLogProvider(new ColoredConsoleLogProvider());
+            MainAsync().Wait();
+        }
 
-                Console.WriteLine("IqOption.NET Sample");
-                LogProvider.SetCurrentLogProvider(new ColoredConsoleLogProvider());
+        private static async Task MainAsync() {
+            api = new IqOptionClient("mongkon.eiadon@hotmail.com", "Code11054");
 
-                var app = provider.GetService<IqClientExample>();
-                app.RunAsync().ConfigureAwait(false);
+            try {
+                //logging in
+                if (await api.ConnectAsync()) {
+                    //get profile
+                    var profile = await api.HttpClient.GetProfileAsync();
 
 
+                    // open order EurUsd in smallest period (1min) 
+                    var exp = DateTime.Now.AddMinutes(1);
+                    var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+
+
+                    // get candles data
+                    var candle = await api.GetCandlesAsync(ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
+                    api.WsClient.ChannelMessage
+                        .Subscribe(x => { Console.WriteLine(x);});
+
+
+                    // subscribe to pair to get real-time data for tf1min and tf5min
+                    //await api.SubscribeCandlesAsync(ActivePair.EURUSD, TimeFrame.Min1);
+                    //await api.SubscribeCandlesAsync(ActivePair.EURUSD, TimeFrame.Min5);
+
+                    //api.CandleInfo
+                    //    .Subscribe(candleInfo => {
+                    //        Console.WriteLine(
+                    //            $"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
+                    //    });
+
+                    //// after this line no-more realtime data for min5 print on console
+                    //await api.UnsubscribeCandlesAsync(ActivePair.EURUSD, TimeFrame.Min5);
+                }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
-            finally
-            {
+            finally {
                 Console.ReadLine();
             }
-
         }
-
-        private static IServiceProvider ConfigureServices(IServiceCollection services)
-        {
-
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile($"appsettings.json", optional: true)
-                .Build();
-
-            services
-                .AddSingleton(configuration)
-                .AddSingleton(new IqOptionConfiguration()
-                {
-                    Email = configuration["iqoption:email"],
-                    Password = configuration["iqoption:password"]
-                })
-                .AddSingleton<TradingExample>()
-                .AddSingleton<IqClientExample>()
-                .AddSingleton<Startup>();
-
-            return services.BuildServiceProvider();
-        }
-
     }
 }

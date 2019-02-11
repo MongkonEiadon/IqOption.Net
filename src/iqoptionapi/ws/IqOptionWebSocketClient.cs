@@ -4,28 +4,24 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using IqOptionApi.ws.@base;
-using IqOptionApi.ws.result;
 using IqOptionApi.Extensions;
 using IqOptionApi.Logging;
 using IqOptionApi.models.instruments;
 using IqOptionApi.Models;
+using IqOptionApi.ws.@base;
+using IqOptionApi.ws.result;
 using IqOptionApi.ws.Request;
 using Websocket.Client;
-using WebSocket4Net;
 
 namespace IqOptionApi.ws {
     public class IqOptionWebSocketClient : IDisposable {
         //privates
         private readonly ILog _logger = LogProvider.GetCurrentClassLogger();
-        private WebSocket Client { get; }
 
-        private Websocket.Client.WebsocketClient _ws;
+        private WebsocketClient _ws;
 
-        public IqOptionWebSocketClient()
-        {
+        public IqOptionWebSocketClient() {
             _ws = new WebsocketClient(new Uri("$wss://iqoption.com/echo/websocket"));
-            
         }
 
         public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null,
@@ -150,7 +146,20 @@ namespace IqOptionApi.ws {
         }
 
         public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") : this(
-            x => x.OpenSecuredSocketAsync(secureToken), host) { }
+            x => x.OpenSecuredSocketAsync(secureToken), host) {
+        }
+
+        private WebSocket Client { get; }
+
+        #region [ServerTimes]
+
+        public static DateTimeOffset ServerTime { get; private set; }
+
+        #endregion
+
+        public void Dispose() {
+            Client?.Dispose();
+        }
 
 
         #region [Public's]
@@ -195,7 +204,6 @@ namespace IqOptionApi.ws {
             if (Client.State == WebSocketState.Open)
                 return Task.FromResult(true);
 #if net46
-
             Client.Open();
             return Task.FromResult(true);
 
@@ -283,12 +291,12 @@ namespace IqOptionApi.ws {
             ActivePair pair,
             int size,
             OrderDirection direction,
-            DateTimeOffset expiration = default(DateTimeOffset)) {
+            DateTimeOffset expiration = default) {
             var tcs = new TaskCompletionSource<BuyResult>();
             try {
                 var obs = BuyResultObservable
                     .Where(x => x != null)
-                    .Subscribe(x => 
+                    .Subscribe(x =>
                         tcs.TrySetResult(x));
 
                 tcs.Task.ContinueWith(t => {
@@ -296,10 +304,11 @@ namespace IqOptionApi.ws {
                 });
 
                 //reduce second to 00s 
-                if(expiration.Second % 60 != 0)
+                if (expiration.Second % 60 != 0)
                     expiration = expiration.AddSeconds(60 - expiration.Second);
 
-                SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTimeOffset.Now)).ConfigureAwait(false);
+                SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTimeOffset.Now))
+                    .ConfigureAwait(false);
             }
             catch (Exception ex) {
                 tcs.TrySetException(ex);
@@ -314,12 +323,6 @@ namespace IqOptionApi.ws {
 
         private readonly Subject<DateTimeOffset> _heartbeat = new Subject<DateTimeOffset>();
         public IObservable<DateTimeOffset> HeartbeatObservable => _heartbeat.Publish().RefCount();
-
-        #endregion
-
-        #region [ServerTimes]
-
-        public static DateTimeOffset ServerTime { get; private set; }
 
         #endregion
 
@@ -375,9 +378,5 @@ namespace IqOptionApi.ws {
         }
 
         #endregion
-
-        public void Dispose() {
-            Client?.Dispose();
-        }
     }
 }

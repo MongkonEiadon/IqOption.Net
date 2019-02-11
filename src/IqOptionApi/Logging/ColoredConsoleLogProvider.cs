@@ -4,44 +4,32 @@ using System.Globalization;
 using System.Linq;
 using IqOptionApi.Logging.LogProviders;
 
-namespace IqOptionApi.Logging
-{
-    public class ColoredConsoleLogProvider : LogProviderBase
-    {
-        private static readonly Dictionary<LogLevel, ConsoleColor> Colors = new Dictionary<LogLevel, ConsoleColor>
-            {
-                {LogLevel.Fatal, ConsoleColor.Red},
-                {LogLevel.Error, ConsoleColor.Yellow},
-                {LogLevel.Warn, ConsoleColor.Magenta},
-                {LogLevel.Info, ConsoleColor.White},
-                {LogLevel.Debug, ConsoleColor.Gray},
-                {LogLevel.Trace, ConsoleColor.DarkGray},
-            };
+namespace IqOptionApi.Logging {
+    public class ColoredConsoleLogProvider : LogProviderBase {
+        private static readonly Dictionary<LogLevel, ConsoleColor> Colors = new Dictionary<LogLevel, ConsoleColor> {
+            {LogLevel.Fatal, ConsoleColor.Red},
+            {LogLevel.Error, ConsoleColor.Yellow},
+            {LogLevel.Warn, ConsoleColor.Magenta},
+            {LogLevel.Info, ConsoleColor.White},
+            {LogLevel.Debug, ConsoleColor.Gray},
+            {LogLevel.Trace, ConsoleColor.DarkGray}
+        };
 
-        public override Logger GetLogger(string name)
-        {
-            return (logLevel, messageFunc, exception, formatParameters) =>
-            {
-                if (messageFunc == null)
-                {
-                    return true; // All log levels are enabled
-                }
+        public override Logger GetLogger(string name) {
+            return (logLevel, messageFunc, exception, formatParameters) => {
+                if (messageFunc == null) return true; // All log levels are enabled
 
-                if (Colors.TryGetValue(logLevel, out ConsoleColor consoleColor))
-                {
+                if (Colors.TryGetValue(logLevel, out var consoleColor)) {
                     var originalForground = Console.ForegroundColor;
-                    try
-                    {
+                    try {
                         Console.ForegroundColor = consoleColor;
                         WriteMessage(logLevel, name, messageFunc, formatParameters, exception);
                     }
-                    finally
-                    {
+                    finally {
                         Console.ForegroundColor = originalForground;
                     }
                 }
-                else
-                {
+                else {
                     WriteMessage(logLevel, name, messageFunc, formatParameters, exception);
                 }
 
@@ -56,23 +44,16 @@ namespace IqOptionApi.Logging
             object[] formatParameters,
             Exception exception) {
             var message = "";
-            if (formatParameters?.Any() ?? false) {
-
+            if (formatParameters?.Any() ?? false)
                 message = string.Format(CultureInfo.InvariantCulture, messageFunc(), formatParameters);
-            }
-            else {
+            else
                 message = messageFunc();
-            }
 
-            if (exception != null)
-            {
-                message = message + "|" + exception;
-            }
-            Console.WriteLine("{0, -10} | {1,-5} | {2, -8} | {3}", DateTime.UtcNow, 
+            if (exception != null) message = message + "|" + exception;
+            Console.WriteLine("{0, -10} | {1,-5} | {2} | {3}", DateTime.UtcNow,
                 logLevel,
-                name, 
+                name,
                 message);
         }
     }
 }
-

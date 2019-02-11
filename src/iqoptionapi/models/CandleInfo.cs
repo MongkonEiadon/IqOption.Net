@@ -1,28 +1,20 @@
 ﻿using System;
 using IqOptionApi.Converters.JsonConverters;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models {
     public class CandleInfo {
+        [JsonProperty("id")] public int Id { get; set; }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        [JsonProperty("open")] public double Open { get; set; }
 
-        [JsonProperty("open")]
-        public double Open { get; set; }
+        [JsonProperty("close")] public double Close { get; set; }
 
-        [JsonProperty("close")]
-        public double Close { get; set; }
+        [JsonProperty("min")] public double Min { get; set; }
 
-        [JsonProperty("min")]
-        public double Min { get; set; }
+        [JsonProperty("max")] public double Max { get; set; }
 
-        [JsonProperty("max")]
-        public double Max { get; set; }
-
-        [JsonProperty("volumn")]
-        public long Volumn { get; set; }
+        [JsonProperty("volumn")] public long Volumn { get; set; }
 
 
         [JsonProperty("from")]

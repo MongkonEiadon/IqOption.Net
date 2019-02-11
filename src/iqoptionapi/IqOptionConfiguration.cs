@@ -1,10 +1,8 @@
-﻿
-using System;
-using System.Reactive.Subjects;
+﻿using System;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
-[assembly:InternalsVisibleTo("IqOptionApi.Tests")]
+[assembly: InternalsVisibleTo("IqOptionApi.Tests")]
+
 namespace IqOptionApi {
     public class IqOptionConfiguration {
         public string Email { get; set; }
@@ -12,14 +10,11 @@ namespace IqOptionApi {
         public string Host { get; set; }
     }
 
-    public interface IClient<TClientType>
-    {
+    public interface IClient<TClientType> {
         TClientType Client { get; }
-        
     }
 
-    public interface IStreamMessageFor<out TType>
-    {
+    public interface IStreamMessageFor<out TType> {
         IObservable<TType> StreamMessageObservable();
     }
 }

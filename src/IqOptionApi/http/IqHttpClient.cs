@@ -1,22 +1,41 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Net;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using IqOptionApi.Annotations;
 using IqOptionApi.Extensions;
-using IqOptionApi.http.commands;
+using IqOptionApi.http.Commands;
 using IqOptionApi.Logging;
 using IqOptionApi.Models;
-using IqOptionApi.ws;
 using RestSharp;
 
 namespace IqOptionApi.http {
     public class IqHttpClient : IIqHttpClient {
+        private readonly ILog _logger = LogProvider.GetLogger("[HTTPS]");
 
+
+        private Profile _profile;
         private string _securedToken;
+
+
+        public IqHttpClient(string username, string password) {
+            LoginModel = new LoginModel {Email = username, Password = password};
+            HttpClient = new RestClient(new Uri("https://iqoption.com/api/"));
+            AuthHttpClient = new RestClient(new Uri("https://auth.iqoption.com/api/v1.0/"));
+        }
+
+        internal IRestClient HttpClient { get; set; }
+        internal IRestClient AuthHttpClient { get; set; }
+
+
+        /// <summary>
+        ///     Stream for profile updated event
+        /// </summary>
+        /// <returns></returns>
+        public IObservable<Profile> ProfileUpdated => this.ToObservable(x => x.Profile);
+
         public string SecuredToken {
             get => _securedToken;
             private set {
@@ -27,14 +46,6 @@ namespace IqOptionApi.http {
 
         public LoginModel LoginModel { get; }
 
-        internal IRestClient HttpClient { get; set; }
-        internal IRestClient AuthHttpClient { get; set; }
-
-        private readonly ILog _logger = LogProvider.GetLogger("[ HTTP ]");
-        private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
-
-
-        private Profile _profile;
         public Profile Profile {
             get => _profile;
             set {
@@ -43,18 +54,14 @@ namespace IqOptionApi.http {
             }
         }
 
+        public void Dispose() {
+        }
 
-        /// <summary>
-        /// Stream for profile updated event
-        /// </summary>
-        /// <returns></returns>
-        public IObservable<Profile> ProfileUpdated => this.ToObservable(x => x.Profile);
-        
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public IqHttpClient(string username, string password) {
-            LoginModel = new LoginModel {Email = username, Password = password};
-            HttpClient = new RestClient( new Uri("https://iqoption.com/api/"));
-            AuthHttpClient = new RestClient(new Uri("https://auth.iqoption.com/api/v1.0/"));
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region Web-Methods
@@ -74,12 +81,13 @@ namespace IqOptionApi.http {
                     var result = httpResult.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
                     result.IsSuccessful = true;
                     SecuredToken = result.Data.Ssid;
-                        
-                    _logger.Debug(L($"Connected:  {result.Data.Ssid}"));
+
+                    _logger.Debug(L("Connected", result.Data.Ssid));
 
                     HttpClient.CookieContainer = new CookieContainer();
                     HttpClient.CookieContainer?.Add(new Cookie("ssid", SecuredToken, "/", "iqoption.com"));
 
+                    // update profile
                     await GetProfileAsync();
 
                     return result;
@@ -95,7 +103,6 @@ namespace IqOptionApi.http {
 
 
         public async Task<Profile> GetProfileAsync() {
-            
             // send command
             var result = await ExecuteHttpClientAsync(new GetProfileCommand());
 
@@ -104,10 +111,11 @@ namespace IqOptionApi.http {
                 var data = result.Content.JsonAs<IqHttpResult<Profile>>().GetContent();
 
                 // log
-                _logger.Trace(L($"Client Profile Updated UserId :{data.UserId}"));
+                _logger.Trace(L( "GetProfile", $"Client Profile Updated UserId :{data.UserId}, trading with BalanceId: {data.BalanceId}"));
 
-                // published
-                _profileSubject.OnNext(data);
+                // updated profile
+                Profile = data;
+
                 return data;
             }
 
@@ -125,31 +133,20 @@ namespace IqOptionApi.http {
         }
 
         private Task<IRestResponse> ExecuteHttpClientAsync(IRestRequest request) {
-           
             // send command
             var result = HttpClient.ExecuteTaskAsync(request);
 
             // response
             return result;
         }
+        
+        private string L(string topic, string msg) {
+            var prefix = $"{LoginModel?.Email ?? "CLIENT",13}".Substring(0, 13);
 
-        private string L(string msg) {
-            var name = (LoginModel?.Email ?? "CLIENT");
-            return $"[{name, -10}] {msg}";
+            return $"{prefix.PadRight(13).Substring(0, 13)} | " +
+                   $"{topic.PadLeft(13).Substring(0, 13)} > {msg}";
         }
 
         #endregion
-
-        public void Dispose() {
-            _profileSubject?.Dispose();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        }
     }
 }

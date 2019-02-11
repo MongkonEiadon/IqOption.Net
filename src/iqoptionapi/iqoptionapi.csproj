@@ -16,49 +16,35 @@
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Upgrade package to 2.2.0</PackageReleaseNotes>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
-    <Version>1.2.0</Version>
+    <PackageReleaseNotes>- Upgrade to purely .NET Standard 2.0
+- No longer support for .NET462 and below
+- Using ToObservable on each property of Api/IqWebSocket/IqHttpClient for as IObservable&lt;T&gt;</PackageReleaseNotes>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0-alpha1</Version>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <DefineConstants>netcore2.0</DefineConstants>
+    <DefineConstants>net_std20</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="IIqOptionApi.cs" />
     <Compile Remove="IqOptionApi.cs" />
+    <Compile Remove="ws\IqOptionWebSocketClient.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.8.0" />
-    <PackageReference Include="LibLog" Version="5.0.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+    <PackageReference Include="LibLog" Version="5.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="restsharp" Version="106.6.7" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
     <PackageReference Include="Websocket.Client" Version="2.0.10" />
-    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="http\result\" />
-  </ItemGroup>
-
-
-
-
+  
 </Project>

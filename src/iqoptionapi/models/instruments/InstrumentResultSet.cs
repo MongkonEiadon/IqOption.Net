@@ -5,8 +5,8 @@ using IqOptionApi.models.Instruments;
 using IqOptionApi.Models;
 
 namespace IqOptionApi.models.instruments {
-    public partial class InstrumentResultSet : Dictionary<InstrumentType, Instrument[]> {
-        public InstrumentResultSet() : base() {
+    public class InstrumentResultSet : Dictionary<InstrumentType, Instrument[]> {
+        public InstrumentResultSet() {
             this[InstrumentType.CFD] = new Instrument[] { };
             this[InstrumentType.Crypto] = new Instrument[] { };
             this[InstrumentType.Forex] = new Instrument[] { };

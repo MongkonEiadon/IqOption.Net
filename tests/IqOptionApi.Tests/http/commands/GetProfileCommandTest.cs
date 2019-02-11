@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using IqOptionApi.http.commands;
+using IqOptionApi.http.Commands;
 using NUnit.Framework;
 using TestAutoFixture;
 
