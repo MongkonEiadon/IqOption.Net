@@ -41,7 +41,7 @@ namespace IqOptionApi.Tests.JsonTest.Profiles {
 
             // assert
             msg.Birthdate.Date.Should().Be(19.November(1988));
-            msg.Created.Should().Be(5.January(2016));
+            msg.Created.Value.Date.Should().Be(5.January(2016));
         }
 
         [Test]

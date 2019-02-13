@@ -93,7 +93,7 @@ namespace IqOptionApi.Models {
         public string Email { get; set; }
 
         [JsonProperty("created")]
-        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
         public DateTimeOffset? Created { get; set; }
 
         [JsonProperty("last_visit")]
@@ -109,7 +109,7 @@ namespace IqOptionApi.Models {
         public string Locale { get; set; }
 
         [JsonProperty("birthdate")]
-        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
         public DateTimeOffset Birthdate { get; set; }
 
         [JsonProperty("country_id")]
