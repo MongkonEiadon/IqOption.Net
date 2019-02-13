@@ -27,6 +27,7 @@
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <DefineConstants>net_std20</DefineConstants>
+    <DefineConstants>LIBLOG_PUBLIC</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

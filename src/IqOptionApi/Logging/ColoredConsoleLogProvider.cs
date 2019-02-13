@@ -15,6 +15,10 @@ namespace IqOptionApi.Logging {
             {LogLevel.Trace, ConsoleColor.DarkGray}
         };
 
+        public ColoredConsoleLogProvider()
+        {
+        }
+
         public override Logger GetLogger(string name) {
             return (logLevel, messageFunc, exception, formatParameters) => {
                 if (messageFunc == null) return true; // All log levels are enabled
