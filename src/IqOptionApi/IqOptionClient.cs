@@ -63,7 +63,7 @@ namespace IqOptionApi {
 
         /// <inheritdoc />
         public Task BuyAsync(ActivePair pair, int size, OrderDirection direction,
-            DateTimeOffset expiration = default) {
+            DateTimeOffset expiration = default(DateTimeOffset)) {
 
             _logger.Info(L("buyAsync", $"Open {direction} {pair}, lot {size, 5} @Exp {expiration.ToLocalTime()}"));
             return WsClient.BuyAsync(pair, size, direction, expiration);

@@ -43,7 +43,7 @@ namespace IqOptionApi {
             ActivePair pair,
             int size,
             OrderDirection direction,
-            DateTimeOffset expiration = default);
+            DateTimeOffset expiration = default(DateTimeOffset));
 
         #endregion
 

@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
