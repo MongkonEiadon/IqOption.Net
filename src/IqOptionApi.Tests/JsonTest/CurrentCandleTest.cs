@@ -1,22 +1,14 @@
-﻿using FluentAssertions;
-using IqOptionApi.Models;
-using IqOptionApi.ws;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
+﻿using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest {
-
     [TestFixture]
-    public class CurrentCandleTest : LoadJsonFileTest<CurrentCandleInfoResultMessage>
-    {
+    public class CurrentCandleTest : LoadJsonFileTest<CurrentCandleInfoResultMessage> {
         public override string JsonSourceFileName => "subscribeMessage\\candle-generated.json";
 
         [Test]
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
-
             //act
-            var result = base.ReadFileSource();
+            var result = ReadFileSource();
 
             // assert
             result.Should().NotBeNull();

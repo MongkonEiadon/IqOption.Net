@@ -1,23 +1,14 @@
 ﻿using System;
-using FluentAssertions;
-using IqOptionApi.Models;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-
 
 namespace IqOptionApi.Tests.JsonTest {
-
     [TestFixture]
-    public class ServerTimeTest : LoadJsonFileTest<ServerTime>
-    {
+    public class ServerTimeTest : LoadJsonFileTest<ServerTime> {
         public override string JsonSourceFileName => "timesync.json";
-        
+
 
         [Ignore("")]
-        public void GetTimeSync_WithExistingValue_DateTimeOffsetConvertedCorrected()
-        {
-
+        public void GetTimeSync_WithExistingValue_DateTimeOffsetConvertedCorrected() {
             // act
             var result = ReadFileSource();
 

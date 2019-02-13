@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using AutoFixture;
-using IqOptionApi.Extensions;
-using IqOptionApi.Models;
 using Microsoft.Reactive.Testing;
 using Websocket.Client;
 
 namespace IqOptionApi.Tests.ws {
-
-    public class MockWsClient : Websocket.Client.IWebsocketClient {
-
-        private Subject<string> _subject { get; } = new Subject<string>();
-
+    public class MockWsClient : IWebsocketClient {
         public MockWsClient() {
-
             var scheduler = new TestScheduler();
             scheduler.Schedule(TimeSpan.FromTicks(20), () => Start());
-
         }
+
+        private Subject<string> _subject { get; } = new Subject<string>();
 
 
         public void Dispose() {
@@ -36,17 +28,14 @@ namespace IqOptionApi.Tests.ws {
         }
 
         public Task Send(string message) {
-
             return Task.CompletedTask;
         }
 
         public Task SendInstant(string message) {
-
             return Task.CompletedTask;
         }
 
         public Task Reconnect() {
-
             return Task.CompletedTask;
         }
 

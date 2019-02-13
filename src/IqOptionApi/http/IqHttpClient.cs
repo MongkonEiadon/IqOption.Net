@@ -1,10 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Net;
-using System.Reactive.Subjects;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using IqOptionApi.Annotations;
 using IqOptionApi.Extensions;
 using IqOptionApi.http.Commands;
 using IqOptionApi.Logging;
@@ -29,26 +25,23 @@ namespace IqOptionApi.http {
 
         internal IRestClient HttpClient { get; set; }
         internal IRestClient AuthHttpClient { get; set; }
-        
 
-        public string SecuredToken
-        {
+
+        public string SecuredToken {
             get => _securedToken;
             private set => this.RaiseAndSetIfChanged(ref _securedToken, value);
         }
 
         public LoginModel LoginModel { get; }
 
-        public Profile Profile
-        {
+        public Profile Profile {
             get => _profile;
             private set => this.RaiseAndSetIfChanged(ref _profile, value);
         }
 
 
-        public void Dispose() {
-            
-        }
+        public void Dispose() { }
+
         #region Web-Methods
 
         public async Task<IqHttpResult<SsidResultMessage>> LoginAsync() {
@@ -96,7 +89,8 @@ namespace IqOptionApi.http {
                 var data = result.Content.JsonAs<IqHttpResult<Profile>>().GetContent();
 
                 // log
-                _logger.Trace(L( "GetProfile", $"Client Profile Updated UserId :{data.UserId}, trading with BalanceId: {data.BalanceId}"));
+                _logger.Trace(L("GetProfile",
+                    $"Client Profile Updated UserId :{data.UserId}, trading with BalanceId: {data.BalanceId}"));
 
                 // updated profile
                 Profile = data;
@@ -124,7 +118,7 @@ namespace IqOptionApi.http {
             // response
             return result;
         }
-        
+
         private string L(string topic, string msg) {
             var prefix = $"{LoginModel?.Email ?? "CLIENT",13}".Substring(0, 13);
 

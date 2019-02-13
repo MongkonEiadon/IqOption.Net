@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using IqOptionApi.Extensions;
-using IqOptionApi.Logging;
 using IqOptionApi.Sample.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using LogProvider = IqOptionApi.Logging.LogProvider;
@@ -11,18 +7,14 @@ namespace IqOptionApi.Sample {
     public class Program {
         private static IIqOptionApi api;
 
-        static void Main(string[] args) {
-
+        private static void Main(string[] args) {
             var provider = ConfigureServices(new ServiceCollection());
             var sample = provider.GetService<TradingExample>();
 
             try {
-
                 Console.WriteLine("IqOption.NET SampleOpenOrder");
 
                 sample.RunAsync().ConfigureAwait(false);
-
-
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
@@ -30,12 +22,9 @@ namespace IqOptionApi.Sample {
             finally {
                 Console.ReadLine();
             }
-
         }
 
         private static IServiceProvider ConfigureServices(IServiceCollection services) {
-
-
             LogProvider.SetCurrentLogProvider(new ColoredConsoleLogProvider());
 
             services
@@ -44,6 +33,5 @@ namespace IqOptionApi.Sample {
 
             return services.BuildServiceProvider();
         }
-
     }
 }

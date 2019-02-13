@@ -1,24 +1,14 @@
-﻿using FluentAssertions;
-using IqOptionApi.models.CFD;
-using IqOptionApi.Models;
-using IqOptionApi.ws;
-using IqOptionApi.ws.@base;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
+﻿using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest.CFD {
-
     [TestFixture]
-    public class DigitalLongClosedJsonTest : LoadJsonFileTest<WsMessageBase<DigitalInfoData>>
-    {
+    public class DigitalLongClosedJsonTest : LoadJsonFileTest<WsMessageBase<DigitalInfoData>> {
         public override string JsonSourceFileName => "CFD\\cfd-long-closed.json";
 
         [Test]
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
-
             //act
-            var result = base.ReadFileSource();
+            var result = ReadFileSource();
 
             result.Message.Should().NotBeNull();
         }
@@ -26,15 +16,13 @@ namespace IqOptionApi.Tests.JsonTest.CFD {
 
 
     [TestFixture]
-    public class DigitalLongOpenJsonTest : LoadJsonFileTest<WsMessageBase<DigitalInfoData>>
-    {
+    public class DigitalLongOpenJsonTest : LoadJsonFileTest<WsMessageBase<DigitalInfoData>> {
         public override string JsonSourceFileName => "CFD\\cfd-long-open.json";
 
         [Test]
-        public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly()
-        {
+        public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
             // act
-            var result = base.ReadFileSource();
+            var result = ReadFileSource();
 
             // assert
             result.Message.Should().NotBeNull();

@@ -1,9 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using FluentAssertions;
-using IqOptionApi.Extensions;
-using IqOptionApi.http;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
@@ -12,9 +9,6 @@ using TestAutoFixture;
 namespace IqOptionApi.Tests.http {
     [TestFixture]
     public class IqOptionApiTest : TestAutoFixtureFor<IqHttpClient> {
-        private Mock<IRestClient> MoqAuthClient { get; set; }
-        private Mock<IRestClient> MoqHttpClient { get; set; }
-
         [SetUp]
         public void SetUp() {
             MoqAuthClient = InjectMock<IRestClient>();
@@ -34,43 +28,8 @@ namespace IqOptionApi.Tests.http {
                 cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson()));
         }
 
-        #region [LoginAsync]
-
-        [Test]
-        public async Task LoginAsync_WhenStatusCodeIsOk_IsSuccessFulMustBeTrue() {
-            // arrange
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson())
-                    .With(x => x.StatusCode, HttpStatusCode.OK));
-
-            MoqAuthClient
-                .Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>()))
-                .ReturnsAsync(A<RestResponse>());
-
-            // act
-            var instance = await CreateCut().LoginAsync();
-
-            // assert
-            instance.IsSuccessful.Should().BeTrue();
-        }
-
-        [Test]
-        public async Task LoginAsync_WhenStatusCodeIsOk_CookieWasAdded() {
-            // arrange
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson())
-                    .With(x => x.StatusCode, HttpStatusCode.OK));
-
-            MoqAuthClient
-                .Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>()))
-                .ReturnsAsync(A<RestResponse>());
-
-            // act
-            var result = await CreateCut().LoginAsync();
-
-            // assert
-            result.Data.Ssid.Should().NotBeNullOrEmpty();
-        }
+        private Mock<IRestClient> MoqAuthClient { get; set; }
+        private Mock<IRestClient> MoqHttpClient { get; set; }
 
         [Test]
         public async Task LoginAsync_VerifyAuthClient_MustBeReceived() {
@@ -107,10 +66,40 @@ namespace IqOptionApi.Tests.http {
             result.IsSuccessful.Should().BeFalse();
         }
 
-        #endregion
+        [Test]
+        public async Task LoginAsync_WhenStatusCodeIsOk_CookieWasAdded() {
+            // arrange
+            Fixture.Customize<RestResponse>(cfg =>
+                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson())
+                    .With(x => x.StatusCode, HttpStatusCode.OK));
 
-        #region GetProfileAsync
+            MoqAuthClient
+                .Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>()))
+                .ReturnsAsync(A<RestResponse>());
 
-        #endregion
+            // act
+            var result = await CreateCut().LoginAsync();
+
+            // assert
+            result.Data.Ssid.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public async Task LoginAsync_WhenStatusCodeIsOk_IsSuccessFulMustBeTrue() {
+            // arrange
+            Fixture.Customize<RestResponse>(cfg =>
+                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson())
+                    .With(x => x.StatusCode, HttpStatusCode.OK));
+
+            MoqAuthClient
+                .Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>()))
+                .ReturnsAsync(A<RestResponse>());
+
+            // act
+            var instance = await CreateCut().LoginAsync();
+
+            // assert
+            instance.IsSuccessful.Should().BeTrue();
+        }
     }
 }

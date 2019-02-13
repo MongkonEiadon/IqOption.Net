@@ -1,11 +1,5 @@
-﻿using FluentAssertions;
-using IqOptionApi.Models;
-using IqOptionApi.ws;
-using Newtonsoft.Json;
+﻿using System;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using System;
-using System.Linq;
 
 namespace IqOptionApi.Tests.JsonTest {
     [TestFixture]
@@ -14,7 +8,6 @@ namespace IqOptionApi.Tests.JsonTest {
 
         [Test]
         public void GetCandlesResult_CandlesItems_ResultMustReturnSuccess() {
-
             //act
             var result = ReadFileSource();
 
@@ -31,7 +24,6 @@ namespace IqOptionApi.Tests.JsonTest {
 
         [Test]
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
-
             //act
             var result = ReadFileSource();
 

@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
-using IqOptionApi;
-using IqOptionApi.Models;
-using ReactiveUI;
 
 namespace IqOptionApi.Sample {
     public class TradingExample {
-        
         public async Task RunAsync() {
-
             var trader = new IqOptionApi("trader@email.com", "passcode");
             var follower = new IqOptionApi("follower@email.com", "passcode");
 
@@ -18,16 +11,12 @@ namespace IqOptionApi.Sample {
 
             trader.WsClient.WhenAnyValue(x => x.InfoData)
                 .Where(x => x != null && x.Win == WinType.Equal)
-                .Subscribe(x => {
-
-                    follower.BuyAsync(x.ActiveId, (int)x.Sum, x.Direction, x.Expired);
-                });
+                .Subscribe(x => { follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired); });
 
 
             //var exp = DateTime.Now.AddMinutes(1);
             var exp = DateTime.Now.AddMinutes(1);
             await trader.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
-
         }
     }
 }

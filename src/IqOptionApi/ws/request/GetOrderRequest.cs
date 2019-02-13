@@ -1,4 +1,3 @@
 ﻿namespace IqOptionApi.ws.Request {
-    internal class GetOrderRequestModel {
-    }
+    internal class GetOrderRequestModel { }
 }

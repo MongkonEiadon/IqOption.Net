@@ -3,7 +3,7 @@
   "request_id": "",
   "msg": {
     "isSuccessful": true,
-    "message": [ "Successful" ],
+    "message": ["Successful"],
     "result": {
       "user_id": 1234,
       "refund_value": 0,

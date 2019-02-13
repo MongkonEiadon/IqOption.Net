@@ -1,6 +1,5 @@
 ﻿using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.models.instruments;
-using IqOptionApi.Models;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.ws.Request {
@@ -23,13 +22,14 @@ namespace IqOptionApi.ws.Request {
     }
 
     internal class GetInstrumentWsMessageBase : WsSendMessageBase<GetInstrumentsRequest> {
-        public static IWsRequestMessage<GetInstrumentsRequest> CreateRequest(InstrumentType type) =>
-            new GetInstrumentWsMessageBase() {
-                Message = new GetInstrumentsRequest() {
-                    InstrumentGetInstrumentsRequestBody = new GetInstrumentsRequest.GetInstrumentsRequestBody() {
+        public static IWsRequestMessage<GetInstrumentsRequest> CreateRequest(InstrumentType type) {
+            return new GetInstrumentWsMessageBase {
+                Message = new GetInstrumentsRequest {
+                    InstrumentGetInstrumentsRequestBody = new GetInstrumentsRequest.GetInstrumentsRequestBody {
                         Type = type
                     }
                 }
             };
+        }
     }
 }

@@ -1,18 +1,12 @@
-﻿using FluentAssertions;
-using IqOptionApi.Tests.JsonTest;
-using IqOptionApi.ws.result;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace IqOptionApi.Tests.JsonTest.BuyResult
-{
+namespace IqOptionApi.Tests.JsonTest.BuyResult {
     [TestFixture]
-    public class BuyFailedTest : LoadJsonFileTest<BuyCompleteResultMessage> 
-    {
+    public class BuyFailedTest : LoadJsonFileTest<BuyCompleteResultMessage> {
         public override string JsonSourceFileName => "BuyResult\\buyFailed.json";
-        
+
         [Test]
-        public void LoadBuyComplete_WithSuccessResult_DateTimeConverted()
-        {
+        public void LoadBuyComplete_WithSuccessResult_DateTimeConverted() {
             // act
             var result = ReadFileSource();
 

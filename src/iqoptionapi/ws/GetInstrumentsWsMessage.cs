@@ -1,4 +1,3 @@
 ﻿namespace IqOptionApi.ws {
-    internal class GetInstrumentsWsMessage {
-    }
+    internal class GetInstrumentsWsMessage { }
 }

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Reactive.Linq;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace IqOptionApi.Tests.Extensions
-{
+namespace IqOptionApi.Tests.Extensions {
     [TestFixture]
-    public class ObservableExtensionsTest : TestAutoFixture.TestAutoFixture
-    {
-
-        [Test]  
+    public class ObservableExtensionsTest : TestAutoFixture.TestAutoFixture {
+        [Test]
         public void AsyncStart_TheElements_ShouldBeOne() {
-
             // arrange
             //var delay = ObservableExtensions.AsyncStart(TimeSpan.FromSeconds(5));
 

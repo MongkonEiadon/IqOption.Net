@@ -1,18 +1,41 @@
-﻿using FluentAssertions;
-using IqOptionApi.Tests.JsonTest;
+﻿using System;
 using NUnit.Framework;
-using System;
-using IqOptionApi.ws.result;
 
-namespace IqOptionApi.Tests.JsonTest.BuyResult
-{
+namespace IqOptionApi.Tests.JsonTest.BuyResult {
     [TestFixture]
     public class BuyCompleteTest : LoadJsonFileTest<BuyCompleteResultMessage> {
         public override string JsonSourceFileName => "BuyResult\\buycomplete.json";
 
         [Test]
-        public void LoadBuyComplete_WithSuccessResult_DateTimeConverted() {
+        public void LoadBuyComplete_ValidateDate() {
+            // act
+            var result = ReadFileSource();
 
+            // assert
+            var buy = result.Message.Result;
+
+            var exp = DateTimeOffset.FromUnixTimeSeconds(1535448900);
+            buy.Exp.Should().Be(exp);
+
+            var created = DateTimeOffset.FromUnixTimeSeconds(1535448820);
+            buy.Created.Should().Be(created);
+
+            var timeRate = DateTimeOffset.FromUnixTimeSeconds(1535448820);
+            buy.TimeRate.Should().Be(timeRate);
+        }
+
+        [Test]
+        public void LoadBuyComplete_ValidateUserData() {
+            // act
+            var result = ReadFileSource();
+
+            // assert
+            var buy = result.Message.Result;
+            buy.UserId.Should().Be(1234);
+        }
+
+        [Test]
+        public void LoadBuyComplete_WithSuccessResult_DateTimeConverted() {
             // act
             var result = ReadFileSource();
 
@@ -26,36 +49,6 @@ namespace IqOptionApi.Tests.JsonTest.BuyResult
 
             var buy = msg.Result;
             buy.UserId.Should().Be(1234);
-        }
-
-        [Test]
-        public void LoadBuyComplete_ValidateUserData() {
-
-            // act
-            var result = ReadFileSource();
-
-            // assert
-            var buy = result.Message.Result;
-            buy.UserId.Should().Be(1234);
-        }
-
-        [Test]
-        public void LoadBuyComplete_ValidateDate()
-        {
-            // act
-            var result = ReadFileSource();
-
-            // assert
-            var buy = result.Message.Result;
-            
-            var exp = DateTimeOffset.FromUnixTimeSeconds(1535448900);
-            buy.Exp.Should().Be(exp);
-
-            var created = DateTimeOffset.FromUnixTimeSeconds(1535448820);
-            buy.Created.Should().Be(created);
-
-            var timeRate  = DateTimeOffset.FromUnixTimeSeconds(1535448820);
-            buy.TimeRate.Should().Be(timeRate);
         }
     }
 }

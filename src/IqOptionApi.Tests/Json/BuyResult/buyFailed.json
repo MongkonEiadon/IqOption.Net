@@ -3,9 +3,9 @@
   "request_id": "",
   "msg": {
     "isSuccessful": false,
-    "message": [ "หมดเวลาสำหรับการซื้อออปชันแล้ว โปรดลองอีกครั้งภายหลัง" ],
+    "message": ["หมดเวลาสำหรับการซื้อออปชันแล้ว โปรดลองอีกครั้งภายหลัง"],
     "result": {
-       "request_id": null
+      "request_id": null
     }
   }
 }

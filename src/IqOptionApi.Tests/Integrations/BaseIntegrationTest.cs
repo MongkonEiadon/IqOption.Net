@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IqOptionApi.http;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
+﻿using NUnit.Framework;
 
-namespace IqOptionApi.Tests.Integrations
-{
-    public abstract class BaseIntegrationTest : TestAutoFixture.TestAutoFixture
-    {
+namespace IqOptionApi.Tests.Integrations {
+    public abstract class BaseIntegrationTest : TestAutoFixture.TestAutoFixture {
         [OneTimeSetUp]
-        public void OneTimeSetup() {
-        }
+        public void OneTimeSetup() { }
     }
 }

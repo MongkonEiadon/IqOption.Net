@@ -1,17 +1,11 @@
-﻿using FluentAssertions;
-using IqOptionApi.ws;
-using NUnit.Framework;
-using Moq;
+﻿using NUnit.Framework;
 using TestAutoFixture;
-using Websocket.Client;
 
-namespace IqOptionApi.Tests.ws
-{
+namespace IqOptionApi.Tests.ws {
     [TestFixture]
     public class WsClientTest : TestAutoFixtureFor<IqWsClient> {
         [Test]
         public void WsClient_InitialInstant_ShouldNotBeNull() {
-
             // arrange
             var instant = CreateCut();
 
@@ -22,7 +16,5 @@ namespace IqOptionApi.Tests.ws
 
     [TestFixture]
     [Category("Integrations")]
-    public class WsClientIntegrationTest : TestAutoFixtureFor<IqWsClient> {
-
-    }
+    public class WsClientIntegrationTest : TestAutoFixtureFor<IqWsClient> { }
 }

@@ -3,11 +3,10 @@ using ReactiveUI;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.ws {
-    public partial class IqWsClient
-    {
+    public partial class IqWsClient {
         private CurrentCandle _currentCandle;
-        public CurrentCandle CurrentCandle
-        {
+
+        public CurrentCandle CurrentCandle {
             get => _currentCandle;
             private set => this.RaiseAndSetIfChanged(ref _currentCandle, value);
         }

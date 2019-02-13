@@ -9,7 +9,6 @@ namespace IqOptionApi.ws {
             get => _profile;
             private set =>
                 this.RaiseAndSetIfChanged(ref _profile, value);
-
         }
     }
 }

@@ -1,50 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Dawn;
-using IqOptionApi.Extensions;
 using IqOptionApi.ws.Request;
 
-
 namespace IqOptionApi.ws {
-
     public partial class IqWsClient {
-
-        public void OpenSecuredConnection(string token)
-        {
+        /// <summary>
+        ///     Set up the connection with secured token
+        /// </summary>
+        /// <param name="token"></param>
+        public void OpenSecuredConnection(string token) {
             var tcs = new TaskCompletionSource<bool>();
-            try
-            {
+            try {
+                // verify the argument
                 Guard.Argument(token, nameof(token)).NotNull().NotEmpty();
 
+                // set the token to the api
                 SecuredToken = token;
 
-                //var limit = 0;
-                //var obs = this.ToObservable(x => x.Profile).Select(x => nameof(Profile))
-                //    .Merge(this.ToObservable(x => x.HeartBeat).Select(x => nameof(HeartBeat)))
-                //    .Subscribe(x => {
-                //        if (limit >= 2) tcs.TrySetResult(false);
-
-                //        if (x == nameof(Profile)) tcs.TrySetResult(true);
-
-                //        limit++;
-                //    });
-
+                // posting the secured to the channel
                 SendMessageAsync(new SsidWsMessageBase(SecuredToken)).Wait();
-
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 tcs.TrySetException(ex);
             }
 
-            finally
-            {
+            finally {
                 SecuredToken = token;
             }
-            
         }
     }
 }

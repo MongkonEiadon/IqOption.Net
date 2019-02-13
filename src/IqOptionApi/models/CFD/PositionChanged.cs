@@ -9,9 +9,11 @@ namespace IqOptionApi.models.CFD {
     ///     Suported for CFD; (Contract-For-Differences) Options, This is kind of Futeres Products
     /// </summary>
     public class DigitalInfoData {
-        [JsonProperty("id")] public int Id { get; set; }
+        [JsonProperty("id")]
+        public int Id { get; set; }
 
-        [JsonProperty("user_id")] public int UserId { get; set; }
+        [JsonProperty("user_id")]
+        public int UserId { get; set; }
 
         [JsonProperty("type")]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -25,7 +27,8 @@ namespace IqOptionApi.models.CFD {
         [JsonConverter(typeof(StringEnumConverter))]
         public ActivePair ActivePair { get; set; }
 
-        [JsonProperty("leverage")] public int Leverage { get; set; }
+        [JsonProperty("leverage")]
+        public int Leverage { get; set; }
 
         [JsonProperty("create_at")]
         [JsonConverter(typeof(UnixDateTimeJsonConverter))]
