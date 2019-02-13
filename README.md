@@ -9,11 +9,19 @@ iqoption api to connect to www.iqoption.com (unofficial), with .netcore based fo
 PM> Install-Package iqoptionapi
 
 ```
+alpha version now available
+``` javascript
+PM> Install-Package iqoptionapi -Version 2.0.0-alpha1
+
+```
+
 # How it work
 This api using websocket to communicate realtime-data to Iqoption server through secured websocket channel, so the realtime meta data that come on this channel will be handles by .net reactive programming called "Rx.NET", cause of a haundred of data type stream on only one channle so we need to selected subscribe on specific topic.
 
 # Milestone
 - BuyBack Position
+- Subscribe to the channel
+- support open Long/Short for CFD contract (Digital Options)
 
 # How to use
 ```csharp
@@ -70,4 +78,56 @@ public async Task TradingFollower_ExampleAsync() {
 }
 ```
 
+## Version 2.0.0 
+Now you can open order like this
+```csharp
+var api = new IqOptionApi("email@email.com", "Code11054");
 
+try {
+    //logging in
+    if (await api.ConnectAsync()) {
+        //open order EurUsd in smallest period(1min) 
+        var exp = DateTime.Now.AddMinutes(1);
+        await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+    }
+}
+catch (Exception ex) {
+    Console.WriteLine(ex.Message);
+}
+finally {
+    Console.ReadLine();
+}
+
+```
+
+### Trading follower
+now using ReactiveUI way for subscribe the changing of model following this
+
+```csharp
+using System;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using IqOptionApi.Models;
+using ReactiveUI;
+
+namespace IqOptionApi.Sample {
+    public class TradingExample {
+        public async Task RunAsync() {
+            var trader = new IqOptionApi("trader@email.com", "passcode");
+            var follower = new IqOptionApi("follower@email.com", "passcode");
+
+            await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
+
+            trader.WsClient.WhenAnyValue(x => x.InfoData)
+                .Where(x => x != null && x.Win == WinType.Equal)
+                .Subscribe(x => { follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired); });
+
+
+            //var exp = DateTime.Now.AddMinutes(1);
+            var exp = DateTime.Now.AddMinutes(1);
+            await trader.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+        }
+    }
+}
+
+```
