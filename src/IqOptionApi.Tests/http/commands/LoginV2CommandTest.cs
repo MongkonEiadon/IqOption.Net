@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using FluentAssertions;
+using IqOptionApi.http.Commands;
+using IqOptionApi.Models;
+using NUnit.Framework;
 using RestSharp;
 using TestAutoFixture;
 

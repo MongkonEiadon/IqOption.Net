@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using IqOptionApi.Models;
+using IqOptionApi.ws;
+using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest {
     [TestFixture]

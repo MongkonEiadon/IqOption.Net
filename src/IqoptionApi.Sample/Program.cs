@@ -1,4 +1,5 @@
 ﻿using System;
+using IqOptionApi.Logging;
 using IqOptionApi.Sample.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using LogProvider = IqOptionApi.Logging.LogProvider;

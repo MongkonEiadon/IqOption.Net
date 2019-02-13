@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using IqOptionApi.models.CFD;
+using IqOptionApi.ws.@base;
+using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest.CFD {
     [TestFixture]

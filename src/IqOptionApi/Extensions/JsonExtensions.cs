@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
+[assembly: InternalsVisibleTo("IqOptionApi.Tests")]
 namespace IqOptionApi.Extensions {
-    internal static class JsonExtensions {
+    public static class JsonExtensions {
         public static string AsJson(this object This) {
             return JsonConvert.SerializeObject(This);
         }

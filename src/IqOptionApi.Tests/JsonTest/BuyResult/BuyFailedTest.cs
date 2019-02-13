@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using IqOptionApi.ws.result;
+using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest.BuyResult {
     [TestFixture]

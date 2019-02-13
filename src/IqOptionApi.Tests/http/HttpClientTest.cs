@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using FluentAssertions;
+using IqOptionApi.Extensions;
+using IqOptionApi.http;
 using Moq;
 using NUnit.Framework;
 using RestSharp;

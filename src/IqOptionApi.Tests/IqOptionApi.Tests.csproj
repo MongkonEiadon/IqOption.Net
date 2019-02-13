@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\iqoptionapi\IqOptionApi.csproj" />
+    <ProjectReference Include="..\iqoptionapi\IqOptionApi.csproj" />
   </ItemGroup>
 
 </Project>

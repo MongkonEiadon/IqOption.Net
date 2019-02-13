@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using IqOptionApi.ws;
+using NUnit.Framework;
 using TestAutoFixture;
 
 namespace IqOptionApi.Tests.ws {

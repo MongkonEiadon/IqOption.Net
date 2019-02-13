@@ -1,4 +1,7 @@
-﻿using FluentAssertions.Extensions;
+﻿using FluentAssertions;
+using FluentAssertions.Extensions;
+using IqOptionApi.Models;
+using IqOptionApi.ws.@base;
 using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest.Profiles {

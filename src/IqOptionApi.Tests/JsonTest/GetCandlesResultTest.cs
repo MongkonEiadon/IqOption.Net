@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using FluentAssertions;
+using IqOptionApi.ws;
 using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest {

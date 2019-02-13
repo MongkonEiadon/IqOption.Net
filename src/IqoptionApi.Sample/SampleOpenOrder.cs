@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using IqOptionApi.Models;
 
 namespace IqOptionApi.Sample {
     public class SampleOpenOrder {

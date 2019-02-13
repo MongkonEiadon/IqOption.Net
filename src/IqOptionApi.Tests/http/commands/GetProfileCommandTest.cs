@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using IqOptionApi.http.Commands;
+using NUnit.Framework;
 using TestAutoFixture;
 
 namespace IqOptionApi.Tests.http.commands {
