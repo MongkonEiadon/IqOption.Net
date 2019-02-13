@@ -1,12 +1,14 @@
-version: 1.0.{build}
+version: 2.0.{build}
+image: Visual Studio 2019 Preview
 configuration: Release
 platform: Any CPU
 build:
-  project: iqoptionapi.net.sln
+  project: IqOptionApi.Net.sln
   verbosity: minimal
 before_package:
 - cmd: nuget restore
-
+test_script:
+- cmd: dotnet test src\IqOptionApi.Tests\IqOptionApi.Tests.csproj
 nuget:
   account_feed: false
   project_feed: false
@@ -29,6 +31,3 @@ deploy:
   #   prerelease: false
   #   on:
   #     branch: master
-
-test_script:
-- cmd: dotnet test tests\iqoptionapi.unit\iqoptionapi.unit.csproj
