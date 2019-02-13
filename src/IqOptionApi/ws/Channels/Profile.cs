@@ -1,4 +1,5 @@
 ﻿using IqOptionApi.Models;
+using ReactiveUI;
 
 namespace IqOptionApi.ws {
     public partial class IqWsClient {
@@ -6,10 +7,9 @@ namespace IqOptionApi.ws {
 
         public Profile Profile {
             get => _profile;
-            private set {
-                _profile = value;
-                OnPropertyChanged(nameof(Profile));
-            }
+            private set =>
+                this.RaiseAndSetIfChanged(ref _profile, value);
+
         }
     }
 }

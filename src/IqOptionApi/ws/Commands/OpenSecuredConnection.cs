@@ -12,7 +12,7 @@ namespace IqOptionApi.ws {
 
     public partial class IqWsClient {
 
-        public Task<bool> OpenSecuredConnectionAsync(string token)
+        public void OpenSecuredConnection(string token)
         {
             var tcs = new TaskCompletionSource<bool>();
             try
@@ -21,18 +21,19 @@ namespace IqOptionApi.ws {
 
                 SecuredToken = token;
 
-                var limit = 0;
-                this.ToObservable(x => x.Profile).Select(x => nameof(Profile))
-                    .Merge(this.ToObservable(x => x.HeartBeat).Select(x => nameof(HeartBeat)))
-                    .Subscribe(x => {
-                        if (limit >= 2) tcs.TrySetResult(false);
+                //var limit = 0;
+                //var obs = this.ToObservable(x => x.Profile).Select(x => nameof(Profile))
+                //    .Merge(this.ToObservable(x => x.HeartBeat).Select(x => nameof(HeartBeat)))
+                //    .Subscribe(x => {
+                //        if (limit >= 2) tcs.TrySetResult(false);
 
-                        if (x == nameof(Profile)) tcs.TrySetResult(true);
+                //        if (x == nameof(Profile)) tcs.TrySetResult(true);
 
-                        limit++;
-                    });
+                //        limit++;
+                //    });
 
-                SendMessageAsync(new SsidWsMessageBase(SecuredToken)).ConfigureAwait(false);
+                SendMessageAsync(new SsidWsMessageBase(SecuredToken)).Wait();
+
             }
             catch (Exception ex)
             {
@@ -43,8 +44,7 @@ namespace IqOptionApi.ws {
             {
                 SecuredToken = token;
             }
-
-            return tcs.Task;
+            
         }
     }
 }

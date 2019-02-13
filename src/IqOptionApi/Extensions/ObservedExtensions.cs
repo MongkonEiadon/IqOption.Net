@@ -10,22 +10,25 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("IqOptionApi.Unit", AllInternalsVisible = true)]
 
 namespace IqOptionApi.Extensions {
-    public static class ObservableExtensions {
+    public static class NotifyPropertyChangeReactiveExtensions
+    {
         public static IObservable<R> ToObservable<T, R>(this T target, string name, Func<T, R> func)
-            where T : INotifyPropertyChanged {
+            where T : INotifyPropertyChanged
+        {
             return Observable.Create<R>(o => {
-                PropertyChangedEventHandler eventHandler = (s, pce) => {
+                PropertyChangedEventHandler eventHandler = new PropertyChangedEventHandler((s, pce) => {
                     if (pce.PropertyName == null || pce.PropertyName == name)
                         o.OnNext(func(target));
-                };
+                });
                 target.PropertyChanged += eventHandler;
                 return () => target.PropertyChanged -= eventHandler;
             });
         }
 
         public static IObservable<R> ToObservable<T, R>(this T target, Expression<Func<T, R>> property)
-            where T : INotifyPropertyChanged {
-            var body = property.Body;
+            where T : INotifyPropertyChanged
+        {
+            var body = (property as LambdaExpression).Body;
             var propertyName = "";
 
             if (body is MemberExpression)
@@ -37,45 +40,13 @@ namespace IqOptionApi.Extensions {
 
             var getValueFunc = property.Compile();
             return Observable.Create<R>(o => {
-                PropertyChangedEventHandler eventHandler = (s, pce) => {
+                PropertyChangedEventHandler eventHandler = new PropertyChangedEventHandler((s, pce) => {
                     if (pce.PropertyName == null || pce.PropertyName == propertyName)
                         o.OnNext(getValueFunc(target));
-                };
+                });
                 target.PropertyChanged += eventHandler;
                 return () => target.PropertyChanged -= eventHandler;
             });
-        }
-
-        public static Task<TResult> WaitForNextObservedResultAsync<TResult>(this IObservable<TResult> This,
-            Action action) {
-            var tcs = new TaskCompletionSource<TResult>();
-            try {
-                var obs = This
-                    .Merge(AsyncStart().Select(x => default(TResult)))
-                    .SubscribeOn(ThreadPoolScheduler.Instance)
-                    .Subscribe(
-                        x => { tcs.TrySetResult(x); },
-                        () => { tcs.TrySetResult(default); });
-
-                // invoke action
-                action();
-
-                // destroy obs
-                tcs.Task.ContinueWith(t => {
-                    if (t.IsCompleted) obs.Dispose();
-                });
-            }
-            catch (Exception ex) {
-                tcs.TrySetException(ex);
-            }
-
-            return tcs.Task;
-        }
-
-        public static IObservable<Unit> AsyncStart(TimeSpan? delay = null) {
-            if (delay == null) delay = TimeSpan.FromSeconds(3);
-
-            return Observable.Timer(delay.Value).Select(x => Unit.Default);
         }
     }
 }

@@ -2,12 +2,13 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
+using ReactiveUI;
 
 namespace IqOptionApi.http {
     /// <summary>
     ///     The IqOption Http Client Wrapper
     /// </summary>
-    public interface IIqHttpClient : IDisposable, INotifyPropertyChanged {
+    public interface IIqHttpClient : IDisposable, IReactiveObject {
         /// <summary>
         ///     The token for using secured channel
         /// </summary>

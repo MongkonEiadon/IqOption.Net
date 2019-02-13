@@ -21,10 +21,7 @@ namespace IqOptionApi {
             HttpClient = new IqHttpClient(email, password);
             WsClient = new IqWsClient();
         }
-
-        public IObservable<Profile> ProfileUpdated =>
-            WsClient.ToObservable(x => x.Profile)
-                .Merge(HttpClient.ToObservable(x => x.Profile));
+        
 
         public IIqHttpClient HttpClient { get; }
         public IIqWsClient WsClient { get; }
@@ -57,7 +54,7 @@ namespace IqOptionApi {
             var result = await HttpClient.LoginAsync();
 
             if (result.IsSuccessful) {
-                await WsClient.OpenSecuredConnectionAsync(result.Data.Ssid);
+                WsClient.OpenSecuredConnection(result.Data.Ssid);
                 return true;
             }
 
@@ -65,7 +62,7 @@ namespace IqOptionApi {
         }
 
         /// <inheritdoc />
-        public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
+        public Task BuyAsync(ActivePair pair, int size, OrderDirection direction,
             DateTimeOffset expiration = default) {
             return WsClient.BuyAsync(pair, size, direction, expiration);
         }
@@ -81,7 +78,7 @@ namespace IqOptionApi {
         #region [Subscribe&Unsubscribe]
 
         /// <inheritdoc />
-        public IObservable<CurrentCandle> CandleInfo => WsClient.ToObservable(x => x.CurrentCandle);
+        public IObservable<CurrentCandle> CandleInfo { get; }
 
 
         /// <inheritdoc />

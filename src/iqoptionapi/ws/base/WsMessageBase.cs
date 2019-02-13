@@ -12,7 +12,7 @@ namespace IqOptionApi.ws.@base {
             return this.AsJson();
         }
 
-        public EnumMessageType MessageType {
+        internal EnumMessageType MessageType {
             get {
                 switch (Name.ToLower()) {
                     case "candles": return EnumMessageType.Candles;

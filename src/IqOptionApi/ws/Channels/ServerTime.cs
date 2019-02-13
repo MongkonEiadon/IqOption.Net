@@ -1,4 +1,5 @@
 ﻿using IqOptionApi.Models;
+using ReactiveUI;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.ws {
@@ -7,10 +8,8 @@ namespace IqOptionApi.ws {
 
         public ServerTime ServerTime {
             get => _serverTime;
-            private set {
-                _serverTime = value;
-                OnPropertyChanged(nameof(ServerTime));
-            }
+            private set =>
+                this.RaiseAndSetIfChanged(ref _serverTime, value);
         }
     }
 }

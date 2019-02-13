@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Json\Candles\Subscribe_CandleGenerated.json" />
     <None Remove="Json\CFD\cfd-long-closed.json" />
     <None Remove="Json\CFD\cfd-long-open.json" />
   </ItemGroup>

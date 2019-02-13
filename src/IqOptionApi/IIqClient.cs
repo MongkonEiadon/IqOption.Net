@@ -39,7 +39,7 @@ namespace IqOptionApi {
         /// <param name="direction"></param>
         /// <param name="expiration"></param>
         /// <returns></returns>
-        Task<BuyResult> BuyAsync(
+        Task BuyAsync(
             ActivePair pair,
             int size,
             OrderDirection direction,

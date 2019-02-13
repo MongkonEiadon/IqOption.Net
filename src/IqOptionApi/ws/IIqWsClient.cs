@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using IqOptionApi.models.CFD;
 using IqOptionApi.Models;
+using ReactiveUI;
 
 namespace IqOptionApi.ws {
-    public interface IIqWsClient : INotifyPropertyChanged, IDisposable {
+    public interface IIqWsClient : IReactiveObject, IDisposable {
         /// <summary>
         ///     The token to make secured websocket channel
         /// </summary>
@@ -18,12 +19,39 @@ namespace IqOptionApi.ws {
 
         #region [Channel Names]
 
+        /// <summary>
+        /// HeartBeat ticker from server
+        /// </summary>
         HeartBeat HeartBeat { get; }
-        ServerTime ServerTime { get; }
+
+        /// <summary>
+        /// The Server time that come from server
+        /// </summary>
+        ServerTime ServerTime { get;  }
+
+        /// <summary>
+        /// The client profile will update automatically
+        /// </summary>
         Profile Profile { get; }
+
+        /// <summary>
+        /// The Digital Information data after client open the position will set automatically
+        /// </summary>
         DigitalInfoData DigitalInfoData { get; }
+
+        /// <summary>
+        /// The Information data after client Open/Expired for Forex/CFD/Options will set automatically
+        /// </summary>
         InfoData InfoData { get; }
+
+        /// <summary>
+        /// Current candles information after using <see cref="IIqWsClient.SubscribeCandlesAsync"/>
+        /// </summary>
         CurrentCandle CurrentCandle { get; }
+
+        /// <summary>
+        /// The result notification after user open position
+        /// </summary>
         BuyResult BuyResult { get; }
 
         #endregion
@@ -38,7 +66,7 @@ namespace IqOptionApi.ws {
         /// <param name="direction">The buying direction</param>
         /// <param name="expiration"></param>
         /// <returns></returns>
-        Task<BuyResult> BuyAsync(
+        Task BuyAsync(
             ActivePair pair,
             int size,
             OrderDirection direction,
@@ -54,7 +82,11 @@ namespace IqOptionApi.ws {
         /// <returns></returns>
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
 
-        Task<bool> OpenSecuredConnectionAsync(string token);
+        /// <summary>
+        /// Open secured connection with specific token
+        /// </summary>
+        /// <param name="token"></param>
+        void OpenSecuredConnection(string token);
 
         #endregion
     }

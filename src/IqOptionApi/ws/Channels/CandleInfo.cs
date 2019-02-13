@@ -1,4 +1,5 @@
 ﻿using IqOptionApi.Models;
+using ReactiveUI;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.ws {
@@ -8,11 +9,7 @@ namespace IqOptionApi.ws {
         public CurrentCandle CurrentCandle
         {
             get => _currentCandle;
-            private set
-            {
-                _currentCandle = value;
-                OnPropertyChanged(nameof(CurrentCandle));
-            }
+            private set => this.RaiseAndSetIfChanged(ref _currentCandle, value);
         }
     }
 }

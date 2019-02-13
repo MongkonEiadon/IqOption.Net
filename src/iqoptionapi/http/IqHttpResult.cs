@@ -19,7 +19,9 @@ namespace IqOptionApi.http {
 
         [CanBeNull]
         public T GetContent() {
-            return (Data ?? Result) ?? default(T);
+            if (Data != null)
+                return Data;
+            return Result;
         }
     }
 

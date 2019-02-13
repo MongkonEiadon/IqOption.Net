@@ -9,10 +9,11 @@ using IqOptionApi.Extensions;
 using IqOptionApi.http.Commands;
 using IqOptionApi.Logging;
 using IqOptionApi.Models;
+using ReactiveUI;
 using RestSharp;
 
 namespace IqOptionApi.http {
-    public class IqHttpClient : IIqHttpClient {
+    public class IqHttpClient : ReactiveObject, IIqHttpClient {
         private readonly ILog _logger = LogProvider.GetLogger("[HTTPS]");
 
 
@@ -28,42 +29,26 @@ namespace IqOptionApi.http {
 
         internal IRestClient HttpClient { get; set; }
         internal IRestClient AuthHttpClient { get; set; }
+        
 
-
-        /// <summary>
-        ///     Stream for profile updated event
-        /// </summary>
-        /// <returns></returns>
-        public IObservable<Profile> ProfileUpdated => this.ToObservable(x => x.Profile);
-
-        public string SecuredToken {
+        public string SecuredToken
+        {
             get => _securedToken;
-            private set {
-                _securedToken = value;
-                OnPropertyChanged(nameof(SecuredToken));
-            }
+            private set => this.RaiseAndSetIfChanged(ref _securedToken, value);
         }
 
         public LoginModel LoginModel { get; }
 
-        public Profile Profile {
+        public Profile Profile
+        {
             get => _profile;
-            set {
-                _profile = value;
-                OnPropertyChanged(nameof(Profile));
-            }
+            private set => this.RaiseAndSetIfChanged(ref _profile, value);
         }
+
 
         public void Dispose() {
+            
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         #region Web-Methods
 
         public async Task<IqHttpResult<SsidResultMessage>> LoginAsync() {

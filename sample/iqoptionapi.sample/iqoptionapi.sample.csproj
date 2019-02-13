@@ -21,6 +21,8 @@
 
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
 
+    <PackageReference Include="system.reactive" Version="4.1.2" />
+
   </ItemGroup>
 
   <ItemGroup>

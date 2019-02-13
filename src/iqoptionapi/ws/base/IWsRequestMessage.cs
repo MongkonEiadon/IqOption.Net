@@ -6,8 +6,6 @@ namespace IqOptionApi.ws.Request {
         [JsonProperty("name")] string Name { get; set; }
 
         [JsonProperty("msg")] T Message { get; set; }
-
-        EnumMessageType MessageType { get; }
     }
 
 

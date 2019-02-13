@@ -1,4 +1,5 @@
 ﻿using IqOptionApi.Models;
+using ReactiveUI;
 
 namespace IqOptionApi.ws {
     public partial class IqWsClient {
@@ -6,10 +7,7 @@ namespace IqOptionApi.ws {
 
         public HeartBeat HeartBeat {
             get => _heartBeat;
-            private set {
-                _heartBeat = value;
-                OnPropertyChanged(nameof(HeartBeat));
-            }
+            private set => this.RaiseAndSetIfChanged(ref _heartBeat, value);
         }
     }
 }

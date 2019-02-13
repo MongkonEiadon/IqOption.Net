@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using IqOptionApi.Models;
+using ReactiveUI;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.ws {
@@ -11,13 +14,7 @@ namespace IqOptionApi.ws {
         public BuyResult BuyResult
         {
             get => _buyResult;
-            set
-            {
-                _buyResult = value;
-                OnPropertyChanged(nameof(BuyResult));
-            }
+            private set => this.RaiseAndSetIfChanged(ref _buyResult, value);
         }
-
-        
     }
 }

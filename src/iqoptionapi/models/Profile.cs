@@ -24,7 +24,7 @@ namespace IqOptionApi.Models {
 
         [JsonProperty("finance_state")] public string FinanceState { get; set; }
 
-        [JsonProperty("balance")] public long Balance { get; set; }
+        [JsonProperty("balance")] public decimal Balance { get; set; }
 
         [JsonProperty("bonus_wager")] public long BonusWager { get; set; }
 
