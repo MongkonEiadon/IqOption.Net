@@ -5,7 +5,7 @@ using IqOptionApi.Models;
 using IqOptionApi.ws;
 
 namespace IqOptionApi {
-    public interface IIqOptionClient : IDisposable {
+    public interface IIqOptionApi : IDisposable {
         /// <summary>
         ///     The Http channel
         /// </summary>

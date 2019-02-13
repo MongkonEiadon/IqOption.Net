@@ -41,12 +41,5 @@
       <IsTransformFile>True</IsTransformFile>
       <DependentUpon>appsettings.json</DependentUpon>
     </None>
-    <None Update="appsettings.json">
-      <TransformOnBuild>True</TransformOnBuild>
-    </None>
-    <None Update="appsettings.Release.json">
-      <IsTransformFile>True</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
   </ItemGroup>
 </Project>

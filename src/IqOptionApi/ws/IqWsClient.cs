@@ -58,7 +58,6 @@ namespace IqOptionApi.ws {
 
                                 case EnumMessageType.Profile:
                                     Profile = x.JsonAs<WsMessageBase<Profile>>().Message;
-                                    _logger.Trace(Get(msg.Name, "Profile Updated"));
                                     break;
 
                                 case EnumMessageType.ListInfoData:
@@ -79,11 +78,11 @@ namespace IqOptionApi.ws {
                                     var _msg = x.JsonAs<BuyCompleteResultMessage>().Message;
                                     if (_msg.IsSuccessful) {
                                         var b = _msg.Result;
-                                        _logger.Debug(Get(msg.Name, $"{_msg.IsSuccessful} => OrderId: {b.Id}"));
+                                        _logger.Debug(Get(msg.Name, $"{_msg.IsSuccessful} OrderId: {b.Id}"));
                                         BuyResult = b;
                                     }
                                     else {
-                                        _logger.Warn(Get(msg.Name, $"{_msg.IsSuccessful} => {string.Join(", ", _msg.Message.ToList())}" ));
+                                        _logger.Warn(Get(msg.Name, $"{_msg.IsSuccessful} {string.Join(", ", _msg.Message.ToList())}" ));
                                     }
 
                                     break;
@@ -95,6 +94,7 @@ namespace IqOptionApi.ws {
 
                                     break;
 
+                                //
                                 case EnumMessageType.OrderChanged:
                                     
                                     break;
@@ -162,7 +162,7 @@ namespace IqOptionApi.ws {
                 if (await ConnectAsync()) {
 
                     // logging
-                    _logger.Debug(Post(msg.Name, msg.CreateIqOptionMessage()));
+                    _logger.Trace(Post(msg.Name, msg.CreateIqOptionMessage()));
 
 
                     Client.Send(msg.CreateIqOptionMessage());

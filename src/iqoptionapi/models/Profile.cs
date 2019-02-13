@@ -78,7 +78,8 @@ namespace IqOptionApi.Models {
 
         [JsonProperty("locale")] public string Locale { get; set; }
 
-        [JsonProperty("birthdate")] public bool Birthdate { get; set; }
+        [JsonProperty("birthdate")]
+        [JsonConverter(typeof(UnixDateTimeJsonConverter))] public DateTimeOffset Birthdate { get; set; }
 
         [JsonProperty("country_id")] public long CountryId { get; set; }
 

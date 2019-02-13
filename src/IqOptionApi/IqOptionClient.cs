@@ -9,7 +9,7 @@ using IqOptionApi.ws;
 using IqOptionApi.ws.Request;
 
 namespace IqOptionApi {
-    public class IqOptionClient : IIqOptionClient {
+    public class IqOptionApi : IIqOptionApi {
         private readonly ILog _logger = LogProvider.GetLogger("[ API ]");
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace IqOptionApi {
         /// </summary>
         /// <param name="email">Username</param>
         /// <param name="password">Password</param>
-        public IqOptionClient(string email, string password) {
+        public IqOptionApi(string email, string password) {
             HttpClient = new IqHttpClient(email, password);
             WsClient = new IqWsClient();
         }
@@ -64,6 +64,8 @@ namespace IqOptionApi {
         /// <inheritdoc />
         public Task BuyAsync(ActivePair pair, int size, OrderDirection direction,
             DateTimeOffset expiration = default) {
+
+            _logger.Info(L("buyAsync", $"Open {direction} {pair}, lot {size, 5} @Exp {expiration.ToLocalTime()}"));
             return WsClient.BuyAsync(pair, size, direction, expiration);
         }
 
@@ -91,11 +93,12 @@ namespace IqOptionApi {
             return ((IqWsClient) WsClient).SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));
         }
         
-        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to)
-        {
+        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to) {
             return WsClient.GetCandlesAsync(pair, timeFrame, count, to);
         }
 
         #endregion
+
+
     }
 }

@@ -4,24 +4,29 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using IqOptionApi;
 using IqOptionApi.Models;
+using ReactiveUI;
 
 namespace IqOptionApi.Sample {
     public class TradingExample {
+        
+        public async Task RunAsync() {
 
-        public TradingExample()
-        {
-        }
+            var trader = new IqOptionApi("trader@email.com", "passcode");
+            var follower = new IqOptionApi("follower@email.com", "passcode");
 
-        public async Task RunSample() {
+            await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
-            //var trader = new IqOptionApi("mongkon.eiadon@gmail.com", "Code11054");
-            //var follower = new IqOptionApi("liie.m@excelbangkok.com", "Code11054");
+            trader.WsClient.WhenAnyValue(x => x.InfoData)
+                .Where(x => x != null && x.Win == WinType.Equal)
+                .Subscribe(x => {
 
-            //await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
+                    follower.BuyAsync(x.ActiveId, (int)x.Sum, x.Direction, x.Expired);
+                });
 
-            //trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
-            //    follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
-            //});
+
+            //var exp = DateTime.Now.AddMinutes(1);
+            var exp = DateTime.Now.AddMinutes(1);
+            await trader.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
 
         }
     }
