@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: /temp
     docker:
       - image: microsoft/dotnet:sdk
     environment:
