@@ -1,14 +1,12 @@
 version: 2
 jobs:
   build:
-    workding_dir: .
     docker:
-      - image: microsoft/dotnet:sdk
+      - image: microsoft/dotnet:2.2-sdk
     environment:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
     steps:
       - checkout
-      - run: dotnet restore .\IqOptionApi.Net.sln
-      - run: dotnet build
-      - run: dotnet test src/IqOptionApi.Tests/IqOptionApi.Tests.csproj
+      - run: dotnet build ./IqOptionApi.Net.sln
