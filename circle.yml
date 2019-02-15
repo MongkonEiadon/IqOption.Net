@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: ./
     docker:
       - image: microsoft/dotnet:sdk
     environment:
@@ -9,6 +8,6 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
     steps:
       - checkout
-      - run: dotnet restore IqOptionApi.Net.sln
-      - run: dotnet build IqOptionApi.Net.sln
-      - run: dotnet test IqOptionApi.Net.sln
+      - run: dotnet restore
+      - run: dotnet build
+      - run: dotnet test src/IqOptionApi.Tests/IqOptionApi.Tests.csproj
