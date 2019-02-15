@@ -9,6 +9,6 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
     steps:
       - checkout
-      - run: dotnet restore iqoptionapi.net.sln
+      - run: dotnet restore .\iqoptionapi.net.sln
       - run: dotnet build
       - run: dotnet test src/IqOptionApi.Tests/IqOptionApi.Tests.csproj
