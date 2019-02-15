@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - checkout
-      - run: dotnet build ./IqOptionApi.sln
+      - run: dotnet build IqOptionApi.sln
