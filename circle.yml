@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_dir: .
     docker:
       - image: microsoft/dotnet:2.2-sdk
     environment:
@@ -9,4 +10,4 @@ jobs:
 
     steps:
       - checkout
-      - run: dotnet build IqOptionApi.sln
+      - run: dotnet restore
