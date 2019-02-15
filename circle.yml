@@ -1,15 +1,18 @@
-dependencies:
-  pre:
-    - curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-    - sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-    - sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
-    - sudo apt-get update
-    - sudo apt-get install dotnet-sdk-2.0.2
-  override:
-    - dotnet restore
-test:
-  pre:
-    - dotnet --version
-    - dotnet build ./IqOptionApi.Net.sln.sln
-  override:
-    - dotnet test ./IqOptionApi.Net.sln.sln
+version: 2
+jobs:
+  build:
+    docker:
+      - image: microsoft/aspnetcore-build:2.0
+    steps:
+      - checkout
+      - run: find .
+      - run: dotnet restore
+      - run: dotnet build
+      - run: dotnet test --no-build ./IqOptionApi.Net.sln.sln
+
+deployment:
+  # master:
+  #   branch: master
+  #   commands:
+  #     - sh script/publish-azure
+  #     - sh script/publish-dockerhub
