@@ -1,8 +1,11 @@
 # IqOption.Net
 iqoption api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
 
-[![Build status](https://ci.appveyor.com/api/projects/status/sueidsbt13avwvoc/branch/master?svg=true)](https://ci.appveyor.com/project/MongkonEiadon/iqoption-net/branch/master)
-[![NuGet version](https://badge.fury.io/nu/iqoptionapi.svg)](https://badge.fury.io/nu/iqoptionapi)
+|Branch|Build|Nuget|
+|:--:|:--:|:--:|
+**master**|[![Build status](https://ci.appveyor.com/api/projects/status/sueidsbt13avwvoc/branch/master?svg=true)](https://ci.appveyor.com/project/MongkonEiadon/iqoption-net/branch/master) |[![NuGet Badge](https://buildstats.info/nuget/iqoptionapi)](https://www.nuget.org/packages/iqoptionapi/) | 
+**developer(Prelease)**|[![Build Status](https://dev.azure.com/mongkoneiadon/IqOption.net/_apis/build/status/developer(Prelease)?branchName=develop)](https://dev.azure.com/mongkoneiadon/IqOption.net/_build/latest?definitionId=4&branchName=develop) | [![NuGet Badge](https://buildstats.info/nuget/iqoptionapi?includePreReleases=true)](https://www.nuget.org/packages/iqoptionapi/2.0.0-alpha1)|
+
 
 # Package Installation
 ``` javascript
