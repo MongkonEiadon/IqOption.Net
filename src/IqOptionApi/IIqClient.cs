@@ -49,7 +49,7 @@ namespace IqOptionApi {
         ///  Change the balance Id
         /// </summary>
         /// <returns></returns>
-        Task<bool> ChangeBalanceAsync(int balanceId);
+        Task<bool> ChangeBalanceAsync(long balanceId);
 
         #endregion
 

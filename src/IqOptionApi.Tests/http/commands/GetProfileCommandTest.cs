@@ -4,6 +4,7 @@ using NUnit.Framework;
 using TestAutoFixture;
 
 namespace IqOptionApi.Tests.http.commands {
+
     [TestFixture]
     public class GetProfileCommandTest : TestAutoFixtureFor<GetProfileCommand> {
         [Test]

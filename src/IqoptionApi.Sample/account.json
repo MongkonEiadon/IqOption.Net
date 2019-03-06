@@ -1,0 +1,11 @@
+{
+  "trader": {
+    "username": "email@email.com",
+    "password": "password"
+  },
+  "follower": {
+    "username": "email@email.com",
+    "password": "password" 
+  } 
+
+}

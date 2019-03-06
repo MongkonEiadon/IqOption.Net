@@ -18,13 +18,9 @@ namespace IqOptionApi.Tests.http {
             MoqHttpClient = InjectMock<IRestClient>();
 
             Fixture.Customize<IqHttpClient>(
-                cfg => cfg.FromFactory(() => {
-                    var cut = new IqHttpClient("", "") {
-                        AuthHttpClient = MoqAuthClient.Object,
-                        HttpClient = MoqHttpClient.Object
-                    };
-
-                    return cut;
+                cfg => cfg.FromFactory(() => new IqHttpClient("", "") {
+                    AuthHttpClient = MoqAuthClient.Object,
+                    HttpClient = MoqHttpClient.Object
                 }));
 
             Fixture.Customize<RestResponse>(cfg =>
