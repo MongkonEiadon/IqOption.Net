@@ -34,5 +34,12 @@ namespace IqOptionApi.http {
         /// </summary>
         /// <returns></returns>
         Task<Profile> GetProfileAsync();
+
+        /// <summary>
+        ///     Change balance
+        /// </summary>
+        /// <param name="balanceId"></param>
+        /// <returns></returns>
+        Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId);
     }
 }

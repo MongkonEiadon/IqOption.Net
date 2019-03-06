@@ -45,6 +45,12 @@ namespace IqOptionApi {
             OrderDirection direction,
             DateTimeOffset expiration = default(DateTimeOffset));
 
+        /// <summary>
+        ///  Change the balance Id
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> ChangeBalanceAsync(int balanceId);
+
         #endregion
 
         /*

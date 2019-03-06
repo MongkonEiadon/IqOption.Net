@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "ec8b126e-e29f-4f70-8938-94e7d658534c",
+		"name": "IqOptionApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "56a39bdb-1894-4b30-b36f-af326653f8de",
+						"exec": [
+							"",
+							"tests[\"status code is 200\"] = responseCode.code === 200"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fa464273-1c6c-4bcf-8b8f-e90991d016e1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{authUrl}}/login?email={{username}}&password={{password}}",
+					"host": [
+						"{{authUrl}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d3840db-3278-4ce8-9b68-9d7728b4ac83",
+						"exec": [
+							"",
+							"tests[\"status code is 200\"] = responseCode.code === 200"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/getprofile",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"getprofile"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e4b57d51-65ee-4e7f-b2e9-0b1e8571745b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "11f453fa-e93b-4dde-ba7a-9b1f2e9b4dcf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8d3544d0-a8ba-4aae-8582-7207b4c7d420",
+			"key": "username",
+			"value": "username",
+			"type": "string"
+		},
+		{
+			"id": "be5a4cfa-59f5-40f1-a28e-4a4d250e3af6",
+			"key": "password",
+			"value": "passcode",
+			"type": "string"
+		},
+		{
+			"id": "1155b5f9-23e8-4292-bc24-869b90c78526",
+			"key": "authUrl",
+			"value": "https://auth.iqoption.com/api/v1.0/",
+			"type": "string"
+		},
+		{
+			"id": "1d6852b2-a413-4275-971f-ecd4885b555f",
+			"key": "baseUrl",
+			"value": "https://iqoption.com/api",
+			"type": "string"
+		},
+		{
+			"id": "b6c7e3f1-b728-4c48-8a0f-d853b57046ae",
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

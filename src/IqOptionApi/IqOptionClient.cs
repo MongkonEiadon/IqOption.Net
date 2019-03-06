@@ -69,6 +69,15 @@ namespace IqOptionApi {
             return WsClient.BuyAsync(pair, size, direction, expiration);
         }
 
+        /// <inheritdoc />
+        public async Task<bool> ChangeBalanceAsync(long balanceId)
+        {
+           _logger.Info(L("changebalance", $"Change to balance id: {balanceId}"));
+           var result = await HttpClient.ChangeBalanceAsync(balanceId);
+
+           return result.IsSuccessful;
+        }
+
         #endregion
 
         /*
