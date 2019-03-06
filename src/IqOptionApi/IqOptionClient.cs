@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using IqOptionApi.Extensions;
 using IqOptionApi.http;
@@ -8,6 +9,7 @@ using IqOptionApi.Models;
 using IqOptionApi.ws;
 using IqOptionApi.ws.Request;
 
+[assembly:InternalsVisibleTo("IqOptionApi.Tests")]
 namespace IqOptionApi {
     public class IqOptionApi : IIqOptionApi {
         private readonly ILog _logger = LogProvider.GetLogger("[ API ]");
@@ -18,13 +20,25 @@ namespace IqOptionApi {
         /// <param name="email">Username</param>
         /// <param name="password">Password</param>
         public IqOptionApi(string email, string password) {
-            HttpClient = new IqHttpClient(email, password);
-            WsClient = new IqWsClient();
+           _lazyHttp = new Lazy<IIqHttpClient>(() =>  new IqHttpClient(email, password));
+           _lazyWs = new Lazy<IIqWsClient>(() => new IqWsClient());
         }
-        
 
-        public IIqHttpClient HttpClient { get; }
-        public IIqWsClient WsClient { get; }
+        internal Lazy<IIqHttpClient> _lazyHttp;
+
+        /// <inheritdoc cref="IIqOptionApi.HttpClient"/>
+        public IIqHttpClient HttpClient {
+            get => _lazyHttp.Value;
+            set => _lazyHttp = new Lazy<IIqHttpClient>(() => value);
+        }
+
+        internal Lazy<IIqWsClient> _lazyWs;
+
+        /// <inheritdoc cref="IIqOptionApi.HttpClient"/>
+        public IIqWsClient WsClient {
+            get => _lazyWs.Value;
+            internal set => _lazyWs = new Lazy<IIqWsClient>(() => value);
+        }
 
 
         public void Dispose() {

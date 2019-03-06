@@ -101,30 +101,41 @@ namespace IqOptionApi.http {
             return null;
         }
 
-
+        /// <inheritdoc cref="IIqHttpClient.ChangeBalanceAsync"/>
         public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
-            var result = await ExecuteHttpClientAsync(new ChangeBalanceCommand(balanceId));
 
-            if (result.StatusCode == HttpStatusCode.OK)
+            try {
+
+                // send command
+                var result = await ExecuteHttpClientAsync(new ChangeBalanceCommand(balanceId));
+
+                if (result.IsSuccessful)
+                    _logger.Info(R("changebalance", "Success"));
+                else
+                    _logger.Warn(R("changebalance", result.ErrorMessage));
+
+
                 return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
 
-            return null;
+            }
+            catch {
+                return null;
+            }
+
         }
 
-        private Task<IRestResponse> ExecuteHttpClientAsync(IRestRequest request) {
+        private Task<IRestResponse> ExecuteHttpClientAsync(IqOptionCommand cmd) {
+            
             // send command
-            var result = HttpClient.ExecuteTaskAsync(request);
+            var result = HttpClient.ExecuteTaskAsync(cmd);
 
             // response
             return result;
         }
 
-        private string L(string topic, string msg) {
-            var prefix = $"{LoginModel?.Email ?? "CLIENT",13}".Substring(0, 13);
-
-            return $"{prefix.PadRight(13).Substring(0, 13)} | " +
-                   $"{topic.PadLeft(13).Substring(0, 13)} > {msg}";
-        }
+        private string prefix() => (LoginModel?.Email ?? "CLIENT").PadRight(13).Substring(0, 13) + " |";
+        private string L(string topic, string msg) => $"{prefix()} {topic.PadLeft(13).Substring(0, 13)} > {msg}";
+        private string R(string topic, string msg) => $"{prefix()} {topic.PadLeft(13).Substring(0, 13)} < {msg}";
 
         #endregion
     }

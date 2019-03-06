@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("IqOptionApi.Tests")]
 namespace IqOptionApi.Extensions {
-    public static class JsonExtensions {
-        public static string AsJson(this object This) {
+    internal static class JsonExtensions {
+        internal static string AsJson(this object This) {
             return JsonConvert.SerializeObject(This);
         }
 
-        public static T JsonAs<T>(this string This) {
+        internal static T JsonAs<T>(this string This) {
             return JsonConvert.DeserializeObject<T>(This);
         }
 

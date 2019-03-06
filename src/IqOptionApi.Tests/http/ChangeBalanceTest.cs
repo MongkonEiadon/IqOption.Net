@@ -38,14 +38,39 @@ namespace IqOptionApi.Tests.http
         }
 
         [Test]
-        public async Task ChangeBalance_WithSuccess()
-        {
-            Fixture.Customize<RestResponse>(cfg => cfg.With(x => x.StatusCode, HttpStatusCode.OK));
+        public async Task ChangeBalance_WithSuccess() {
 
-            var moqClient = InjectMock<IRestClient>();
-            moqClient.Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>())).ReturnsAsync(A<RestResponse>());
+            // arrange
+            Fixture.Customize<RestResponse>(cfg =>
+                cfg.With(x => x.StatusCode, HttpStatusCode.OK)
+                   .With(x => x.Content, @"{ 'isSuccessful': true, 'message': [],  'result': null }"));
 
+            MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>())).ReturnsAsync(A<RestResponse>());
+
+            // act
             var api = await CreateCut().ChangeBalanceAsync(A<long>());
+
+            // assert
+            api.IsSuccessful.Should().BeTrue();
+        }
+
+
+        [Test]
+        public async Task ChangeBalance_WithNotSuccess_MessageShouldResponse()
+        {
+            // arrange
+            Fixture.Customize<RestResponse>(cfg =>
+                cfg.With(x => x.StatusCode, HttpStatusCode.OK)
+                    .With(x => x.Content, @"{ 'isSuccessful': false, 'message': 'Balance not your',  'result': null }"));
+
+            MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>())).ReturnsAsync(A<RestResponse>());
+
+            // act
+            var api = await CreateCut().ChangeBalanceAsync(A<long>());
+
+            // assert
+            api.IsSuccessful.Should().BeFalse();
+            api.Message.ToString().Should().Be("Balance not your");
         }
     }
 }
