@@ -16,8 +16,8 @@ namespace IqOptionApi.http {
         private Profile _profile;
         private string _securedToken;
 
-
-        public IqHttpClient(string username, string password) {
+        public IqHttpClient(string username, string password)
+        {
             LoginModel = new LoginModel {Email = username, Password = password};
             HttpClient = new RestClient(new Uri("https://iqoption.com/api/"));
             AuthHttpClient = new RestClient(new Uri("https://auth.iqoption.com/api/v1.0/"));

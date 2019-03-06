@@ -16,9 +16,12 @@
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>- Upgrade to purely .NET Standard 2.0
-- No longer support for .NET462 and below
-- Using ToObservable on each property of Api/IqWebSocket/IqHttpClient for as IObservable&lt;T&gt;</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      - Upgrade to purely .NET Standard 2.0
+      - No longer support for .NET462 and below
+      - Using ToObservable on each property of Api/IqWebSocket/IqHttpClient for as IObservable&lt;T&gt;
+      - Support Changebalance feature
+    </PackageReleaseNotes>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <Version>2.0.0-alpha1</Version>
