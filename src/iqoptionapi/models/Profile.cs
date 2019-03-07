@@ -42,7 +42,7 @@ namespace IqOptionApi.Models {
         public long BalanceId { get; set; }
 
         [JsonProperty("balance_type")]
-        public long BalanceType { get; set; }
+        public BalanceType BalanceType { get; set; }
 
         [JsonProperty("messages")]
         public long Messages { get; set; }

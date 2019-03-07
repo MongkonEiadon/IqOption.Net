@@ -30,7 +30,7 @@ namespace IqOptionApi.Tests.JsonTest.Profiles {
             // assert
             msg.Balance.Should().Be(1031.2900390625m);
             msg.BalanceId.Should().Be(43997693);
-            msg.BalanceType.Should().Be(4);
+            msg.BalanceType.Should().Be(BalanceType.Practice);
         }
 
 

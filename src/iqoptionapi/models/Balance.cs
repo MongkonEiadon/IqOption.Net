@@ -6,7 +6,7 @@ namespace IqOptionApi.Models {
         public long Id { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public BalanceType Type { get; set; }
 
         [JsonProperty("amount")]
         public long Amount { get; set; }
