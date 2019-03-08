@@ -1,23 +1,21 @@
-# Build ASP.NET Core project using Azure Pipelines
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
+trigger:
+- master
+- develop
+- rel/*
+- preview/*
 
-pool:
-  vmImage: 'Ubuntu 16.04'
-  
-variables:
-  buildConfiguration: 'Release'
+pr:
+- master
+- rel/*
+- preview/*
 
-steps:
-- script: |
-    dotnet build $(parameters.solution) --configuration $(buildConfiguration)
-    dotnet test $(parameters.solution) dotnetcore-tests --configuration $(buildConfiguration) --logger trx
-    dotnet publish $(parameters.solution) --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY
-  failOnStderr: true
+jobs:
+- job: Windows
+  pool:
+    vmImage: vs2017-win2016
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-
-- task: PublishBuildArtifacts@1
+  steps:
+  - task: DotNetCoreInstaller@0
+    displayName: Install Dot Net Core v2.2.1
+    inputs:
+        version: '2.2.103'
