@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Threading.Tasks;
+using FluentAssertions;
+using IqOptionApi.Exceptions;
 using IqOptionApi.http.Commands;
 using IqOptionApi.Tests.Constants;
 using RestSharp;
@@ -10,13 +13,17 @@ namespace IqOptionApi.Tests.http
     public class GetBalanceModeTest : IqHttpClientBaseTest
     {
         [Test]
-        public async Task GetBalanceMode_WithReturnWithNotAuthorize_ErrorShouldNotThrown()
+        public void GetBalanceMode_WithReturnWithNotAuthorize_ErrorShouldNotThrown()
         {
             MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<GetProfileCommand>()))
                 .Returns(Task.FromResult(HttpConstants.NoLoggedIn));
 
             // act
-            var api = await CreateCut().GetBalanceModeAsync();
+            Action act = () => CreateCut().GetBalanceModeAsync().Wait();
+
+            // assert
+            act.Should().Throw<IqOptionMessageExceptionBase>()
+                .WithMessage("Not logged in");
         }
     }
 }
