@@ -1,4 +1,15 @@
 pool:
+
+trigger:
+  branches:
+    include: *
+pr:
+  branches:
+    include: 
+    - master
+    - releases/*
+    - develop
+
   vmImage: Hosted VS2019
   demands:
   - msbuild
