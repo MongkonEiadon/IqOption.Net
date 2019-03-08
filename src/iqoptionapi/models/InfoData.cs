@@ -3,7 +3,7 @@ using IqOptionApi.Converters.JsonConverters;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
-    public partial class InfoData {
+    public class InfoData {
         [JsonProperty("amount")]
         public long Amount { get; set; }
 
@@ -67,7 +67,7 @@ namespace IqOptionApi.Models {
         public long Sum { get; set; }
 
         [JsonProperty("win")]
-        public string Win { get; set; }
+        public WinType Win { get; set; }
 
         [JsonProperty("now")]
         public long Now { get; set; }

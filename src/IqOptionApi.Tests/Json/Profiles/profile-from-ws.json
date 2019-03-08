@@ -1,0 +1,214 @@
+﻿{
+  "name": "profile",
+  "msg": {
+    "avatar": "",
+    "confirmation_required": 0,
+    "popup": [],
+    "money": {
+      "deposit": {
+        "min": 2,
+        "max": 1000000
+      },
+      "withdraw": {
+        "min": 2,
+        "max": 1000000
+      }
+    },
+    "user_group": "Default",
+    "welcome_splash": 0,
+    "functions": {
+      "popup_ids": [
+        "1"
+      ],
+      "ext_fields": [],
+      "is_vip_mode": 0,
+      "is_bonus_block": 0,
+      "is_no_currency_change": 0,
+      "is_trading_bonus_block": 0
+    },
+    "finance_state": "",
+    "balance": 1031.2900390625,
+    "bonus_wager": 0,
+    "bonus_total_wager": 0,
+    "balance_id": 43997693,
+    "balance_type": 4,
+    "messages": 0,
+    "id": 7797866,
+    "demo": 0,
+    "public": 0,
+    "group_id": 1,
+    "name": "Mongkon Eiadon",
+    "nickname": "Isaac Miller",
+    "currency": "USD",
+    "currency_char": "$",
+    "mask": "$%s",
+    "city": "Bangkok",
+    "user_id": 7797866,
+    "first_name": "Mongkon",
+    "last_name": "Eiadon",
+    "phone": "66 *****3157",
+    "email": "m@email.com",
+    "created": 1452014867,
+    "last_visit": false,
+    "site_id": 1,
+    "tz": "Asia/Jakarta",
+    "locale": "th_TH",
+    "birthdate": 595900800,
+    "country_id": 194,
+    "currency_id": 5,
+    "gender": "male",
+    "address": "Ramkamhang",
+    "postal_index": "10240",
+    "timediff": 14400,
+    "tz_offset": 420,
+    "balances": [
+      {
+        "id": 8007269,
+        "user_id": 7797866,
+        "type": 1,
+        "amount": 0,
+        "enrolled_amount": 0,
+        "enrolled_sum_amount": 0,
+        "hold_amount": 0,
+        "orders_amount": 0,
+        "auth_amount": 0,
+        "equivalent": 0,
+        "currency": "USD",
+        "tournament_id": null,
+        "tournament_name": null,
+        "is_fiat": true
+      },
+      {
+        "id": 43997693,
+        "user_id": 7797866,
+        "type": 4,
+        "amount": 1031.29,
+        "enrolled_amount": 1031.299208,
+        "enrolled_sum_amount": 1031.299208,
+        "hold_amount": 0,
+        "orders_amount": 0,
+        "auth_amount": 0,
+        "equivalent": 0,
+        "currency": "USD",
+        "tournament_id": null,
+        "tournament_name": null,
+        "is_fiat": true
+      },
+      {
+        "id": 100544948,
+        "user_id": 7797866,
+        "type": 5,
+        "amount": 0,
+        "enrolled_amount": 0,
+        "enrolled_sum_amount": 0,
+        "hold_amount": 0,
+        "orders_amount": 0,
+        "auth_amount": 0,
+        "equivalent": 0,
+        "currency": "BTC",
+        "tournament_id": null,
+        "tournament_name": null,
+        "is_fiat": false
+      },
+      {
+        "id": 100544949,
+        "user_id": 7797866,
+        "type": 5,
+        "amount": 0,
+        "enrolled_amount": 0,
+        "enrolled_sum_amount": 0,
+        "hold_amount": 0,
+        "orders_amount": 0,
+        "auth_amount": 0,
+        "equivalent": 0,
+        "currency": "ETH",
+        "tournament_id": null,
+        "tournament_name": null,
+        "is_fiat": false
+      },
+      {
+        "id": 100544950,
+        "user_id": 7797866,
+        "type": 5,
+        "amount": 0,
+        "enrolled_amount": 0,
+        "enrolled_sum_amount": 0,
+        "hold_amount": 0,
+        "orders_amount": 0,
+        "auth_amount": 0,
+        "equivalent": 0,
+        "currency": "OTN",
+        "tournament_id": null,
+        "tournament_name": null,
+        "is_fiat": false
+      }
+    ],
+    "infeed": 1,
+    "confirmed_phones": [],
+    "need_phone_confirmation": false,
+    "rate_in_one_click": false,
+    "deposit_in_one_click": false,
+    "kyc_confirmed": false,
+    "kyc": {
+      "status": 3,
+      "isPhoneFilled": true,
+      "isPhoneNeeded": false,
+      "isProfileFilled": true,
+      "isProfileNeeded": false,
+      "isRegulatedUser": false,
+      "daysLeftToVerify": -1,
+      "isPhoneConfirmed": false,
+      "isDocumentsNeeded": false,
+      "isDocumentsApproved": false,
+      "isDocumentsDeclined": false,
+      "isDocumentsUploaded": false,
+      "isDocumentPoaUploaded": false,
+      "isDocumentPoiUploaded": false,
+      "isDocumentsUploadSkipped": false,
+      "isPhoneConfirmationSkipped": true
+    },
+    "trade_restricted": false,
+    "auth_two_factor": null,
+    "deposit_count": 0,
+    "is_activated": true,
+    "new_email": "",
+    "tc": true,
+    "trial": false,
+    "is_islamic": false,
+    "tin": "",
+    "personal_data_policy": {
+      "is_call_accepted": {
+        "status": true
+      },
+      "is_push_accepted": {
+        "status": true
+      },
+      "is_email_accepted": {
+        "status": true
+      },
+      "is_agreement_accepted": {
+        "status": null
+      },
+      "is_thirdparty_accepted": {
+        "status": true
+      }
+    },
+    "client_category_id": 1,
+    "tournaments_ids": null,
+    "socials": [],
+    "flag": "TH",
+    "cashback_level_info": {
+      "enabled": false
+    },
+    "user_circle": "No exp",
+    "skey": "1b03abf08a4dd969cf44c652809a076e",
+    "forget_status": {
+      "status": "none",
+      "created": null,
+      "expires": null
+    },
+    "account_status": "NONE",
+    "ssid": "f0ac9a56be312f32936bb868b1dca530"
+  },
+  "request_id": ""
+}

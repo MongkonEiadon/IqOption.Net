@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using Newtonsoft.Json;
 
-namespace IqOptionApi.Models
-{
-    public class CurrentCandle : CandleInfo
-    {
+namespace IqOptionApi.Models {
+    public class CurrentCandle : CandleInfo {
         [JsonProperty("active_id")]
         public ActivePair ActivePair { get; set; }
 

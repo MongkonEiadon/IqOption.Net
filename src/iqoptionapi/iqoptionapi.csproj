@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,46 +16,42 @@
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Fix Http Login</PackageReleaseNotes>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0.4</Version>
+    <PackageReleaseNotes>
+      - Upgrade to purely .NET Standard 2.0
+      - No longer support for .NET462 and below
+      - Using ToObservable on each property of Api/IqWebSocket/IqHttpClient for as IObservable&lt;T&gt;
+      - Support Changebalance feature
+    </PackageReleaseNotes>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0-alpha1</Version>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <DefineConstants>netcore2.0</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
-    <DefineConstants>net46</DefineConstants>
+    <DefineConstants>net_std20</DefineConstants>
+    <DefineConstants>LIBLOG_PUBLIC</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="restsharp" Version="106.3.1" />
-    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
-    <PackageReference Include="System.Reactive" Version="4.1.0" />
-    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
-    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-  </ItemGroup>
-
-
-
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+    <Compile Remove="extensions\ObservedExtensions.cs" />
+    <Compile Remove="IIqOptionApi.cs" />
+    <Compile Remove="IqOptionApi.cs" />
+    <Compile Remove="ws\IqOptionWebSocketClient.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="http\result\" />
+    <PackageReference Include="Dawn.Guard" Version="1.8.0" />
+    <PackageReference Include="LibLog" Version="5.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="polly" Version="7.0.3" />
+    <PackageReference Include="reactiveui" Version="9.10.1" />
+    <PackageReference Include="restsharp" Version="106.6.7" />
+    <PackageReference Include="System.Reactive" Version="4.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+    <PackageReference Include="websocket4net" Version="0.15.2" />
   </ItemGroup>
-
-
-
-
+  
 </Project>

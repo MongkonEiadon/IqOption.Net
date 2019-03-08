@@ -1,8 +1,6 @@
-﻿using iqoptionapi.ws.@base;
-using IqOptionApi.Models;
-using IqOptionApi.ws;
+﻿using IqOptionApi.Models;
+using IqOptionApi.ws.@base;
 
-namespace iqoptionapi.ws.result
-{
+namespace IqOptionApi.ws.result {
     public class BuyCompleteResultMessage : WsMessageBase<WsMessageWithSuccessfulResult<BuyResult>> { }
 }

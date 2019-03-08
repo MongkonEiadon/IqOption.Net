@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IqOptionApi.models.Instruments;
+using IqOptionApi.Models;
 
-namespace IqOptionApi.Models {
-    public partial class InstrumentResultSet : Dictionary<InstrumentType, Instrument[]> {
-        public InstrumentResultSet() : base() {
+namespace IqOptionApi.models.instruments {
+    public class InstrumentResultSet : Dictionary<InstrumentType, Instrument[]> {
+        public InstrumentResultSet() {
             this[InstrumentType.CFD] = new Instrument[] { };
             this[InstrumentType.Crypto] = new Instrument[] { };
             this[InstrumentType.Forex] = new Instrument[] { };

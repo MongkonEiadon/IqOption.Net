@@ -1,8 +1,13 @@
-﻿namespace IqOptionApi.Models {
+﻿using System.Runtime.Serialization;
+
+namespace IqOptionApi.models.instruments {
     public enum InstrumentType {
         Forex,
-        CFD,
+
+        [EnumMember(Value = "digital-option")] CFD,
+
         Crypto,
+
         Unknown
     }
 }

@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Json\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Json\Candles\Subscribe_CandleGenerated.json" />
+    <None Remove="Json\CFD\cfd-long-closed.json" />
+    <None Remove="Json\CFD\cfd-long-open.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fluentassertions" Version="5.6.0" />
+    <PackageReference Include="Microsoft.Reactive.Testing" Version="4.1.2" />
+    <PackageReference Include="Nunit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="System.Reactive" Version="4.1.2" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.1.2" />
+    <PackageReference Include="TestAutoFixture" Version="1.0.4" />
+    <PackageReference Include="Websocket.Client" Version="2.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iqoptionapi\IqOptionApi.csproj" />
+  </ItemGroup>
+
+</Project>

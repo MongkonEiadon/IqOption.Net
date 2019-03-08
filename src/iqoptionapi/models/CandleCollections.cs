@@ -1,10 +1,7 @@
-﻿using IqOptionApi.ws;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
-
     public class CandleCollections {
-
         [JsonProperty("candles")]
         public CandleInfo[] Infos { get; set; }
 

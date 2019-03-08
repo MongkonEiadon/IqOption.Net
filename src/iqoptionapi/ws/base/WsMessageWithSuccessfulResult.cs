@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.ws {
-
     public class WsMessageWithSuccessfulResult<T> where T : class, new() {
-
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
 
@@ -19,7 +16,7 @@ namespace IqOptionApi.ws {
         public string Location { get; set; }
 
         public string GetMessageDescription() {
-            return String.Join(", ", Message ?? Enumerable.Empty<object>());
+            return string.Join(", ", Message ?? Enumerable.Empty<object>());
         }
     }
 }
