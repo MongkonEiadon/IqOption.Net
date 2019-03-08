@@ -13,7 +13,8 @@ using RestSharp;
 
 namespace IqOptionApi.Tests.http {
     [TestFixture]
-    public class LoginAsyncTest : IqHttpApiTestBase {
+    public class LoginAsyncTest : IqHttpClientBaseTest
+    {
         
         [Test]
         public async Task LoginAsync_VerifyAuthClient_MustBeReceived() {

@@ -101,6 +101,14 @@ namespace IqOptionApi.http {
 
         }
 
+        /// <inheritdoc cref="IIqHttpClient.GetBalanceModeAsync"/>
+        public async Task<BalanceType> GetBalanceModeAsync()
+        {
+            var profile = await GetProfileAsync();
+
+            return profile.BalanceType;
+        }
+
         /// <inheritdoc cref="IIqHttpClient.ChangeBalance"/>
         public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalance(long balanceId) {
             
@@ -140,8 +148,6 @@ namespace IqOptionApi.http {
 
             return default(IqHttpResult<T>);
         }
-
-
 
         private string prefix() => (LoginModel?.Email ?? "CLIENT").PadRight(13).Substring(0, 13) + " |";
         private string L(string topic, string msg) => $"{prefix()} {topic.PadLeft(13).Substring(0, 13)} > {msg}";

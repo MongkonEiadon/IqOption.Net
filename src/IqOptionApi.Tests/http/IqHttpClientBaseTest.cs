@@ -8,8 +8,11 @@ using TestAutoFixture;
 namespace IqOptionApi.Tests.http
 {
     [TestFixture]
-    public class IqHttpApiTestBase : TestAutoFixtureFor<IqHttpClient>
+    public abstract class IqHttpClientBaseTest : TestAutoFixtureFor<IqHttpClient>
     {
+        protected Mock<IRestClient> MoqAuthClient { get; set; }
+        protected Mock<IRestClient> MoqHttpClient { get; set; }
+
         [SetUp]
         public void SetUp()
         {
@@ -26,8 +29,5 @@ namespace IqOptionApi.Tests.http
             Fixture.Customize<RestResponse>(cfg =>
                 cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson()));
         }
-
-        protected Mock<IRestClient> MoqAuthClient { get; set; }
-        protected Mock<IRestClient> MoqHttpClient { get; set; }
     }
 }
