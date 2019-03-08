@@ -41,5 +41,11 @@ namespace IqOptionApi.http {
         /// <param name="balanceId"></param>
         /// <returns></returns>
         Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId);
+
+        /// <summary>
+        /// Get current balance mode
+        /// </summary>
+        /// <returns></returns>
+        Task<BalanceType> GetBalanceModeAsync();
     }
 }

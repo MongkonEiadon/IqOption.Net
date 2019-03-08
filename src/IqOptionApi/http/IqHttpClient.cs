@@ -124,6 +124,13 @@ namespace IqOptionApi.http {
 
         }
 
+        public async Task<BalanceType> GetBalanceModeAsync()
+        {
+            var profile = await GetProfileAsync();
+
+            return profile.BalanceType;
+        }
+
         private Task<IRestResponse> ExecuteHttpClientAsync(IqOptionCommand cmd) {
             
             // send command

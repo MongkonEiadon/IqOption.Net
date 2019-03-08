@@ -7,29 +7,12 @@ using IqOptionApi.http;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
-using TestAutoFixture;
 
 namespace IqOptionApi.Tests.http {
     [TestFixture]
-    public class IqOptionApiTest : TestAutoFixtureFor<IqHttpClient> {
-        [SetUp]
-        public void SetUp() {
-            MoqAuthClient = InjectMock<IRestClient>();
-            MoqHttpClient = InjectMock<IRestClient>();
-
-            Fixture.Customize<IqHttpClient>(
-                cfg => cfg.FromFactory(() => new IqHttpClient("", "") {
-                    AuthHttpClient = MoqAuthClient.Object,
-                    HttpClient = MoqHttpClient.Object
-                }));
-
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson()));
-        }
-
-        private Mock<IRestClient> MoqAuthClient { get; set; }
-        private Mock<IRestClient> MoqHttpClient { get; set; }
-
+    public class LoginAsyncTest : IqHttpClientBaseTest
+    {
+      
         [Test]
         public async Task LoginAsync_VerifyAuthClient_MustBeReceived() {
             // arrange
