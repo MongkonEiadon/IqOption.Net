@@ -1,35 +1,20 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
+using IqOptionApi.Exceptions;
 using IqOptionApi.Extensions;
 using IqOptionApi.http;
+using IqOptionApi.Tests.Constants;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
-using TestAutoFixture;
 
 namespace IqOptionApi.Tests.http {
     [TestFixture]
-    public class IqOptionApiTest : TestAutoFixtureFor<IqHttpClient> {
-        [SetUp]
-        public void SetUp() {
-            MoqAuthClient = InjectMock<IRestClient>();
-            MoqHttpClient = InjectMock<IRestClient>();
-
-            Fixture.Customize<IqHttpClient>(
-                cfg => cfg.FromFactory(() => new IqHttpClient("", "") {
-                    AuthHttpClient = MoqAuthClient.Object,
-                    HttpClient = MoqHttpClient.Object
-                }));
-
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson()));
-        }
-
-        private Mock<IRestClient> MoqAuthClient { get; set; }
-        private Mock<IRestClient> MoqHttpClient { get; set; }
-
+    public class LoginAsyncTest : IqHttpApiTestBase {
+        
         [Test]
         public async Task LoginAsync_VerifyAuthClient_MustBeReceived() {
             // arrange
@@ -68,13 +53,9 @@ namespace IqOptionApi.Tests.http {
         [Test]
         public async Task LoginAsync_WhenStatusCodeIsOk_CookieWasAdded() {
             // arrange
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.Content, A<IqHttpResult<SsidResultMessage>>().AsJson())
-                    .With(x => x.StatusCode, HttpStatusCode.OK));
-
             MoqAuthClient
                 .Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>()))
-                .ReturnsAsync(A<RestResponse>());
+                .ReturnsAsync(HttpResponseConst.LoginSuccess);
 
             // act
             var result = await CreateCut().LoginAsync();
@@ -99,6 +80,21 @@ namespace IqOptionApi.Tests.http {
 
             // assert
             instance.IsSuccessful.Should().BeTrue();
+        }
+
+        [Test]
+        public void LoginAsync_WithInvalidCredentials_IsSuccessMustBeFalse()
+        {
+            // arrange
+            MoqAuthClient.Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>()))
+                .Returns(Task.FromResult(HttpResponseConst.InvalidCredentials));
+
+            // act
+            Action act = () => CreateCut().LoginAsync().Wait();
+
+            // assert
+            act.Should().Throw<IqOptionMessageExceptionBase>()
+                .WithMessage("Invalid credentials");
         }
     }
 }

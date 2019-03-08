@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using IqOptionApi.Exceptions;
 using IqOptionApi.Extensions;
 using IqOptionApi.http.Commands;
 using IqOptionApi.Logging;
 using IqOptionApi.Models;
+using Polly;
 using ReactiveUI;
 using RestSharp;
 
 namespace IqOptionApi.http {
     public class IqHttpClient : ReactiveObject, IIqHttpClient {
         private readonly ILog _logger = LogProvider.GetLogger("[HTTPS]");
-
 
         private Profile _profile;
         private string _securedToken;
@@ -70,6 +72,14 @@ namespace IqOptionApi.http {
 
                     return result;
                 }
+
+                // invalid credentials
+                case HttpStatusCode.Forbidden:
+                {
+                    var msg = httpResult.Content.JsonAs<IqHttpResult<object>>();
+                    _logger.Warn(R("login", msg.Errors.GetErrorMessage()));
+                    throw new IqOptionMessageExceptionBase(msg.Errors.GetErrorMessage());
+                }
                 default: {
                     var error = httpResult.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
                     error.IsSuccessful = false;
@@ -81,57 +91,57 @@ namespace IqOptionApi.http {
 
 
         public async Task<Profile> GetProfileAsync() {
+
             // send command
-            var result = await ExecuteHttpClientAsync(new GetProfileCommand());
+            var profile = await ExecuteCommandAsync<Profile>(new GetProfileCommand());
 
-            //
-            if (result != null && result.StatusCode == HttpStatusCode.OK) {
-                var data = result.Content.JsonAs<IqHttpResult<Profile>>().GetContent();
+            this.Profile = profile?.GetContent();
 
-                // log
-                _logger.Trace(L("GetProfile",
-                    $"Client Profile Updated UserId :{data.UserId}, trading with BalanceId: {data.BalanceId}"));
-
-                // updated profile
-                Profile = data;
-
-                return data;
-            }
-
-            return null;
-        }
-
-        /// <inheritdoc cref="IIqHttpClient.ChangeBalanceAsync"/>
-        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
-
-            try {
-
-                // send command
-                var result = await ExecuteHttpClientAsync(new ChangeBalanceCommand(balanceId));
-
-                if (result.IsSuccessful)
-                    _logger.Info(R("changebalance", "Success"));
-                else
-                    _logger.Warn(R("changebalance", result.ErrorMessage));
-
-
-                return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
-
-            }
-            catch {
-                return null;
-            }
+            return this.Profile;
 
         }
 
-        private Task<IRestResponse> ExecuteHttpClientAsync(IqOptionCommand cmd) {
+        /// <inheritdoc cref="IIqHttpClient.ChangeBalance"/>
+        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalance(long balanceId) {
             
             // send command
-            var result = HttpClient.ExecuteTaskAsync(cmd);
+            var result = await ExecuteCommandAsync<IHttpResultMessage>(new ChangeBalanceCommand(balanceId));
 
-            // response
             return result;
+
         }
+
+        private async Task<IqHttpResult<T>> ExecuteCommandAsync<T>(IqOptionCommand cmd, [CallerMemberName] string caller = "") {
+
+            // send command
+            try
+            {
+                var result = await HttpClient.ExecuteTaskAsync(cmd);
+
+                if (result.StatusCode == HttpStatusCode.OK)
+                {
+                    var data = result.Content.JsonAs<IqHttpResult<object>>();
+                    if (!data.IsSuccessful) 
+                        throw new IqOptionMessageExceptionBase(data.Message);
+
+                    _logger.Debug(R(caller, "Success"));
+                    return result.Content.JsonAs<IqHttpResult<T>>();
+                }
+            }
+
+            catch (IqOptionMessageExceptionBase iqex) {
+                _logger.Error(R(caller, iqex.Message));
+                throw iqex;
+            }
+
+            catch (Exception ex) {
+                _logger.ErrorException(R(caller, ex.Message), ex);
+            }
+
+            return default(IqHttpResult<T>);
+        }
+
+
 
         private string prefix() => (LoginModel?.Email ?? "CLIENT").PadRight(13).Substring(0, 13) + " |";
         private string L(string topic, string msg) => $"{prefix()} {topic.PadLeft(13).Substring(0, 13)} > {msg}";

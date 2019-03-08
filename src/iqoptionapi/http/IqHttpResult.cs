@@ -4,7 +4,7 @@ using IqOptionApi.Annotations;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.http {
-    public class IqHttpResult<T> where T : IHttpResultMessage {
+    public class IqHttpResult<T>  {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
 

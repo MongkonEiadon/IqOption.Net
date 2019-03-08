@@ -2,7 +2,7 @@
 using IqOptionApi.Extensions;
 using IqOptionApi.http;
 
-namespace IqOptionApi.exceptions {
+namespace IqOptionApi.Exceptions {
     public class LoginLimitExceededException : Exception {
         public LoginLimitExceededException(int ttl) :
             base($"Login limit exceeded, you can re-login in next {ttl} secs.") { }
