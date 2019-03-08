@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using IqOptionApi.Exceptions;
 using IqOptionApi.Extensions;
 using IqOptionApi.http;
 using IqOptionApi.Logging;
@@ -84,12 +85,37 @@ namespace IqOptionApi {
         }
 
         /// <inheritdoc />
+        public async Task<Profile> GetProfileAsync()
+        {
+            try
+            {
+                _logger.Info(L("getprofile", ""));
+                var profile = await HttpClient.GetProfileAsync();
+
+                return profile;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(L("getprofile", ex.Message));
+                return null;
+            }
+        }
+
+        /// <inheritdoc />
         public async Task<bool> ChangeBalanceAsync(long balanceId)
         {
-           _logger.Info(L("changebalance", $"Change to balance id: {balanceId}"));
-           var result = await HttpClient.ChangeBalanceAsync(balanceId);
+            try
+            {
+                _logger.Info(L("changebalance", $"Change to balance id: {balanceId}"));
+                await HttpClient.ChangeBalance(balanceId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(L("changebalance", $"{ex.Message}"), ex);
+                return false;
+            }
 
-           return result.IsSuccessful;
         }
 
         #endregion

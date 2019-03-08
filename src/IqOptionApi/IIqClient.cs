@@ -30,6 +30,12 @@ namespace IqOptionApi {
         /// <returns></returns>
         Task<bool> ConnectAsync();
 
+        /// <summary>
+        ///     Get Profile
+        /// </summary>
+        /// <returns></returns>
+        Task<Profile> GetProfileAsync();
+
 
         /// <summary>
         ///     Open buying position for Forex/Crypto/Options

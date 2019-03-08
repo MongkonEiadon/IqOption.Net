@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
+using IqOptionApi.Exceptions;
 using IqOptionApi.http;
 using IqOptionApi.http.Commands;
+using IqOptionApi.Tests.Constants;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
@@ -38,17 +40,14 @@ namespace IqOptionApi.Tests.http
         }
 
         [Test]
-        public async Task ChangeBalance_WithSuccess() {
+        public async Task ChangeBalance_WithSuccess()
+        {
 
-            // arrange
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.StatusCode, HttpStatusCode.OK)
-                   .With(x => x.Content, @"{ 'isSuccessful': true, 'message': [],  'result': null }"));
-
-            MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>())).ReturnsAsync(A<RestResponse>());
+            MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<IqOptionCommand>()))
+                .ReturnsAsync(HttpResponseConst.ChangeBalanceSuccess);
 
             // act
-            var api = await CreateCut().ChangeBalanceAsync(A<long>());
+            var api = await CreateCut().ChangeBalance(A<long>());
 
             // assert
             api.IsSuccessful.Should().BeTrue();
@@ -56,21 +55,18 @@ namespace IqOptionApi.Tests.http
 
 
         [Test]
-        public async Task ChangeBalance_WithNotSuccess_MessageShouldResponse()
+        public void ChangeBalance_WithNotSuccess_MessageShouldResponse()
         {
             // arrange
-            Fixture.Customize<RestResponse>(cfg =>
-                cfg.With(x => x.StatusCode, HttpStatusCode.OK)
-                    .With(x => x.Content, @"{ 'isSuccessful': false, 'message': 'Balance not your',  'result': null }"));
-
-            MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<IRestRequest>())).ReturnsAsync(A<RestResponse>());
+            MoqHttpClient.Setup(x => x.ExecuteTaskAsync(Any<IqOptionCommand>()))
+                .ReturnsAsync(HttpResponseConst.ChangeIncorrectBalance);
 
             // act
-            var api = await CreateCut().ChangeBalanceAsync(A<long>());
+            Action action = () => CreateCut().ChangeBalance(A<long>()).Wait();
 
             // assert
-            api.IsSuccessful.Should().BeFalse();
-            api.Message.ToString().Should().Be("Balance not your");
+            action.Should().Throw<IqOptionMessageExceptionBase>()
+                .WithMessage("Balance not your");
         }
     }
 }
