@@ -7,7 +7,6 @@ using IqOptionApi.Extensions;
 using IqOptionApi.http.Commands;
 using IqOptionApi.Logging;
 using IqOptionApi.Models;
-using Polly;
 using ReactiveUI;
 using RestSharp;
 
@@ -27,8 +26,8 @@ namespace IqOptionApi.http {
 
         internal IRestClient HttpClient { get; set; }
         internal IRestClient AuthHttpClient { get; set; }
-
-
+        
+        /// <inheritdoc />"/>
         public string SecuredToken {
             get => _securedToken;
             private set => this.RaiseAndSetIfChanged(ref _securedToken, value);

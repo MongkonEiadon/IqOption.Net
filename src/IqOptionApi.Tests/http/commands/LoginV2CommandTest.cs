@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using FluentAssertions;
 using IqOptionApi.http.Commands;
 using IqOptionApi.Models;
@@ -8,7 +9,7 @@ using TestAutoFixture;
 
 namespace IqOptionApi.Tests.http.commands {
     [TestFixture]
-    public class LoginV2CommandTest : TestAutoFixtureFor<LoginV2Command> {
+    public class LoginV2CommandTest : TestAutoFixture.TestAutoFixture {
         [SetUp]
         public void SetUp() {
             Fixture.Customize<LoginModel>(cfg =>

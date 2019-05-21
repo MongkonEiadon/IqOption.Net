@@ -45,9 +45,8 @@
     <PackageReference Include="Dawn.Guard" Version="1.8.0" />
     <PackageReference Include="LibLog" Version="5.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="polly" Version="7.0.3" />
-    <PackageReference Include="reactiveui" Version="9.10.1" />
-    <PackageReference Include="restsharp" Version="106.6.7" />
+    <PackageReference Include="Reactiveui" Version="9.10.1" />
+    <PackageReference Include="Restsharp" Version="106.6.7" />
     <PackageReference Include="System.Reactive" Version="4.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
