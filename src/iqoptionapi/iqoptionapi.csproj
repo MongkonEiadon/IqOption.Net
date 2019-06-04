@@ -45,7 +45,7 @@
     <PackageReference Include="Dawn.Guard" Version="1.8.0" />
     <PackageReference Include="LibLog" Version="5.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="Reactiveui" Version="9.15.7" />
+    <PackageReference Include="Reactiveui" Version="9.16.6" />
     <PackageReference Include="Restsharp" Version="106.6.9" />
     <PackageReference Include="System.Reactive" Version="4.1.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
