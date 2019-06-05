@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using IqOptionApi.extensions;
-using IqOptionApi.ws.request;
+using IqOptionApi.Extensions;
 using IqOptionApi.http;
+using IqOptionApi.Logging;
+using IqOptionApi.models.instruments;
+using IqOptionApi.models.Instruments;
 using IqOptionApi.Models;
 using IqOptionApi.ws;
-using Serilog;
 
 namespace IqOptionApi {
     public class IqOptionApi : IIqOptionApi {
 
         #region [Privates]
 
-        private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
+        private readonly ILog _logger = LogProvider.GetCurrentClassLogger();
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 
         private readonly Subject<bool> connectedSubject = new Subject<bool>();
@@ -41,35 +39,36 @@ namespace IqOptionApi {
         public bool IsConnected { get; private set; }
 
         //clients
-        public IqOptionHttpClient HttpClient { get; }
-        public IqOptionWebSocketClient WsClient { get; private set; }
+        public IqHttpClient IqHttpClient { get; }
+        public IqOptionWebSocketClient WebSocketClient { get; private set; }
+        public IIqWsClient IqWsClient { get; }
 
         //obs
-        public IObservable<InfoData[]> InfoDatasObservable => WsClient?.InfoDataObservable;
+        public IObservable<InfoData[]> InfoDatasObservable => WebSocketClient?.InfoDataObservable;
         public IObservable<Profile> ProfileObservable => _profileSubject.Publish().RefCount();
         public IObservable<bool> IsConnectedObservable => connectedSubject.Publish().RefCount();
-        public IObservable<BuyResult> BuyResultObservable => WsClient?.BuyResultObservable;
+        public IObservable<BuyResult> BuyResultObservable => WebSocketClient?.BuyResultObservable;
 
         #endregion
-
-
-
+               
         public Task<bool> ConnectAsync() {
             connectedSubject.OnNext(false);
             IsConnected = false;
 
             var tcs = new TaskCompletionSource<bool>();
             try {
-                this.HttpClient
+                this.IqHttpClient
                     .LoginAsync()
                     .ContinueWith(t => {
                         if (t.Result != null && t.Result.IsSuccessful) {
                            
-                            _logger.Information($"{Username} logged in success!");
+                            _logger.Info($"{Username} logged in success!");
 
-                            WsClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
+                            //WebSocketClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
 
-                            SubscribeWebSocket();
+                            //SubscribeWebSocket();
+
+                            IqWsClient.OpenSecuredConnectionAsync(t.Result.Data.Ssid);
 
                             IsConnected = true;
                             connectedSubject.OnNext(true);
@@ -77,7 +76,7 @@ namespace IqOptionApi {
                             return;
                         }
 
-                        _logger.Information($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
+                        _logger.Info($"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
                         tcs.TrySetResult(false);
                     });
             }
@@ -89,12 +88,12 @@ namespace IqOptionApi {
         }
 
         public async Task<Profile> GetProfileAsync() {
-            var result = await HttpClient.GetProfileAsync();
-            return result.Result;
+            var result = await IqHttpClient.GetProfileAsync();
+            return result;
         }
 
         public async Task<bool> ChangeBalanceAsync(long balanceId) {
-            var result = await HttpClient.ChangeBalanceAsync(balanceId);
+            var result = await IqHttpClient.ChangeBalanceAsync(balanceId);
 
             if (result?.Message == null && !result.IsSuccessful) {
                 _logger.Error($"Change balance ({balanceId}) error : {result.Message}");
@@ -107,19 +106,19 @@ namespace IqOptionApi {
         public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
             DateTimeOffset expiration = default(DateTimeOffset)) {
             
-            return WsClient?.BuyAsync(pair, size, direction, expiration);
+            return WebSocketClient?.BuyAsync(pair, size, direction, expiration);
         }
 
 
         public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to) {
-            return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
+            return WebSocketClient?.GetCandlesAsync(pair, timeFrame, count, to);
         }
 
         public Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf) {
 
-            WsClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
+            WebSocketClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
 
-            var stream = WsClient?
+            var stream = WebSocketClient?
                 .RealTimeCandleInfoObservable
                 .Where(x => x.ActivePair == pair && x.TimeFrame == tf);
             
@@ -128,12 +127,12 @@ namespace IqOptionApi {
         }
 
         public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf) {
-            return WsClient?.UnsubscribeCandlesAsync(pair, tf);
+            return WebSocketClient?.UnsubscribeCandlesAsync(pair, tf);
         }
 
         public void Dispose() {
             connectedSubject?.Dispose();
-            WsClient?.Dispose();
+            WebSocketClient?.Dispose();
         }
 
 
@@ -145,14 +144,14 @@ namespace IqOptionApi {
         private void SubscribeWebSocket() {
 
             //subscribe profile
-            WsClient.ProfileObservable
-                .Merge(HttpClient.ProfileObservable())
+            WebSocketClient.ProfileObservable
+                .Merge(IqHttpClient.ProfileUpdated)
                 .DistinctUntilChanged()
                 .Where(x => x!=null)
                 .Subscribe(x => Profile = x);
 
             //subscribe for instrument updated
-            WsClient.InstrumentResultSetObservable
+            WebSocketClient.InstrumentResultSetObservable
                 .Subscribe(x => Instruments = x);
 
 
@@ -166,19 +165,11 @@ namespace IqOptionApi {
             Password = password;
 
             //set up client
-            HttpClient = new IqOptionHttpClient(username, password);
-            WsClient = new IqOptionWebSocketClient("");
+            IqHttpClient = new IqHttpClient(username, password);
+            IqWsClient = new IqWsClient();
         }
 
-      
-
         #endregion
-    }
-
-    public enum OrderDirection {
-        [EnumMember(Value = "put")] Put = 1,
-
-        [EnumMember(Value = "call")] Call = 2
     }
 
 

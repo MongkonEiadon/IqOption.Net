@@ -1,0 +1,11 @@
+﻿{
+  "name": "buyComplete",
+  "request_id": "",
+  "msg": {
+    "isSuccessful": false,
+    "message": ["หมดเวลาสำหรับการซื้อออปชันแล้ว โปรดลองอีกครั้งภายหลัง"],
+    "result": {
+      "request_id": null
+    }
+  }
+}

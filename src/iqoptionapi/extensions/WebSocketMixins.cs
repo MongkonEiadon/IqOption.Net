@@ -4,22 +4,21 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using IqOptionApi.extensions;
 
-namespace IqOptionApi {
+namespace IqOptionApi.Extensions {
     internal static class WebSocketMixins {
         public static Task SendString(this ClientWebSocket ws, object data, CancellationToken cancellation) {
             return ws.SendString(data.AsJson(), cancellation);
         }
 
-        public static Task SendString(this ClientWebSocket ws, String data, CancellationToken cancellation) {
+        public static Task SendString(this ClientWebSocket ws, string data, CancellationToken cancellation) {
             var encoded = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
+            var buffer = new ArraySegment<byte>(encoded, 0, encoded.Length);
             return ws.SendAsync(buffer, WebSocketMessageType.Text, true, cancellation);
         }
 
-        public static async Task<String> ReadString(this ClientWebSocket ws) {
-            ArraySegment<Byte> buffer = new ArraySegment<byte>(new Byte[8192]);
+        public static async Task<string> ReadString(this ClientWebSocket ws) {
+            var buffer = new ArraySegment<byte>(new byte[8192]);
 
             WebSocketReceiveResult result = null;
 
@@ -31,8 +30,9 @@ namespace IqOptionApi {
 
                 ms.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new StreamReader(ms, Encoding.UTF8))
+                using (var reader = new StreamReader(ms, Encoding.UTF8)) {
                     return reader.ReadToEnd();
+                }
             }
         }
     }

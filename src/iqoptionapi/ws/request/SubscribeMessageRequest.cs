@@ -1,27 +1,24 @@
-﻿using iqoptionapi.ws.@base;
-using IqOptionApi.Models;
+﻿using IqOptionApi.Models;
+using IqOptionApi.ws.@base;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.ws.request {
+namespace IqOptionApi.ws.Request {
     internal class SubscribeMessageRequest : WsMessageBase<SubscribeRequestBody> {
-
-        public override string Name => "subscribeMessage";
-
         public SubscribeMessageRequest(ActivePair pair, TimeFrame tf) {
-            base.Message = new SubscribeRequestBody() {
-                Parameters = new SubscribeRequestParameter() {
-                    Filter = new SubscribeRequestParameter.RequestFilter() {
+            base.Message = new SubscribeRequestBody {
+                Parameters = new SubscribeRequestParameter {
+                    Filter = new SubscribeRequestParameter.RequestFilter {
                         ActivePair = pair,
                         TimeFrame = tf
                     }
                 }
             };
         }
+
+        public override string Name => "subscribeMessage";
     }
 
     internal class SubscribeRequestBody {
-
-
         [JsonProperty("name")]
         public string Name { get; set; } = "candle-generated";
 
@@ -30,7 +27,6 @@ namespace IqOptionApi.ws.request {
     }
 
     internal class SubscribeRequestParameter {
-
         [JsonProperty("routingFilters")]
         public RequestFilter Filter { get; set; }
 
@@ -43,6 +39,4 @@ namespace IqOptionApi.ws.request {
             public TimeFrame TimeFrame { get; set; }
         }
     }
-
-
 }

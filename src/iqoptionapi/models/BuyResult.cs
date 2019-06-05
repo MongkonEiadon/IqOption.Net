@@ -3,7 +3,6 @@ using IqOptionApi.Converters.JsonConverters;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
-
     public class BuyResult {
         [JsonProperty("user_id")]
         public long UserId { get; set; }
@@ -63,7 +62,7 @@ namespace IqOptionApi.Models {
         public object[] ErrorMessage { get; set; }
 
         public static BuyResult BuyResultError(object[] msg) {
-            return new BuyResult() {ErrorMessage = msg};
+            return new BuyResult {ErrorMessage = msg};
         }
     }
 }

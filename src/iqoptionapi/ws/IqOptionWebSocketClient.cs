@@ -4,19 +4,25 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using iqoptionapi.ws.@base;
-using iqoptionapi.ws.result;
-using IqOptionApi.extensions;
+using IqOptionApi.Extensions;
+using IqOptionApi.Logging;
+using IqOptionApi.models.instruments;
 using IqOptionApi.Models;
-using IqOptionApi.ws.request;
-using Serilog;
-using WebSocket4Net;
+using IqOptionApi.ws.@base;
+using IqOptionApi.ws.result;
+using IqOptionApi.ws.Request;
+using Websocket.Client;
 
 namespace IqOptionApi.ws {
     public class IqOptionWebSocketClient : IDisposable {
         //privates
-        private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
-        private WebSocket Client { get; }
+        private readonly ILog _logger = LogProvider.GetCurrentClassLogger();
+
+        private WebsocketClient _ws;
+
+        public IqOptionWebSocketClient() {
+            _ws = new WebsocketClient(new Uri("$wss://iqoption.com/echo/websocket"));
+        }
 
         public IqOptionWebSocketClient(Action<IqOptionWebSocketClient> initialSetup = null,
             string host = "iqoption.com") {
@@ -59,7 +65,7 @@ namespace IqOptionApi.ws {
                     }
                     case "instruments": {
                         var result = x.JsonAs<WsMessageBase<InstrumentsResult>>().Message;
-                        _logger.Verbose($"Received Inst. => instruments ({result.Type.ToString()})");
+                        _logger.Trace($"Received Inst. => instruments ({result.Type.ToString()})");
                         _instrumentResultSet[result.Type] = result.Instruments;
                         _instrumentResultSetSubject.OnNext(_instrumentResultSet);
 
@@ -92,7 +98,7 @@ namespace IqOptionApi.ws {
                         _infoDataSubject.OnNext(result?.Message);
                         var info = result?.Message.FirstOrDefault();
                         if (info != null)
-                            _logger.Verbose(
+                            _logger.Trace(
                                 $"info-received  => {info.UserId} {info.Win} {info.Direction} {info.Sum} {info.Active} @{info.Value} exp {info.ExpTime}({info.Expired})");
                         break;
                     }
@@ -101,11 +107,11 @@ namespace IqOptionApi.ws {
                         var result = x.JsonAs<BuyCompleteResultMessage>().Message;
                         if (result.IsSuccessful) {
                             var buyResult = x.JsonAs<BuyCompleteResultMessage>().Message.Result;
-                            _logger.Verbose(
+                            _logger.Trace(
                                 $"buycompleted   => {buyResult.UserId} {buyResult.Type} {buyResult.Direction} {buyResult.Price} {(ActivePair) buyResult.Act} @{buyResult.Value} ");
                         }
                         else {
-                            _logger.Warning($"{Profile?.UserId}\t{result.GetMessageDescription()}");
+                            _logger.Warn($"{Profile?.UserId}\t{result.GetMessageDescription()}");
                         }
 
                         _buyResultSubject.OnNext(result.Result);
@@ -129,7 +135,7 @@ namespace IqOptionApi.ws {
                     }
 
                     default: {
-                        _logger.Verbose(Profile?.Id + "    =>  " + a.AsJson());
+                        _logger.Trace(Profile?.Id + "    =>  " + a.AsJson());
                         break;
                     }
                 }
@@ -140,7 +146,20 @@ namespace IqOptionApi.ws {
         }
 
         public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") : this(
-            x => x.OpenSecuredSocketAsync(secureToken), host) { }
+            x => x.OpenSecuredSocketAsync(secureToken), host) {
+        }
+
+        private WebSocket Client { get; }
+
+        #region [ServerTimes]
+
+        public static DateTimeOffset ServerTime { get; private set; }
+
+        #endregion
+
+        public void Dispose() {
+            Client?.Dispose();
+        }
 
 
         #region [Public's]
@@ -185,12 +204,11 @@ namespace IqOptionApi.ws {
             if (Client.State == WebSocketState.Open)
                 return Task.FromResult(true);
 #if net46
-
             Client.Open();
             return Task.FromResult(true);
 
 #else
-            return Client.OpenAsync();
+            return null; // Client.OpenAsync();
 #endif
         }
 
@@ -202,7 +220,7 @@ namespace IqOptionApi.ws {
 
         public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator) {
             if (await OpenWebSocketAsync()) {
-                _logger.Information($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
+                _logger.Info($"send message   => :\t{messageCreator.CreateIqOptionMessage()}");
                 Client.Send(messageCreator.CreateIqOptionMessage());
             }
         }
@@ -231,7 +249,7 @@ namespace IqOptionApi.ws {
         public Task<InstrumentResultSet> SendInstrumentsRequestAsync() {
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
             try {
-                _logger.Verbose(nameof(SendInstrumentsRequestAsync));
+                _logger.Trace(nameof(SendInstrumentsRequestAsync));
 
                 //subscribe for the lastest result
                 InstrumentResultSetObservable
@@ -273,12 +291,12 @@ namespace IqOptionApi.ws {
             ActivePair pair,
             int size,
             OrderDirection direction,
-            DateTimeOffset expiration = default(DateTimeOffset)) {
+            DateTimeOffset expiration = default) {
             var tcs = new TaskCompletionSource<BuyResult>();
             try {
                 var obs = BuyResultObservable
                     .Where(x => x != null)
-                    .Subscribe(x => 
+                    .Subscribe(x =>
                         tcs.TrySetResult(x));
 
                 tcs.Task.ContinueWith(t => {
@@ -286,10 +304,11 @@ namespace IqOptionApi.ws {
                 });
 
                 //reduce second to 00s 
-                if(expiration.Second % 60 != 0)
+                if (expiration.Second % 60 != 0)
                     expiration = expiration.AddSeconds(60 - expiration.Second);
 
-                SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTimeOffset.Now)).ConfigureAwait(false);
+                SendMessageAsync(new BuyV2WsMessage(pair, size, direction, expiration, DateTimeOffset.Now))
+                    .ConfigureAwait(false);
             }
             catch (Exception ex) {
                 tcs.TrySetException(ex);
@@ -304,12 +323,6 @@ namespace IqOptionApi.ws {
 
         private readonly Subject<DateTimeOffset> _heartbeat = new Subject<DateTimeOffset>();
         public IObservable<DateTimeOffset> HeartbeatObservable => _heartbeat.Publish().RefCount();
-
-        #endregion
-
-        #region [ServerTimes]
-
-        public static DateTimeOffset ServerTime { get; private set; }
 
         #endregion
 
@@ -365,9 +378,5 @@ namespace IqOptionApi.ws {
         }
 
         #endregion
-
-        public void Dispose() {
-            Client?.Dispose();
-        }
     }
 }

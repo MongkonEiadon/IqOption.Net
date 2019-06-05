@@ -1,6 +1,6 @@
-﻿using iqoptionapi.ws.@base;
+﻿using IqOptionApi.ws.@base;
 
-namespace IqOptionApi.ws.request {
+namespace IqOptionApi.ws.Request {
     internal class SsidWsMessageBase : WsMessageBase<string> {
         public SsidWsMessageBase(string ssid) {
             base.Message = ssid;

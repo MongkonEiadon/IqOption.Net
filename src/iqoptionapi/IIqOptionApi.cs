@@ -6,8 +6,12 @@ using IqOptionApi.ws;
 
 namespace IqOptionApi {
     public interface IIqOptionApi : IDisposable {
-        IqOptionWebSocketClient WsClient { get; }
-        IqOptionHttpClient HttpClient { get; }
+        [Obsolete]
+        IqOptionWebSocketClient WebSocketClient { get; }
+        
+        IIqWsClient IqWsClient { get; }
+
+        IqHttpClient IqHttpClient { get; }
         IObservable<Profile> ProfileObservable { get; }
         IObservable<InfoData[]> InfoDatasObservable { get; }
         Profile Profile { get; }
@@ -22,6 +26,5 @@ namespace IqOptionApi {
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf);
         Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf);
-
     }
 }

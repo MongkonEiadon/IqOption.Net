@@ -4,7 +4,7 @@ using IqOptionApi.http;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
-    public partial class Profile : IHttpResultMessage {
+    public class Profile : IHttpResultMessage {
         [JsonProperty("avatar")]
         public string Avatar { get; set; }
 
@@ -30,7 +30,7 @@ namespace IqOptionApi.Models {
         public string FinanceState { get; set; }
 
         [JsonProperty("balance")]
-        public long Balance { get; set; }
+        public decimal Balance { get; set; }
 
         [JsonProperty("bonus_wager")]
         public long BonusWager { get; set; }
@@ -42,7 +42,7 @@ namespace IqOptionApi.Models {
         public long BalanceId { get; set; }
 
         [JsonProperty("balance_type")]
-        public long BalanceType { get; set; }
+        public BalanceType BalanceType { get; set; }
 
         [JsonProperty("messages")]
         public long Messages { get; set; }
@@ -93,7 +93,7 @@ namespace IqOptionApi.Models {
         public string Email { get; set; }
 
         [JsonProperty("created")]
-        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
         public DateTimeOffset? Created { get; set; }
 
         [JsonProperty("last_visit")]
@@ -109,7 +109,8 @@ namespace IqOptionApi.Models {
         public string Locale { get; set; }
 
         [JsonProperty("birthdate")]
-        public bool Birthdate { get; set; }
+        [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
+        public DateTimeOffset Birthdate { get; set; }
 
         [JsonProperty("country_id")]
         public long CountryId { get; set; }

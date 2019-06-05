@@ -2,7 +2,7 @@
 using System.Linq;
 using IqOptionApi.Models;
 
-namespace IqOptionApi.extensions {
+namespace IqOptionApi.Extensions {
     public static class InfoDataExtensions {
         public static IEnumerable<InfoData> OnlyOpenedInfoData(this IEnumerable<InfoData> This) {
             return This.Where(x => x.Win.Equals("equal"));

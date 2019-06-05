@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using IqOptionApi.Annotations;
 using Newtonsoft.Json;
 
 namespace IqOptionApi.http {
-    public class IqHttpResult<T> where T : IHttpResultMessage {
+    public class IqHttpResult<T>  {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
 
@@ -22,10 +22,16 @@ namespace IqOptionApi.http {
 
         [JsonProperty("errors")]
         public Errors Errors { get; set; }
+
+        [CanBeNull]
+        public T GetContent() {
+            if (Data != null)
+                return Data;
+            return Result;
+        }
     }
 
     public class Errors : List<ErrorResult> {
-
         public string GetErrorMessage() {
             return string.Join(", ", this.Select(x => x.Message));
         }
@@ -33,10 +39,12 @@ namespace IqOptionApi.http {
 
     public class ErrorResult {
         [JsonProperty("code")]
-    public int Code { get; set; }
+        public int Code { get; set; }
+
         [JsonProperty("title")]
         public string Message { get; set; }
     }
+
     public class LoginFailedResultMessage {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
@@ -66,8 +74,7 @@ namespace IqOptionApi.http {
         public int Ttl { get; set; }
     }
 
-    public class SsidResultMessage : IHttpResultMessage
-    {
+    public class SsidResultMessage : IHttpResultMessage {
         [JsonProperty("ssid")]
         public string Ssid { get; set; }
     }

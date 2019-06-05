@@ -1,11 +1,9 @@
 ﻿using System;
 using IqOptionApi.Converters.JsonConverters;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models {
     public class CandleInfo {
-
         [JsonProperty("id")]
         public int Id { get; set; }
 
