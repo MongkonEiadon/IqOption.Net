@@ -84,7 +84,7 @@ public async Task TradingFollower_ExampleAsync() {
 ## Version 2.0.0 
 Now you can open order like this
 ```csharp
-var api = new IqOptionApi("email@email.com", "Code11054");
+var api = new IqOptionApi("email@email.com", "passcode");
 
 try {
     //logging in
