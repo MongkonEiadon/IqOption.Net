@@ -1,5 +1,8 @@
 # IqOption.Net
 iqoption api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
+Now we can talk about the issue on gitter here 
+
+[![Gitter](https://badges.gitter.im/Iqoption-Net/community.svg)](https://gitter.im/Iqoption-Net/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 |Branch|Build|Nuget|
 |:--:|:--:|:--:|
