@@ -1,15 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using iqoptionapi.ws.@base;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.ws.request {
-    public interface IWsRequestMessage<T> : IWsIqOptionMessageCreator {
 
-        [JsonProperty("name")]
-        string Name { get; set; }
+    public interface IWsMessage<T> : IWsIqOptionMessageCreator {
 
-        [JsonProperty("msg")]
-        T Message { get; set; }
+        [JsonProperty("name")] string Name { get; set; }
+
+        [JsonProperty("msg")] T Message { get; set; }
+
     }
 
-
-    public interface IResponseMessage { }
 }

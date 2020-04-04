@@ -1,4 +1,5 @@
 ﻿using System;
+
 using iqoptionapi.ws.@base;
 using IqOptionApi.Models;
 using Newtonsoft.Json;
@@ -17,7 +18,26 @@ namespace IqOptionApi.ws.request {
                }
             };
         }
-        public override string Name => "sendMessage";
+
+        public override string Name => MessageType.SendMessage;
+
+    }
+    
+    
+
+    public class RequestBody<T> where T : class {
+
+        [JsonProperty("name")]
+        public string RequestBodyType { get; set; }
+        
+        
+        [JsonProperty("body")]
+        public T Body { get; set; }
+
+
+        [JsonProperty("version")] 
+        public string Version { get; set; } = "1.0";
+
     }
 
 

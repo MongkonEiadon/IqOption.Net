@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using IqOptionApi.extensions;
-using IqOptionApi.ws.request;
+
 using IqOptionApi.http;
 using IqOptionApi.Models;
 using IqOptionApi.ws;
 using Serilog;
 
 namespace IqOptionApi {
-    public class IqOptionApi : IIqOptionApi {
+    public class IqOptionClient : IIqOptionClient {
 
         #region [Privates]
 
-        private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
+        private readonly ILogger _logger =  IqOptionLoggerFactory.CreateLogger();
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 
         private readonly Subject<bool> connectedSubject = new Subject<bool>();
@@ -46,13 +43,11 @@ namespace IqOptionApi {
 
         //obs
         public IObservable<InfoData[]> InfoDatasObservable => WsClient?.InfoDataObservable;
-        public IObservable<Profile> ProfileObservable => _profileSubject.Publish().RefCount();
-        public IObservable<bool> IsConnectedObservable => connectedSubject.Publish().RefCount();
+        public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
+        public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
         public IObservable<BuyResult> BuyResultObservable => WsClient?.BuyResultObservable;
 
         #endregion
-
-
 
         public Task<bool> ConnectAsync() {
             connectedSubject.OnNext(false);
@@ -67,7 +62,8 @@ namespace IqOptionApi {
                            
                             _logger.Information($"{Username} logged in success!");
 
-                            WsClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
+                            if(WsClient != null) WsClient.Dispose();
+                            WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
 
                             SubscribeWebSocket();
 
@@ -101,11 +97,12 @@ namespace IqOptionApi {
                 return false;
             }
 
+            _logger.Information($"Change balance to {balanceId} successfully!");
             return true;
         }
 
         public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
-            DateTimeOffset expiration = default(DateTimeOffset)) {
+            DateTimeOffset expiration) {
             
             return WsClient?.BuyAsync(pair, size, direction, expiration);
         }
@@ -145,8 +142,8 @@ namespace IqOptionApi {
         private void SubscribeWebSocket() {
 
             //subscribe profile
-            WsClient.ProfileObservable
-                .Merge(HttpClient.ProfileObservable())
+            HttpClient.ProfileObservable()
+                .Merge(WsClient.ProfileObservable())
                 .DistinctUntilChanged()
                 .Where(x => x!=null)
                 .Subscribe(x => Profile = x);
@@ -160,14 +157,13 @@ namespace IqOptionApi {
 
         #region [Ctor]
 
-        public IqOptionApi(string username, string password, string host = "iqoption.com")
+        public IqOptionClient(string username, string password, string host = "iqoption.com")
         {
             Username = username;
             Password = password;
 
             //set up client
             HttpClient = new IqOptionHttpClient(username, password);
-            WsClient = new IqOptionWebSocketClient("");
         }
 
       
@@ -176,6 +172,7 @@ namespace IqOptionApi {
     }
 
     public enum OrderDirection {
+        
         [EnumMember(Value = "put")] Put = 1,
 
         [EnumMember(Value = "call")] Call = 2

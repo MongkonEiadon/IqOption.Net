@@ -6,10 +6,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models {
-    public class HeartBeat  : WsMessageBase<DateTimeOffset>, IResponseMessage {
+    public class HeartBeat  : WsMessageBase<DateTimeOffset> {
 
         [JsonProperty("msg")]
-        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
         public override DateTimeOffset Message { get; set; }
 
     }

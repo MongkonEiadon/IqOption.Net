@@ -1,12 +1,17 @@
 ﻿
 using System;
+
+using FluentAssertions;
+
 using IqOptionApi.Models;
 using Newtonsoft.Json;
-using Shouldly;
-using Xunit;
+
+using NUnit.Framework;
 
 namespace IqOptionApi.unit.JsonTest {
-    public class HeartBeatTest : IClassFixture<LoadJsonFileTest>
+    
+    [TestFixture]
+    public class HeartBeatTest : TestFor<LoadJsonFileTest>
     {
         private readonly LoadJsonFileTest _loadTest;
         private string Json => _loadTest.LoadJson("heartbeat.json");
@@ -15,7 +20,7 @@ namespace IqOptionApi.unit.JsonTest {
         }
 
 
-        [Fact]
+        [Test]
         public void ConvertHeartbeat_WithExistingValue_ValuedConverted() {
 
             // act
@@ -26,8 +31,8 @@ namespace IqOptionApi.unit.JsonTest {
 
             var dt = DateTimeOffset.FromUnixTimeMilliseconds(1534749247713);
 
-            result.ShouldNotBeNull();
-            result.Message.ShouldBe(dt);
+            result.Should().NotBeNull();
+            result.Message.Should().Be(dt);
         }
     }
 }

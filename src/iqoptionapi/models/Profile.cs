@@ -1,9 +1,32 @@
 ﻿using System;
+using System.Runtime.Serialization;
+
 using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.http;
+using IqOptionApi.ws;
+
+using iqoptionapi.ws.@base;
+
 using Newtonsoft.Json;
 
 namespace IqOptionApi.Models {
+
+    public enum BalanceType {
+
+        [EnumMember(Value = "1")]
+        Real = 1,
+        
+        
+        [EnumMember(Value = "4")]
+        Practice = 4,
+        
+        
+        [EnumMember(Value = "5")]
+        RealOption = 5,
+        Unknow
+    }
+    
+    
     public partial class Profile : IHttpResultMessage {
         [JsonProperty("avatar")]
         public string Avatar { get; set; }
@@ -30,7 +53,7 @@ namespace IqOptionApi.Models {
         public string FinanceState { get; set; }
 
         [JsonProperty("balance")]
-        public long Balance { get; set; }
+        public decimal Balance { get; set; }
 
         [JsonProperty("bonus_wager")]
         public long BonusWager { get; set; }
@@ -42,7 +65,7 @@ namespace IqOptionApi.Models {
         public long BalanceId { get; set; }
 
         [JsonProperty("balance_type")]
-        public long BalanceType { get; set; }
+        public BalanceType BalanceType { get; set; }
 
         [JsonProperty("messages")]
         public long Messages { get; set; }
@@ -142,7 +165,7 @@ namespace IqOptionApi.Models {
         public object[] ConfirmedPhones { get; set; }
 
         [JsonProperty("need_phone_confirmation")]
-        public bool NeedPhoneConfirmation { get; set; }
+        public bool? NeedPhoneConfirmation { get; set; }
 
         [JsonProperty("rate_in_one_click")]
         public bool RateInOneClick { get; set; }
@@ -200,5 +223,6 @@ namespace IqOptionApi.Models {
 
         [JsonProperty("deposit_amount")]
         public long DepositAmount { get; set; }
+        
     }
 }

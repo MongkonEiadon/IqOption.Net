@@ -1,9 +1,11 @@
 ﻿using iqoptionapi.ws.@base;
-using Newtonsoft.Json;
 
+// ReSharper disable once CheckNamespace
 namespace IqOptionApi.ws.request {
-    internal class WsSendMessageBase<T> : WsMessageBase<T> where T : class {
-        [JsonProperty("name")]
-        public override string Name { get; set; } = "sendMessage";
+    
+    internal class WsSendMessageBase<T> : WsMessageBase<RequestBody<T>> where T : class {
+
+        public override string Name { get; set; } = MessageType.SendMessage;
+
     }
 }

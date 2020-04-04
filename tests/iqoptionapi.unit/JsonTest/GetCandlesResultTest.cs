@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Linq;
+
+using FluentAssertions;
+
 using IqOptionApi.ws;
 using Newtonsoft.Json;
-using Shouldly;
-using Xunit;
 
+using NUnit.Framework;
 namespace IqOptionApi.unit.JsonTest {
-    public class GetCandlesResultTest : IClassFixture<LoadJsonFileTest> {
-        public GetCandlesResultTest(LoadJsonFileTest loadJsonFileTest) {
-            _loadJsonFileTest = loadJsonFileTest;
+    public class GetCandlesResultTest : TestFor<LoadJsonFileTest> {
+        public GetCandlesResultTest() {
 
             GetCandlesSuccessJson = _loadJsonFileTest.LoadJson("candles\\GetCandles_Success.json");
         }
@@ -17,7 +18,7 @@ namespace IqOptionApi.unit.JsonTest {
 
         private string GetCandlesSuccessJson { get; }
 
-        [Fact]
+        [Test]
         public void GetCandlesResult_CandlesItems_ResultMustReturnSuccess() {
 
             //act
@@ -25,17 +26,17 @@ namespace IqOptionApi.unit.JsonTest {
 
 
             //assert
-            result.Message.Infos.ShouldNotBeEmpty();
+            result.Message.Infos.Should().NotBeEmpty();
 
             var candles = result.Message.Infos.FirstOrDefault(x => x.Id == 17990335);
-            candles.ShouldNotBeNull();
-            candles.Open.ShouldBe(1.14384);
-            candles.Close.ShouldBe(1.143865);
-            candles.Min.ShouldBe(1.14384);
-            candles.Max.ShouldBe(1.143865);
+            candles.Should().NotBeNull();
+            candles.Open.Should().Be(1.14384);
+            candles.Close.Should().Be(1.143865);
+            candles.Min.Should().Be(1.14384);
+            candles.Max.Should().Be(1.143865);
         }
 
-        [Fact]
+        [Test]
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
 
             //act
@@ -43,17 +44,17 @@ namespace IqOptionApi.unit.JsonTest {
 
 
             //assert
-            result.Message.Infos.ShouldNotBeEmpty();
+            result.Message.Infos.Should().NotBeEmpty();
 
             var candles = result.Message.Infos.FirstOrDefault(x => x.Id == 17990335);
 
             var from = DateTimeOffset.FromUnixTimeSeconds(1534539516).ToLocalTime();
 
-            candles.From.ShouldBe(from);
+            candles.From.Should().Be(from);
         }
 
 
-        [Fact]
+        [Test]
         public void GetCandlesResult_WithSuccessFul_ResultMustReturnSuccess() {
             //arrange
 
@@ -62,9 +63,9 @@ namespace IqOptionApi.unit.JsonTest {
 
 
             //assert
-            result.ShouldNotBeNull();
-            result.Message.ShouldNotBeNull();
-            result.Message.Count.ShouldBe(100);
+            result.Should().NotBeNull();
+            result.Message.Should().NotBeNull();
+            result.Message.Count.Should().Be(100);
         }
     }
 }

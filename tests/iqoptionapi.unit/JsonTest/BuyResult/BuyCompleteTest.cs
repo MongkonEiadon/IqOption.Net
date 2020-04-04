@@ -1,48 +1,51 @@
 ﻿using System;
+using System.IO;
+
+using FluentAssertions;
+
 using iqoptionapi.ws.result;
-using IqOptionApi.Models;
 using Newtonsoft.Json;
-using Shouldly;
-using Xunit;
+
+using NUnit.Framework;
 
 namespace IqOptionApi.unit.JsonTest
 {
-    public class BuyCompleteTest : IClassFixture<LoadJsonFileTest> {
-        private readonly LoadJsonFileTest _jsonLoader;
+    public class BuyCompleteTest : TestFor<LoadJsonFileTest> {
 
-        public readonly string Json;
+        public string Json { get; set; }
 
-        public BuyCompleteTest(LoadJsonFileTest jsonLoader) {
-            _jsonLoader = jsonLoader;
+        [SetUp]
+        public void Setup() {
 
-            Json = _jsonLoader.LoadJson("BuyResult\\buycomplete.json");
+            var path =
+                Fluent.IO.Path.Get(Path.GetFullPath(AppContext.BaseDirectory))
+                    .Combine("Json", "BuyResult", "buycomplete.json");
+            
+            Json = CreateUnit().LoadJson(path.FullPath);
         }
 
 
-        [Fact]
+        [Test]
         public void LoadBuyComplete_WithSuccessResult_DateTimeConverted() {
 
             // act
             var result = JsonConvert.DeserializeObject<BuyCompleteResultMessage>(Json);
 
             // assert
-            result.ShouldNotBeNull();
-            result.Message.ShouldNotBeNull();
+            result.Should().NotBeNull();
+            result.Message.Should().NotBeNull();
 
             var msg = result.Message;
-            msg.IsSuccessful.ShouldBeTrue();
-            msg.GetMessageDescription().ShouldBe("Successful");
+            msg.IsSuccessful.Should().BeTrue();
+            msg.GetMessageDescription().Should().Be("Successful");
 
             var buy = msg.Result;
 
-            buy.Created.ShouldNotBeNull();
-            buy.Exp.ShouldNotBeNull();
-
-            buy.UserId.ShouldBe(1234);
+            buy.UserId.Should().Be(1234);
         }
 
 
-        [Fact]
+        [Test]
         public void LoadBuyComplete_ValidateUserData() {
 
             // act
@@ -51,13 +54,10 @@ namespace IqOptionApi.unit.JsonTest
             // assert
             var buy = result.Message.Result;
 
-            buy.Created.ShouldNotBeNull();
-            buy.Exp.ShouldNotBeNull();
-
-            buy.UserId.ShouldBe(1234);
+            buy.UserId.Should().Be(1234);
         }
 
-        [Fact]
+        [Test]
         public void LoadBuyComplete_ValidateDate()
         {
 
@@ -67,15 +67,14 @@ namespace IqOptionApi.unit.JsonTest
             // assert
             var buy = result.Message.Result;
 
-            buy.Created.ShouldNotBeNull();
             var exp = DateTimeOffset.FromUnixTimeSeconds(1535448900);
-            buy.Exp.ShouldBe(exp);
+            buy.Exp.Should().Be(exp);
 
             var created = DateTimeOffset.FromUnixTimeSeconds(1535448820);
-            buy.Created.ShouldBe(created);
+            buy.Created.Should().Be(created);
 
             var timeRate  = DateTimeOffset.FromUnixTimeSeconds(1535448820);
-            buy.TimeRate.ShouldBe(timeRate);
+            buy.TimeRate.Should().Be(timeRate);
         }
     }
 }

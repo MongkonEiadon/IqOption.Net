@@ -10,7 +10,7 @@ namespace IqOptionApi.unit.JsonTest {
         }
         public string LoadJson(string fileName) {
 
-            var JSON = System.IO.File.ReadAllText($"Json\\{fileName}");
+            var JSON = System.IO.File.ReadAllText($"{fileName}");
             return JSON;
         }
 

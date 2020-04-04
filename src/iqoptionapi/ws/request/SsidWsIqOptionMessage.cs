@@ -6,6 +6,7 @@ namespace IqOptionApi.ws.request {
             base.Message = ssid;
         }
 
-        public override string Name => "ssid";
+        public override string Name => MessageType.Ssid;
+
     }
 }

@@ -1,12 +1,8 @@
-using System.Threading.Tasks;
-using Autofac;
-using NUnit.Framework;
-using Shouldly;
-using Xunit;
+
 
 namespace IqOptionApi.unit
 {
-    public class IqOptionApiTest : BaseUnitTest {
+    public class IqOptionApiTest  {
 
         //[Fact]
         //public async Task ConnectAsyncTask_WithValidUserId_ConnectMustBeTrue() {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,39 +23,22 @@
     <Version>1.1.0.4</Version>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <DefineConstants>netcore2.0</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
-    <DefineConstants>net46</DefineConstants>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="restsharp" Version="106.3.1" />
-    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
-    <PackageReference Include="System.Reactive" Version="4.1.0" />
-    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
-    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-  </ItemGroup>
-
-
-
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
-  </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="http\result\" />
+    <Folder Include="Http\result\" />
   </ItemGroup>
-
-
-
-
+  
+  <ItemGroup>
+    <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Literate" Version="3.0.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.0.1" />
+    <PackageReference Include="System.Reactive" Version="4.3.2" />
+    <PackageReference Include="Restsharp" Version="106.10.1" />
+  </ItemGroup>
 </Project>

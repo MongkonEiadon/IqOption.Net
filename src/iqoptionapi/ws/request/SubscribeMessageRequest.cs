@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace IqOptionApi.ws.request {
     internal class SubscribeMessageRequest : WsMessageBase<SubscribeRequestBody> {
 
-        public override string Name => "subscribeMessage";
+        public override string Name => MessageType.SubscribeMessage;
 
         public SubscribeMessageRequest(ActivePair pair, TimeFrame tf) {
             base.Message = new SubscribeRequestBody() {
@@ -43,6 +43,4 @@ namespace IqOptionApi.ws.request {
             public TimeFrame TimeFrame { get; set; }
         }
     }
-
-
 }

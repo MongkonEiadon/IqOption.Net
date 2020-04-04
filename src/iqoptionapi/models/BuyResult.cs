@@ -66,4 +66,5 @@ namespace IqOptionApi.Models {
             return new BuyResult() {ErrorMessage = msg};
         }
     }
+
 }

@@ -2,26 +2,24 @@
 using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using IqOptionApi.exceptions;
+
 using IqOptionApi.extensions;
-using IqOptionApi.ws;
 using IqOptionApi.Models;
-using Newtonsoft.Json;
+
 using RestSharp;
 using Serilog;
 
 namespace IqOptionApi.http {
-    public class IqOptionHttpClient  {
 
-        private readonly ILogger _logger;
+    public class IqOptionHttpClient {
+
+        private readonly ILogger _logger = IqOptionLoggerFactory.CreateHttpLogger();
 
 
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
             Client = new RestClient(ApiEndPoint(host));
             LoginModel = new LoginModel {Email = username, Password = password};
-            _logger = IqOptionLoggerFactory.CreateLogger();
         }
 
         public LoginModel LoginModel { get; }
@@ -34,7 +32,7 @@ namespace IqOptionApi.http {
             return new Uri($"https://{host}/api");
         }
 
-#region [Profile]
+        #region [Profile]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
         private Profile _profile;
@@ -49,54 +47,49 @@ namespace IqOptionApi.http {
 
         public IObservable<Profile> ProfileObservable() => _profileSubject.Publish().RefCount();
 
-#endregion
+        #endregion
 
 
-#region Web-Methods
+        #region Web-Methods
 
         public Task<IqHttpResult<SsidResultMessage>> LoginAsync() {
 
             var tcs = new TaskCompletionSource<IqHttpResult<SsidResultMessage>>();
-            try
-            {
+            try {
                 var client = new RestClient("https://auth.iqoption.com/api/v1.0/login");
-                var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json }
+                var request = new RestRequest(Method.POST) {RequestFormat = DataFormat.Json}
                     .AddHeader("Content-Type", "application/x-www-form-urlencoded")
                     .AddHeader("content-type", "multipart/form-data")
                     .AddHeader("Accept", "application/json")
                     .AddParameter("email", this.LoginModel.Email, ParameterType.QueryString)
                     .AddParameter("password", this.LoginModel.Password, ParameterType.QueryString);
 
-                client.ExecuteTaskAsync(request)
+                client.ExecuteAsync(request)
                     .ContinueWith(t => {
-                        switch (t.Result.StatusCode)
-                        {
-                            case HttpStatusCode.OK:
-                                {
-                                    var result = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
-                                    result.IsSuccessful = true;
-                                    SecuredToken = result.Data;
+                        switch (t.Result.StatusCode) {
+                            case HttpStatusCode.OK: {
+                                var result = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
+                                result.IsSuccessful = true;
+                                SecuredToken = result.Data;
 
-                                    Client.CookieContainer = new CookieContainer();
-                                    Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
+                                Client.CookieContainer = new CookieContainer();
+                                Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
 
-                                    tcs.TrySetResult(result);
-                                    break;
-                                }
-                            default :
-                                {
-                                    var error = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
-                                    error.IsSuccessful = false;
-                                    tcs.TrySetResult(error);
+                                tcs.TrySetResult(result);
+                                break;
+                            }
+                            default: {
+                                var error = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
+                                error.IsSuccessful = false;
+                                tcs.TrySetResult(error);
 
-                                    break;
-                                }
+                                break;
+                            }
                         }
 
                     });
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 tcs.TrySetException(ex);
             }
 
@@ -105,9 +98,8 @@ namespace IqOptionApi.http {
             return tcs.Task;
         }
 
-        public Task<IqHttpResult<Profile>> GetProfileAsync()
-        {
-            return ExecuteHttpClientAsync(new GetProfileRequest()).ContinueWith(t => {
+        public Task<IqHttpResult<Profile>> GetProfileAsync() {
+            return Client.ExecuteGetAsync(new GetProfileRequest()).ContinueWith(t => {
                 if (t.Result != null && t.Result.StatusCode == HttpStatusCode.OK) {
                     return t.Result.Content.JsonAs<IqHttpResult<Profile>>();
                 }
@@ -117,7 +109,7 @@ namespace IqOptionApi.http {
         }
 
         public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
-            var result = await ExecuteHttpClientAsync(new ChangeBalanceRequest(balanceId));
+            var result = await Client.ExecutePostAsync(new ChangeBalanceRequest(balanceId));
 
             if (result.StatusCode == HttpStatusCode.OK)
                 return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
@@ -125,12 +117,8 @@ namespace IqOptionApi.http {
             return null;
         }
 
-        private Task<IRestResponse> ExecuteHttpClientAsync(IRestRequest request) {
-            var result = Client.ExecuteTaskAsync(request);
-            return result;
-        }
+        #endregion
 
-#endregion
     }
 
 

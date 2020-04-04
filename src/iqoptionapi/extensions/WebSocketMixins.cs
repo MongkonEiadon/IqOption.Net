@@ -36,4 +36,11 @@ namespace IqOptionApi {
             }
         }
     }
+
+        internal enum RequestType {
+            Request,
+            Response,
+            Unknown
+        }
+
 }

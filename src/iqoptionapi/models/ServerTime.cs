@@ -3,12 +3,13 @@ using iqoptionapi.ws.@base;
 using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.ws.request;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models {
-    public class ServerTime : WsMessageBase<DateTimeOffset>, IResponseMessage {
+    public class ServerTime : WsMessageBase<DateTimeOffset> {
 
         [JsonProperty("msg")]
-        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
         public override DateTimeOffset Message { get; set; }
         
     }
