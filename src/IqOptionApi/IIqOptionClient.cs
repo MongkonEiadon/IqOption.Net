@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using IqOptionApi.http;
+using IqOptionApi.Http;
 using IqOptionApi.Models;
-using IqOptionApi.ws;
+using IqOptionApi.Ws;
 
-namespace IqOptionApi {
-    public interface IIqOptionClient : IDisposable {
+namespace IqOptionApi
+{
+    public interface IIqOptionClient : IDisposable
+    {
         IqOptionWebSocketClient WsClient { get; }
         IqOptionHttpClient HttpClient { get; }
         IObservable<Profile> ProfileObservable { get; }
@@ -22,6 +24,5 @@ namespace IqOptionApi {
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf);
         Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf);
-
     }
 }

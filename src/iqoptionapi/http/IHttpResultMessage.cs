@@ -1,4 +1,6 @@
-﻿namespace IqOptionApi.http {
-    public interface IHttpResultMessage {
+﻿namespace IqOptionApi.Http
+{
+    public interface IHttpResultMessage
+    {
     }
 }

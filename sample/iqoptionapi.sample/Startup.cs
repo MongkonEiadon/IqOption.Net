@@ -6,23 +6,21 @@ using IqOptionApi;
 using IqOptionApi.Models;
 using Serilog;
 
-namespace iqoptionapi.sample {
+namespace IqOptionApi.Sample {
     public class Startup {
         private readonly IqOptionConfiguration _config;
         private readonly ILogger _logger;
 
-        public Startup(IqOptionConfiguration config, Serilog.ILogger logger)
+        public Startup(IqOptionConfiguration config, ILogger logger)
         {
             _config = config;
             _logger = logger;
         }
-
         
-
         public async Task RunSample() {
 
-            var api = new IqOptionApi.IqOptionApi(_config.Email, _config.Password);
-            _logger.Information($"Connecting to {_config.Host} for {_config.Email}");
+            var api = new IqOptionClient(_config.Email, _config.Password);
+            _logger.Information($"Connecting to iqoption.com for {_config.Email}");
 
 
             if (await api.ConnectAsync()) {

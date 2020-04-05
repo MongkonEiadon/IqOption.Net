@@ -1,6 +1,7 @@
-﻿namespace IqOptionApi.Models {
-    public enum TimeFrame : int {
-
+﻿namespace IqOptionApi.Models
+{
+    public enum TimeFrame
+    {
         Min1 = 1,
         Min5 = 5,
         Min10 = 10,
@@ -29,6 +30,5 @@
         Week1 = 10080,
         Week60 = 604800,
         Year5 = 2592000
-
     }
 }

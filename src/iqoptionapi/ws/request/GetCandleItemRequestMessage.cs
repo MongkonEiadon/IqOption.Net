@@ -1,73 +1,25 @@
 ﻿using System;
-
-using iqoptionapi.ws.@base;
 using IqOptionApi.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using IqOptionApi.Ws.Base;
 
-namespace IqOptionApi.ws.request {
-    public class GetCandleItemRequestMessage : WsMessageBase<GetCandlesRequestModel> {
-
-        public GetCandleItemRequestMessage(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to) {
-            base.Message = new GetCandlesRequestModel() {
-               RequestBody = new GetCandlesRequestModel.GetCandlesRequestBody() {
-                   ActivePair = pair,
-                   TimeFrame = tf,
-                   Count = count,
-                   To = to.ToUniversalTime() // servertime should set here
-               }
+namespace IqOptionApi.Ws.Request
+{
+    public class GetCandleItemRequestMessage : WsMessageBase<GetCandlesRequestModel>
+    {
+        public GetCandleItemRequestMessage(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to)
+        {
+            base.Message = new GetCandlesRequestModel
+            {
+                RequestBody = new GetCandlesRequestModel.GetCandlesRequestBody
+                {
+                    ActivePair = pair,
+                    TimeFrame = tf,
+                    Count = count,
+                    To = to.ToUniversalTime() // servertime should set here
+                }
             };
         }
 
         public override string Name => MessageType.SendMessage;
-
-    }
-    
-    
-
-    public class RequestBody<T> where T : class {
-
-        [JsonProperty("name")]
-        public string RequestBodyType { get; set; }
-        
-        
-        [JsonProperty("body")]
-        public T Body { get; set; }
-
-
-        [JsonProperty("version")] 
-        public string Version { get; set; } = "1.0";
-
-    }
-
-
-    public class GetCandlesRequestModel
-    {
-
-        [JsonProperty("name")]
-        public string Name => "get-candles";
-
-        [JsonProperty("version")]
-        public string Version => "2.0";
-
-        [JsonProperty("body")]
-        public GetCandlesRequestBody RequestBody { get; set; }
-
-        public class GetCandlesRequestBody
-        {
-
-            [JsonProperty("active_id")]
-            public ActivePair ActivePair { get; set; }
-
-            [JsonProperty("size")]
-            public TimeFrame TimeFrame { get; set; }
-
-            [JsonProperty("to")]
-            [JsonConverter(typeof(UnixDateTimeConverter))]
-            public DateTimeOffset To { get; set; }
-
-            [JsonProperty("count")]
-            public int Count { get; set; }
-        }
     }
 }

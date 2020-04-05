@@ -2,39 +2,38 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Reflection;
 using System.Threading.Tasks;
-
+using System.Timers;
 using IqOptionApi.Models;
-using IqOptionApi.ws.request;
+using IqOptionApi.Ws.Base;
+using IqOptionApi.Ws.Request;
 using Serilog;
 using WebSocketSharp;
 
-
-namespace IqOptionApi.ws {
-
-    public partial class IqOptionWebSocketClient : IDisposable {
-
-        //privates
-        private readonly string _secureToken;
-        private ILogger _logger;
+namespace IqOptionApi.Ws
+{
+    public partial class IqOptionWebSocketClient : IDisposable
+    {
         private readonly WebSocket _client;
 
-        public string SecureToken => _secureToken;
+        //privates
+        private ILogger _logger;
 
-        private System.Timers.Timer SystemReconnectionTimer = new System.Timers.Timer(TimeSpan.FromMinutes(3).Ticks);
+        private readonly Timer SystemReconnectionTimer = new Timer(TimeSpan.FromMinutes(3).Ticks);
 
-        public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com") {
-            _secureToken = secureToken;
+        public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com")
+        {
+            SecureToken = secureToken;
 
             _client = new WebSocket($"wss://{host}/echo/websocket");
-            _client.OnError += (sender, args) => {
+            _client.OnError += (sender, args) =>
+            {
                 var a = args;
             };
-            
+
             _client.Connect();
-            
-           
+
+
             var scheduler = new EventLoopScheduler();
             MessageReceivedObservable =
                 Observable.Using(
@@ -53,26 +52,28 @@ namespace IqOptionApi.ws {
 
             _client.OnMessage += (sender, args) => SubscribeIncomingMessage(args.Data);
 
-            
             SystemReconnectionTimer.AutoReset = true;
             SystemReconnectionTimer.Enabled = true;
-            SystemReconnectionTimer.Elapsed += (sender, args) => {
+            SystemReconnectionTimer.Elapsed += (sender, args) =>
+            {
                 _logger.Warning("System try to reconnect");
                 SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
             };
-            
+
 
             // send secure token to connect to server
             SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
         }
 
-    
+        public string SecureToken { get; }
 
-    #region [Public's]
+
+        #region [Public's]
 
         public IObservable<string> MessageReceivedObservable { get; }
-        
-        public Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator) {
+
+        public Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
+        {
             _client.Send(messageCreator.CreateIqOptionMessage());
 
             return Task.CompletedTask;
@@ -80,7 +81,7 @@ namespace IqOptionApi.ws {
 
         #endregion
 
-       
+
         #region [InfoData]
 
         private readonly Subject<InfoData[]> _infoDataSubject = new Subject<InfoData[]>();
@@ -97,15 +98,18 @@ namespace IqOptionApi.ws {
             ActivePair pair,
             int size,
             OrderDirection direction,
-            DateTimeOffset expiration) {
+            DateTimeOffset expiration)
+        {
             var tcs = new TaskCompletionSource<BuyResult>();
-            try {
+            try
+            {
                 var obs = BuyResultObservable
                     .Where(x => x != null)
                     .Subscribe(x =>
                         tcs.TrySetResult(x));
 
-                tcs.Task.ContinueWith(t => {
+                tcs.Task.ContinueWith(t =>
+                {
                     if (t.Result != null) obs.Dispose();
                 });
 
@@ -120,16 +124,16 @@ namespace IqOptionApi.ws {
 
                 SendMessageAsync(
                         new BuyV2WsMessage(
-                            balanceId: Profile.BalanceId,
-                            pair: pair,
-                            optionType: optionType,
-                            direction: direction,
-                            expiration: expiration,
-                            price: size))
-
+                            Profile.BalanceId,
+                            pair,
+                            optionType,
+                            direction,
+                            expiration,
+                            size))
                     .ConfigureAwait(false);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 tcs.TrySetException(ex);
             }
 
@@ -139,32 +143,20 @@ namespace IqOptionApi.ws {
         #endregion
 
 
-
         #region [CurrentCandleInfo]
 
         public IObservable<CurrentCandle> RealTimeCandleInfoObservable => _candleInfoSubject.AsObservable();
 
-        public Task SubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame) {
+        public Task SubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame)
+        {
             return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
         }
 
-        public Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame) {
+        public Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame)
+        {
             return SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));
         }
-        
 
         #endregion
-        
-        internal class MethodInvoker<T> where T : Attribute {
-
-            public T Attribute { get; }
-            public MethodInfo TargetMethod { get; }
-
-            public MethodInvoker(T attribute, MethodInfo targetMethod) {
-                Attribute = attribute;
-                TargetMethod = targetMethod;
-            }
-        }
     }
 }
-

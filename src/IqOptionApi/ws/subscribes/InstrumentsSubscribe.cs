@@ -2,14 +2,13 @@ using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-
 using IqOptionApi.Models;
 
 // ReSharper disable once CheckNamespace
-namespace IqOptionApi.ws {
-
-    public partial class IqOptionWebSocketClient {
-
+namespace IqOptionApi.Ws
+{
+    public partial class IqOptionWebSocketClient
+    {
         #region [Instruments]
 
         private InstrumentResultSet _instrumentResultSet = new InstrumentResultSet();
@@ -19,9 +18,11 @@ namespace IqOptionApi.ws {
             _instrumentResultSetSubject.Publish().RefCount();
 
 
-        public Task<InstrumentResultSet> SendInstrumentsRequestAsync() {
+        public Task<InstrumentResultSet> SendInstrumentsRequestAsync()
+        {
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
-            try {
+            try
+            {
                 _logger.Verbose(nameof(SendInstrumentsRequestAsync));
 
                 //subscribe for the lastest result
@@ -39,7 +40,8 @@ namespace IqOptionApi.ws {
                 );
             }
 
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 tcs.TrySetException(ex);
             }
 
@@ -47,8 +49,5 @@ namespace IqOptionApi.ws {
         }
 
         #endregion
-
-
     }
-
 }

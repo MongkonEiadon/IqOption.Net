@@ -3,7 +3,7 @@ using System.IO;
 
 using FluentAssertions;
 
-using iqoptionapi.ws.result;
+using IqOptionApi.ws.result;
 using Newtonsoft.Json;
 
 using NUnit.Framework;

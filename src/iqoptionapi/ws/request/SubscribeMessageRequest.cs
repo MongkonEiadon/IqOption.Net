@@ -1,46 +1,46 @@
-﻿using iqoptionapi.ws.@base;
-using IqOptionApi.Models;
+﻿using IqOptionApi.Models;
+using IqOptionApi.Ws.Base;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.ws.request {
-    internal class SubscribeMessageRequest : WsMessageBase<SubscribeRequestBody> {
-
-        public override string Name => MessageType.SubscribeMessage;
-
-        public SubscribeMessageRequest(ActivePair pair, TimeFrame tf) {
-            base.Message = new SubscribeRequestBody() {
-                Parameters = new SubscribeRequestParameter() {
-                    Filter = new SubscribeRequestParameter.RequestFilter() {
+namespace IqOptionApi.Ws.Request
+{
+    internal class SubscribeMessageRequest : WsMessageBase<SubscribeRequestBody>
+    {
+        public SubscribeMessageRequest(ActivePair pair, TimeFrame tf)
+        {
+            base.Message = new SubscribeRequestBody
+            {
+                Parameters = new SubscribeRequestParameter
+                {
+                    Filter = new SubscribeRequestParameter.RequestFilter
+                    {
                         ActivePair = pair,
                         TimeFrame = tf
                     }
                 }
             };
         }
+
+        public override string Name => MessageType.SubscribeMessage;
     }
 
-    internal class SubscribeRequestBody {
+    internal class SubscribeRequestBody
+    {
+        [JsonProperty("name")] public string Name { get; set; } = "candle-generated";
 
-
-        [JsonProperty("name")]
-        public string Name { get; set; } = "candle-generated";
-
-        [JsonProperty("params")]
-        public SubscribeRequestParameter Parameters { get; set; }
+        [JsonProperty("params")] public SubscribeRequestParameter Parameters { get; set; }
     }
 
-    internal class SubscribeRequestParameter {
+    internal class SubscribeRequestParameter
+    {
+        [JsonProperty("routingFilters")] public RequestFilter Filter { get; set; }
 
-        [JsonProperty("routingFilters")]
-        public RequestFilter Filter { get; set; }
 
+        internal class RequestFilter
+        {
+            [JsonProperty("active_id")] public ActivePair ActivePair { get; set; }
 
-        internal class RequestFilter {
-            [JsonProperty("active_id")]
-            public ActivePair ActivePair { get; set; }
-
-            [JsonProperty("size")]
-            public TimeFrame TimeFrame { get; set; }
+            [JsonProperty("size")] public TimeFrame TimeFrame { get; set; }
         }
     }
 }

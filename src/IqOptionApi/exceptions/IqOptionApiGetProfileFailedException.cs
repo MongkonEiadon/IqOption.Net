@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IqOptionApi
+namespace IqOptionApi.Exceptions
 {
     public class IqOptionApiGetProfileFailedException : Exception
     {

@@ -16,15 +16,16 @@
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Fix Http Login</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      - Fix Websocket.
+      - Fix Logging behavior.
+      - Fix BuyAsync now you can open the Option and Binary.
+    </PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0.4</Version>
+    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <FileVersion>2.0.2</FileVersion>
+    <Version>2.0.2</Version>
   </PropertyGroup>
-
-
-
 
   <ItemGroup>
     <Folder Include="Http\result\" />
@@ -37,8 +38,8 @@
     <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Literate" Version="3.0.0" />
-    <PackageReference Include="Serilog.Sinks.Async" Version="1.0.1" />
-    <PackageReference Include="System.Reactive" Version="4.3.2" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
     <PackageReference Include="Restsharp" Version="106.10.1" />
   </ItemGroup>
 </Project>

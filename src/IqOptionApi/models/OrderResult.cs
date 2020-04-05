@@ -1,28 +1,22 @@
 using System.Runtime.Serialization;
 
-namespace IqOptionApi.Models {
+namespace IqOptionApi.Models
+{
+    public enum OrderResult
+    {
+        [EnumMember(Value = "loose")] Loose,
 
-    public enum OrderResult {
+        [EnumMember(Value = "win")] Win,
 
-        [EnumMember(Value = "loose")]
-        Loose,
-        
-        [EnumMember(Value = "win")]
-        Win,
-        
-        [EnumMember(Value = "equal")]
-        Equal,
-        
-        [EnumMember(Value = "sold")]
-        Sold
+        [EnumMember(Value = "equal")] Equal,
 
+        [EnumMember(Value = "sold")] Sold
     }
 
-    public enum OptionType {
+    public enum OptionType
+    {
         Turbo = 3,
-        
+
         Binary = 1
-
     }
-
 }

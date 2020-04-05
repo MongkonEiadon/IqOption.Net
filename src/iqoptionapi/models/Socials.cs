@@ -1,4 +1,6 @@
-﻿namespace IqOptionApi.Models {
-    public partial class Socials {
+﻿namespace IqOptionApi.Models
+{
+    public class Socials
+    {
     }
 }

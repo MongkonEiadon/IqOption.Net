@@ -1,5 +1,5 @@
 # IqOption.Net
-iqoption api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
+IqOption Api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest,
 
 |Branch|Build|Nuget|
 |:--:|:--:|:--:|
@@ -9,17 +9,12 @@ iqoption api to connect to www.iqoption.com (unofficial), with .netcore based fo
 
 # Package Installation
 ``` javascript
-PM> Install-Package iqoptionapi
-
-```
-alpha version now available
-``` javascript
-PM> Install-Package iqoptionapi -Version 2.0.0-alpha1
+PM> Install-Package iqoptionapi -Version 2.0.2
 
 ```
 
 # How it work
-This api using websocket to communicate realtime-data to Iqoption server through secured websocket channel, so the realtime meta data that come on this channel will be handles by .net reactive programming called "Rx.NET", cause of a haundred of data type stream on only one channle so we need to selected subscribe on specific topic.
+This api using websocket to communicate realtime-data to IqOption server through secured websocket channel, so the realtime meta data that come on this channel will be handles by .net reactive programming called "Rx.NET", cause of a haundred of data type stream on only one channle so we need to selected subscribe on specific topic.
 
 # Milestone
 - BuyBack Position

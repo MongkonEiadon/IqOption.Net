@@ -2,17 +2,22 @@
 using IqOptionApi.Models;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.Converters.JsonConverters {
-    public sealed class InstrumentTypeJsonConverter : JsonConverter {
-        public override bool CanConvert(Type objectType) {
+namespace IqOptionApi.Converters.JsonConverters
+{
+    public sealed class InstrumentTypeJsonConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
             return objectType == typeof(string);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType,
-            object existingValue, JsonSerializer serializer) {
+            object existingValue, JsonSerializer serializer)
+        {
             var value = (string) reader.Value;
 
-            switch (value) {
+            switch (value)
+            {
                 case "forex":
                     return InstrumentType.Forex;
                 case "cfd":
@@ -25,10 +30,10 @@ namespace IqOptionApi.Converters.JsonConverters {
         }
 
         public override void WriteJson(JsonWriter writer, object value,
-            JsonSerializer serializer) {
-            var _value = (InstrumentType) (value);
-
-            switch (value) {
+            JsonSerializer serializer)
+        {
+            switch (value)
+            {
                 case InstrumentType.Forex:
                     writer.WriteValue("forex");
                     break;

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 
-using iqoptionapi.ws.result;
+using IqOptionApi.ws.result;
 
 using Newtonsoft.Json;
 

@@ -1,9 +1,7 @@
-using System.Runtime.Serialization;
-
-namespace iqoptionapi.ws.@base {
-
-    public struct MessageType {
-
+namespace IqOptionApi.Ws.Base
+{
+    public struct MessageType
+    {
         public const string Front = "front";
         public const string Profile = "profile";
         public const string Heartbeat = "heartbeat";
@@ -26,7 +24,5 @@ namespace iqoptionapi.ws.@base {
 
         public const string BalanceChanged = "balance-changed";
         public const string Candles = "candles";
-
     }
-
 }

@@ -1,28 +1,24 @@
 using System;
 
-namespace IqOptionApi.utilities {
-
-   
-
+namespace IqOptionApi.utilities
+{
     [AttributeUsage(AttributeTargets.Method)]
-    public class SubscribeForTopicNameAttribute : Attribute {
-
-        public string TopicName { get; }
-        
-        public Type ArgumentType { get; }
-
-        public SubscribeForTopicNameAttribute(string topicName, Type argumentType) {
+    public class SubscribeForTopicNameAttribute : Attribute
+    {
+        public SubscribeForTopicNameAttribute(string topicName, Type argumentType)
+        {
             TopicName = topicName;
             ArgumentType = argumentType;
         }
 
+        public string TopicName { get; }
+
+        public Type ArgumentType { get; }
     }
 
 
     [AttributeUsage(AttributeTargets.Method)]
-    public class PredisposableAttribute : Attribute {
-
-
+    public class PredisposableAttribute : Attribute
+    {
     }
-
 }

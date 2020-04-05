@@ -1,5 +1,7 @@
-﻿namespace IqOptionApi.Models {
-    public enum InstrumentType {
+﻿namespace IqOptionApi.Models
+{
+    public enum InstrumentType
+    {
         Forex,
         CFD,
         Crypto,

@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
-using iqoptionapi.ws.@base;
 using IqOptionApi.Converters.JsonConverters;
 using IqOptionApi.Models;
+using IqOptionApi.Ws.Base;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-[assembly: InternalsVisibleTo("IqOptionApi.unit", AllInternalsVisible = true)]
+[assembly: InternalsVisibleTo("IqOptionApi.Unit", AllInternalsVisible = true)]
 
-namespace IqOptionApi.ws.request {
-    
-    internal class BuyV2RequestModel {
+namespace IqOptionApi.Ws.Request
+{
+    internal class BuyV2RequestModel
+    {
         [JsonProperty("price", Required = Required.Always)]
         public long Price { get; set; }
 
@@ -29,45 +28,37 @@ namespace IqOptionApi.ws.request {
         [JsonProperty("direction", Required = Required.Always)]
         [JsonConverter(typeof(StringEnumConverter))]
         public OrderDirection Direction { get; set; }
-        
-        [JsonProperty("user_balance_id")]
-        public long UserBalanceId { get; set; }
-        
-        [JsonProperty("option_type_id")]
-        public OptionType OptionType { get; set; }
 
-        [JsonProperty("refund_value")]
-        public int RefundValue { get; set; }
-        
-        [JsonProperty("profit_percent")]
-        public long ProfitPercent { get; set; }
-        
-        [JsonProperty("value")]
-        public int Value { get; set; }
+        [JsonProperty("user_balance_id")] public long UserBalanceId { get; set; }
 
+        [JsonProperty("option_type_id")] public OptionType OptionType { get; set; }
 
+        [JsonProperty("refund_value")] public int RefundValue { get; set; }
 
+        [JsonProperty("profit_percent")] public long ProfitPercent { get; set; }
+
+        [JsonProperty("value")] public int Value { get; set; }
     }
 
-    public class ExpirationModel {
+    public class ExpirationModel
+    {
+        public ExpirationModel(DateTimeOffset now, int duration)
+        {
+        }
 
         public OptionType Type { get; }
-        
+
         public DateTimeOffset Expiration { get; }
 
 
-        public ExpirationModel(DateTimeOffset now, int duration) {
-            
-        }
-
-
-        public ExpirationModel[] AvailableExpirations() {
+        public ExpirationModel[] AvailableExpirations()
+        {
             throw new NotImplementedException();
         }
 
-        
-        public static DateTimeOffset GetExpirationTime(DateTimeOffset dt) {
 
+        public static DateTimeOffset GetExpirationTime(DateTimeOffset dt)
+        {
             var now = dt.ToUnixTimeSeconds();
             var exp_date = dt.AddSeconds(-dt.Second).AddMilliseconds(-dt.Millisecond);
 
@@ -82,19 +73,20 @@ namespace IqOptionApi.ws.request {
                 .Select(x => exp_date.AddMinutes(x))
                 .Select(x => x.ToUnixTimeSeconds())
                 .ToList();
-            
+
             var idx = 50;
             var index = 0;
-            
-            
-            while (index < idx) {
 
+
+            while (index < idx)
+            {
                 if (exp_date.Minute % 15 == 0
-                    && ((exp_date.ToUnixTimeSeconds() - now) > 60 * 5)) {
+                    && exp_date.ToUnixTimeSeconds() - now > 60 * 5)
+                {
                     exp_range.Add(exp_date.ToUnixTimeSeconds());
                     index += 1;
                 }
- 
+
                 exp_date = exp_date.AddMinutes(1);
             }
 
@@ -105,13 +97,11 @@ namespace IqOptionApi.ws.request {
 
             return DateTimeOffset.Now;
         }
-
     }
 
 
-    internal class BuyV2WsMessage : WsSendMessageBase<BuyV2RequestModel> {
-        
-    
+    internal class BuyV2WsMessage : WsSendMessageBase<BuyV2RequestModel>
+    {
         /*
          {
                 "name": "sendMessage",
@@ -160,18 +150,20 @@ namespace IqOptionApi.ws.request {
             OptionType optionType,
             OrderDirection direction,
             DateTimeOffset expiration,
-            int price) {
-
-            Message = new RequestBody<BuyV2RequestModel> {
+            int price)
+        {
+            Message = new RequestBody<BuyV2RequestModel>
+            {
                 RequestBodyType = RequestMessageBodyType.OpenOptions,
-                Body = new BuyV2RequestModel {
+                Body = new BuyV2RequestModel
+                {
                     UserBalanceId = balanceId,
                     ActivePair = pair,
                     OptionType = optionType,
                     Direction = direction,
                     Expiration = expiration,
                     Price = price,
-                    
+
                     // default preset
                     Value = 0,
                     ProfitPercent = 0,

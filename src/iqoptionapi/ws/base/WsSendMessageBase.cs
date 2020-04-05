@@ -1,11 +1,9 @@
-﻿using iqoptionapi.ws.@base;
+﻿using IqOptionApi.Ws.Request;
 
-// ReSharper disable once CheckNamespace
-namespace IqOptionApi.ws.request {
-    
-    internal class WsSendMessageBase<T> : WsMessageBase<RequestBody<T>> where T : class {
-
+namespace IqOptionApi.Ws.Base
+{
+    internal class WsSendMessageBase<T> : WsMessageBase<RequestBody<T>> where T : class
+    {
         public override string Name { get; set; } = MessageType.SendMessage;
-
     }
 }
