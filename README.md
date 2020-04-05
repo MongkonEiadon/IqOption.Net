@@ -67,19 +67,18 @@ This is example use cases that this api could solve your problems
 ```csharp
 public async Task TradingFollower_ExampleAsync() {
 
-    var trader = new IqOptionApi("trader@gmail.com", "passcode");
-    var follower = new IqOptionApi("follower@gmail.com", "passcode");
+    var trader = new IqOptionClient("a@b.com", "changeme");
+    var follower = new IqOptionClient("b@c.com", "changeme"); 
 
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
-    trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
-        follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
+    trader.WsClient.OpenOptionObservable().Subscribe(x => {
+        follower.BuyAsync(x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
     });
-    
 }
 ```
 
-## Version 2.0.0 
+## Version 2.0.2
 Now you can open order like this
 ```csharp
 var api = new IqOptionApi("email@email.com", "passcode");

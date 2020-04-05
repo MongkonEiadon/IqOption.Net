@@ -15,8 +15,8 @@ namespace IqOptionApi.Sample {
 
             await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
-            trader.InfoDatasObservable.Select(x => x[0]).Where(x => x.Win == "equal").Subscribe(x => {
-                follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired);
+            trader.WsClient.OpenOptionObservable().Subscribe(x => {
+                follower.BuyAsync(x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
             });
         }
     }
