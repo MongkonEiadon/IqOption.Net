@@ -100,35 +100,19 @@ finally {
 
 ```
 
-### Trading follower
+### Copy Trade
 now using ReactiveUI way for subscribe the changing of model following this
 
 ```csharp
-using System;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using IqOptionApi.Models;
-using ReactiveUI;
 
-namespace IqOptionApi.Sample {
-    public class TradingExample {
-        public async Task RunAsync() {
-            var trader = new IqOptionApi("trader@email.com", "passcode");
-            var follower = new IqOptionApi("follower@email.com", "passcode");
+    var trader = new IqOptionClient("a@b.com", "changeme");
+    var follower = new IqOptionClient("b@c.com", "changeme"); 
 
-            await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
+    await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
-            trader.WsClient.WhenAnyValue(x => x.InfoData)
-                .Where(x => x != null && x.Win == WinType.Equal)
-                .Subscribe(x => { follower.BuyAsync(x.ActiveId, (int) x.Sum, x.Direction, x.Expired); });
-
-
-            //var exp = DateTime.Now.AddMinutes(1);
-            var exp = DateTime.Now.AddMinutes(1);
-            await trader.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
-        }
-    }
-}
+    trader.WsClient.OpenOptionObservable().Subscribe(x => {
+        follower.BuyAsync(x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
+    });
 
 ```
 # Support Me
