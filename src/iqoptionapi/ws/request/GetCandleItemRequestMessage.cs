@@ -1,20 +1,24 @@
 ﻿using System;
-using iqoptionapi.ws.@base;
 using IqOptionApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace IqOptionApi.ws.request {
-    public class GetCandleItemRequestMessage : WsMessageBase<GetCandlesRequestModel> {
+namespace IqOptionApi.ws.request
+{
+    public class GetCandleItemRequestMessage : WsSendMessageBase<GetCandlesRequestModel>
+    {
 
-        public GetCandleItemRequestMessage(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to) {
-            base.Message = new GetCandlesRequestModel() {
-               RequestBody = new GetCandlesRequestModel.GetCandlesRequestBody() {
-                   ActivePair = pair,
-                   TimeFrame = tf,
-                   Count = count,
-                   To = to.ToUniversalTime() // servertime should set here
-               }
+        public GetCandleItemRequestMessage(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to)
+        {
+            base.Message = new GetCandlesRequestModel()
+            {
+                RequestBody = new GetCandlesRequestModel.GetCandlesRequestBody()
+                {
+                    ActivePair = pair,
+                    TimeFrame = tf,
+                    Count = count,
+                    To = to.ToUniversalTime() // servertime should set here
+                }
             };
         }
         public override string Name => "sendMessage";

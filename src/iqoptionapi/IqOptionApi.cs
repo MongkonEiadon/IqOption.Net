@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using IqOptionApi.extensions;
-using IqOptionApi.ws.request;
 using IqOptionApi.http;
 using IqOptionApi.Models;
 using IqOptionApi.ws;
 using Serilog;
 
-namespace IqOptionApi {
-    public class IqOptionApi : IIqOptionApi {
+namespace IqOptionApi
+{
+    public class IqOptionApi : IIqOptionApi
+    {
 
         #region [Privates]
 
@@ -31,9 +29,11 @@ namespace IqOptionApi {
         public string Username { get; }
         public string Password { get; }
         public IDictionary<InstrumentType, Instrument[]> Instruments { get; private set; }
-        public Profile Profile {
+        public Profile Profile
+        {
             get => _profile;
-            private set {
+            private set
+            {
                 _profileSubject.OnNext(value);
                 _profile = value;
             }
@@ -54,17 +54,21 @@ namespace IqOptionApi {
 
 
 
-        public Task<bool> ConnectAsync() {
+        public Task<bool> ConnectAsync()
+        {
             connectedSubject.OnNext(false);
             IsConnected = false;
 
             var tcs = new TaskCompletionSource<bool>();
-            try {
+            try
+            {
                 this.HttpClient
                     .LoginAsync()
-                    .ContinueWith(t => {
-                        if (t.Result != null && t.Result.IsSuccessful) {
-                           
+                    .ContinueWith(t =>
+                    {
+                        if (t.Result != null && t.Result.IsSuccessful)
+                        {
+
                             _logger.Information($"{Username} logged in success!");
 
                             WsClient.OpenSecuredSocketAsync(t.Result.Data.Ssid);
@@ -81,22 +85,26 @@ namespace IqOptionApi {
                         tcs.TrySetResult(false);
                     });
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 tcs.TrySetException(ex);
             }
 
             return tcs.Task;
         }
 
-        public async Task<Profile> GetProfileAsync() {
+        public async Task<Profile> GetProfileAsync()
+        {
             var result = await HttpClient.GetProfileAsync();
             return result.Result;
         }
 
-        public async Task<bool> ChangeBalanceAsync(long balanceId) {
+        public async Task<bool> ChangeBalanceAsync(long balanceId)
+        {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
 
-            if (result?.Message == null && !result.IsSuccessful) {
+            if (result?.Message == null && !result.IsSuccessful)
+            {
                 _logger.Error($"Change balance ({balanceId}) error : {result.Message}");
                 return false;
             }
@@ -105,55 +113,61 @@ namespace IqOptionApi {
         }
 
         public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
-            DateTimeOffset expiration = default(DateTimeOffset)) {
-            
+            DateTimeOffset expiration = default(DateTimeOffset))
+        {
+
             return WsClient?.BuyAsync(pair, size, direction, expiration);
         }
 
 
-        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to) {
+        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count, DateTimeOffset to)
+        {
             return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
         }
 
-        public Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf) {
+        public Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf)
+        {
 
             WsClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
 
             var stream = WsClient?
                 .RealTimeCandleInfoObservable
                 .Where(x => x.ActivePair == pair && x.TimeFrame == tf);
-            
+
 
             return Task.FromResult(stream);
         }
 
-        public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf) {
+        public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf)
+        {
             return WsClient?.UnsubscribeCandlesAsync(pair, tf);
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             connectedSubject?.Dispose();
             WsClient?.Dispose();
         }
 
 
-      
+
 
         /// <summary>
         /// listen to all obs, for make all properties updated
         /// </summary>
-        private void SubscribeWebSocket() {
+        private void SubscribeWebSocket()
+        {
 
             //subscribe profile
             WsClient.ProfileObservable
                 .Merge(HttpClient.ProfileObservable())
                 .DistinctUntilChanged()
-                .Where(x => x!=null)
+                .Where(x => x != null)
                 .Subscribe(x => Profile = x);
 
             //subscribe for instrument updated
-            WsClient.InstrumentResultSetObservable
-                .Subscribe(x => Instruments = x);
+            //WsClient.InstrumentResultSetObservable
+            //    .Subscribe(x => Instruments = x);
 
 
         }
@@ -170,21 +184,24 @@ namespace IqOptionApi {
             WsClient = new IqOptionWebSocketClient("");
         }
 
-      
+
 
         #endregion
     }
 
-    public enum OrderDirection {
+    public enum OrderDirection
+    {
         [EnumMember(Value = "put")] Put = 1,
 
         [EnumMember(Value = "call")] Call = 2
     }
 
 
-    public class IqOptionApiGetProfileFailedException : Exception {
+    public class IqOptionApiGetProfileFailedException : Exception
+    {
         public IqOptionApiGetProfileFailedException(object receivedContent) : base(
-            $"received incorrect content : {receivedContent}") {
+            $"received incorrect content : {receivedContent}")
+        {
         }
     }
 }

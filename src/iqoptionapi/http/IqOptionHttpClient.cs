@@ -2,25 +2,24 @@
 using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using IqOptionApi.exceptions;
 using IqOptionApi.extensions;
-using IqOptionApi.ws;
 using IqOptionApi.Models;
-using Newtonsoft.Json;
 using RestSharp;
 using Serilog;
 
-namespace IqOptionApi.http {
-    public class IqOptionHttpClient  {
+namespace IqOptionApi.http
+{
+    public class IqOptionHttpClient
+    {
 
         private readonly ILogger _logger;
 
 
-        public IqOptionHttpClient(string username, string password, string host = "iqoption.com") {
+        public IqOptionHttpClient(string username, string password, string host = "iqoption.com")
+        {
             Client = new RestClient(ApiEndPoint(host));
-            LoginModel = new LoginModel {Email = username, Password = password};
+            LoginModel = new LoginModel { Email = username, Password = password };
             _logger = IqOptionLoggerFactory.CreateLogger();
         }
 
@@ -30,18 +29,21 @@ namespace IqOptionApi.http {
         public SsidResultMessage SecuredToken { get; private set; }
         public IRestClient Client { get; }
 
-        protected static Uri ApiEndPoint(string host) {
+        protected static Uri ApiEndPoint(string host)
+        {
             return new Uri($"https://{host}/api");
         }
 
-#region [Profile]
+        #region [Profile]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
         private Profile _profile;
 
-        public Profile Profile {
+        public Profile Profile
+        {
             get => _profile;
-            private set {
+            private set
+            {
                 _profileSubject.OnNext(value);
                 _profile = value;
             }
@@ -49,12 +51,13 @@ namespace IqOptionApi.http {
 
         public IObservable<Profile> ProfileObservable() => _profileSubject.Publish().RefCount();
 
-#endregion
+        #endregion
 
 
-#region Web-Methods
+        #region Web-Methods
 
-        public Task<IqHttpResult<SsidResultMessage>> LoginAsync() {
+        public Task<IqHttpResult<SsidResultMessage>> LoginAsync()
+        {
 
             var tcs = new TaskCompletionSource<IqHttpResult<SsidResultMessage>>();
             try
@@ -68,7 +71,8 @@ namespace IqOptionApi.http {
                     .AddParameter("password", this.LoginModel.Password, ParameterType.QueryString);
 
                 client.ExecuteTaskAsync(request)
-                    .ContinueWith(t => {
+                    .ContinueWith(t =>
+                    {
                         switch (t.Result.StatusCode)
                         {
                             case HttpStatusCode.OK:
@@ -83,7 +87,7 @@ namespace IqOptionApi.http {
                                     tcs.TrySetResult(result);
                                     break;
                                 }
-                            default :
+                            default:
                                 {
                                     var error = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
                                     error.IsSuccessful = false;
@@ -107,8 +111,10 @@ namespace IqOptionApi.http {
 
         public Task<IqHttpResult<Profile>> GetProfileAsync()
         {
-            return ExecuteHttpClientAsync(new GetProfileRequest()).ContinueWith(t => {
-                if (t.Result != null && t.Result.StatusCode == HttpStatusCode.OK) {
+            return ExecuteHttpClientAsync(new GetProfileRequest()).ContinueWith(t =>
+            {
+                if (t.Result != null && t.Result.StatusCode == HttpStatusCode.OK)
+                {
                     return t.Result.Content.JsonAs<IqHttpResult<Profile>>();
                 }
 
@@ -116,7 +122,8 @@ namespace IqOptionApi.http {
             });
         }
 
-        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId) {
+        public async Task<IqHttpResult<IHttpResultMessage>> ChangeBalanceAsync(long balanceId)
+        {
             var result = await ExecuteHttpClientAsync(new ChangeBalanceRequest(balanceId));
 
             if (result.StatusCode == HttpStatusCode.OK)
@@ -125,14 +132,15 @@ namespace IqOptionApi.http {
             return null;
         }
 
-        private Task<IRestResponse> ExecuteHttpClientAsync(IRestRequest request) {
+        private Task<IRestResponse> ExecuteHttpClientAsync(IRestRequest request)
+        {
             var result = Client.ExecuteTaskAsync(request);
             return result;
         }
 
-#endregion
+        #endregion
     }
 
 
-  
+
 }

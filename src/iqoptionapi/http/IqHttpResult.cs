@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace IqOptionApi.http {
-    public class IqHttpResult<T> where T : IHttpResultMessage {
+namespace IqOptionApi.http
+{
+    public class IqHttpResult<T> where T : IHttpResultMessage
+    {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
 
@@ -24,20 +25,24 @@ namespace IqOptionApi.http {
         public Errors Errors { get; set; }
     }
 
-    public class Errors : List<ErrorResult> {
+    public class Errors : List<ErrorResult>
+    {
 
-        public string GetErrorMessage() {
+        public string GetErrorMessage()
+        {
             return string.Join(", ", this.Select(x => x.Message));
         }
     }
 
-    public class ErrorResult {
+    public class ErrorResult
+    {
         [JsonProperty("code")]
-    public int Code { get; set; }
+        public int Code { get; set; }
         [JsonProperty("title")]
         public string Message { get; set; }
     }
-    public class LoginFailedResultMessage {
+    public class LoginFailedResultMessage
+    {
         [JsonProperty("isSuccessful")]
         public bool IsSuccessful { get; set; }
 
@@ -49,7 +54,8 @@ namespace IqOptionApi.http {
     }
 
 
-    public class LoginFailedMessage {
+    public class LoginFailedMessage
+    {
         [JsonProperty("email")]
         public string[] Email { get; set; }
 
@@ -58,7 +64,8 @@ namespace IqOptionApi.http {
     }
 
 
-    public class LoginTooMuchResultMessage : IHttpResultMessage {
+    public class LoginTooMuchResultMessage : IHttpResultMessage
+    {
         [JsonProperty("status")]
         public string Status { get; set; }
 
@@ -68,6 +75,8 @@ namespace IqOptionApi.http {
 
     public class SsidResultMessage : IHttpResultMessage
     {
+        [JsonProperty("code")]
+        public string Code { get; set; }
         [JsonProperty("ssid")]
         public string Ssid { get; set; }
     }
