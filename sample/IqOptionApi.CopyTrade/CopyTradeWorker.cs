@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using IqOptionApi.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace IqOptionApi.CopyTrade
 {
-    public class Worker : BackgroundService
+    public class CopyTradeWorker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<CopyTradeWorker> _logger;
 
-        public Worker(ILogger<Worker> logger)
+        public CopyTradeWorker(ILogger<CopyTradeWorker> logger)
         {
             _logger = logger;
         }
@@ -29,4 +30,6 @@ namespace IqOptionApi.CopyTrade
             });
         }
     }
+
+    
 }
