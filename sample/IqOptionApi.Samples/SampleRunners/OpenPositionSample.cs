@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
-using Serilog;
 
-namespace IqOptionApi.Samples.Workers
+namespace IqOptionApi.Samples.SampleRunners
 {
     public class OpenPositionSample : SampleRunner
     {

@@ -98,15 +98,14 @@ namespace IqOptionApi
             return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
         }
 
-        public Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf)
+        public Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf)
         {
-            WsClient?.SubscribeCandlesAsync(pair, tf).ConfigureAwait(false);
+            WsClient?.SubscribeQuoteAsync(pair, tf).ConfigureAwait(false);
 
             var stream = WsClient?
                 .RealTimeCandleInfoObservable
                 .Where(x => x.ActivePair == pair && x.TimeFrame == tf);
-
-
+            
             return Task.FromResult(stream);
         }
 

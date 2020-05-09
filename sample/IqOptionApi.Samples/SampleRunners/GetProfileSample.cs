@@ -1,10 +1,7 @@
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Serilog;
 
-namespace IqOptionApi.Samples.Workers
+namespace IqOptionApi.Samples.SampleRunners
 {
     public class GetProfileSample : SampleRunner
     {

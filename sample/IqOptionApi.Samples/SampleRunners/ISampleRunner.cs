@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Serilog;
 
-namespace IqOptionApi.Samples.Workers
+namespace IqOptionApi.Samples.SampleRunners
 {
     public interface ISampleRunner
     {

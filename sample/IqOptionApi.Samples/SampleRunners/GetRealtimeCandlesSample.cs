@@ -1,11 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
-using IqOptionApi.Ws;
 using Newtonsoft.Json;
-using Serilog;
 
-namespace IqOptionApi.Samples.Workers
+namespace IqOptionApi.Samples.SampleRunners
 {
     public class GetCandlesSample : SampleRunner
     {

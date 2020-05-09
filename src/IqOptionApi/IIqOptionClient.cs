@@ -22,7 +22,7 @@ namespace IqOptionApi
 
         Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTimeOffset expiration);
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
-        Task<IObservable<CurrentCandle>> SubscribeRealtimeDataAsync(ActivePair pair, TimeFrame tf);
+        Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf);
         Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf);
     }
 }

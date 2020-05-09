@@ -54,16 +54,18 @@ namespace IqOptionApi.Ws
 
         #region [Subscribes]
 
-        [SubscribeForTopicName(MessageType.Candles, typeof(CurrentCandle))]
+        [SubscribeForTopicName(MessageType.Candles, typeof(CandleCollections))]
+        public void Subscribe(CandleCollections type)
+        {
+            _candelsCollections.OnNext(type);
+        }
+
+        [SubscribeForTopicName(MessageType.Quotes, typeof(CurrentCandle))]
         public void Subscribe(CurrentCandle type)
         {
             _candleInfoSubject.OnNext(type);
         }
 
-        public void Subscribe(CandleCollections type)
-        {
-            _candelsCollections.OnNext(type);
-        }
 
         #endregion
     }

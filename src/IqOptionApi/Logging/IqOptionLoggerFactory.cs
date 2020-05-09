@@ -12,7 +12,11 @@ namespace IqOptionApi
         public static ILogger CreateHttpLogger()
         {
             return new LoggerConfiguration()
-                .MinimumLevel.Debug()
+#if Release
+                .MinimumLevel.Information()
+#else
+                .MinimumLevel.Verbose()
+#endif
                 .WriteTo.Console(
                     outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level}] [HTTP]\t{SourceContext}{Message:lj}{NewLine}{Exception}",
@@ -24,7 +28,11 @@ namespace IqOptionApi
         public static ILogger CreateWebSocketLogger(Profile profile)
         {
             return new LoggerConfiguration()
-                .MinimumLevel.Debug()
+#if Release
+                .MinimumLevel.Information()
+#else
+                .MinimumLevel.Verbose()
+#endif
                 .WriteTo.Async(
                     a => a.LiterateConsole(
                         outputTemplate:
@@ -37,7 +45,11 @@ namespace IqOptionApi
         {
             if (_loggerInstance == null)
                 _loggerInstance = new LoggerConfiguration()
-                    .MinimumLevel.Debug()
+#if Release
+                .MinimumLevel.Information()
+#else
+                    .MinimumLevel.Verbose()
+#endif
                     .WriteTo.Async(
                         a => a.Console(
                             outputTemplate:

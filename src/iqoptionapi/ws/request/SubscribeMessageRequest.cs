@@ -6,6 +6,7 @@ namespace IqOptionApi.Ws.Request
 {
     internal class SubscribeMessageRequest : WsMessageBase<SubscribeRequestBody>
     {
+        //{"name":"subscribeMessage","msg":{"name":"candle-generated","params":{"routingFilters":{"active_id":1,"size":1}}}}
         public SubscribeMessageRequest(ActivePair pair, TimeFrame tf)
         {
             base.Message = new SubscribeRequestBody

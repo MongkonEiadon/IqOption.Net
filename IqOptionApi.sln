@@ -5,11 +5,9 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi", "src\IqOptionApi\IqOptionApi.csproj", "{404B9F64-C2D7-4B86-98FB-AA53111A37C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi.Sample", "Sample\IqOptionApi.Sample\IqOptionApi.Sample.csproj", "{CAC0EFBC-41E7-4348-99B3-CB96F12B3BCA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi.CopyTrade", "Sample\IqOptionApi.CopyTrade\IqOptionApi.CopyTrade.csproj", "{60704C64-84A4-4B90-8AB8-EAE351F4329B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{254AA6AE-687A-4F41-9637-7F1D89533DC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi.Samples", "Sample\IqOptionApi.Samples\IqOptionApi.Samples.csproj", "{F980D376-4C0E-4248-B77F-B6D1015C0244}"
 EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -17,21 +15,16 @@ Global
 		{404B9F64-C2D7-4B86-98FB-AA53111A37C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{404B9F64-C2D7-4B86-98FB-AA53111A37C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{404B9F64-C2D7-4B86-98FB-AA53111A37C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAC0EFBC-41E7-4348-99B3-CB96F12B3BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAC0EFBC-41E7-4348-99B3-CB96F12B3BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAC0EFBC-41E7-4348-99B3-CB96F12B3BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAC0EFBC-41E7-4348-99B3-CB96F12B3BCA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60704C64-84A4-4B90-8AB8-EAE351F4329B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60704C64-84A4-4B90-8AB8-EAE351F4329B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60704C64-84A4-4B90-8AB8-EAE351F4329B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60704C64-84A4-4B90-8AB8-EAE351F4329B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F980D376-4C0E-4248-B77F-B6D1015C0244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F980D376-4C0E-4248-B77F-B6D1015C0244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F980D376-4C0E-4248-B77F-B6D1015C0244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F980D376-4C0E-4248-B77F-B6D1015C0244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{60704C64-84A4-4B90-8AB8-EAE351F4329B} = {254AA6AE-687A-4F41-9637-7F1D89533DC4}
-		{CAC0EFBC-41E7-4348-99B3-CB96F12B3BCA} = {254AA6AE-687A-4F41-9637-7F1D89533DC4}
+		{F980D376-4C0E-4248-B77F-B6D1015C0244} = {254AA6AE-687A-4F41-9637-7F1D89533DC4}
 	EndGlobalSection
 EndGlobal

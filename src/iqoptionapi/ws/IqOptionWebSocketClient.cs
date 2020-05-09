@@ -74,7 +74,11 @@ namespace IqOptionApi.Ws
 
         public Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
         {
-            _client.Send(messageCreator.CreateIqOptionMessage());
+            var payload = messageCreator.CreateIqOptionMessage();
+            
+            _logger.ForContext("Topic", "request >>").Debug("{payload}", payload);
+            
+            _client.Send(payload);
 
             return Task.CompletedTask;
         }
@@ -147,7 +151,7 @@ namespace IqOptionApi.Ws
 
         public IObservable<CurrentCandle> RealTimeCandleInfoObservable => _candleInfoSubject.AsObservable();
 
-        public Task SubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame)
+        public Task SubscribeQuoteAsync(ActivePair pair, TimeFrame timeFrame)
         {
             return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
         }

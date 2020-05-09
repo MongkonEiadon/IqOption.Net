@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
+using System;
 using System.Threading.Tasks;
-using IqOptionApi;
-using IqOptionApi.Models;
-using Serilog;
 
-namespace IqOptionApi.Sample {
-    public class TradingExample {
-        public async Task RunSample() {
-
+namespace IqOptionApi.Samples.SampleRunners
+{
+    public class CopyTradeSample : ISampleRunner
+    {
+        public async Task RunSample()
+        {           
             var trader = new IqOptionClient("a@b.com", "changeme");
             var follower = new IqOptionClient("b@c.com", "changeme"); 
 

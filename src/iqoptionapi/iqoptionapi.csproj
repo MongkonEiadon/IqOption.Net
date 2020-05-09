@@ -27,6 +27,10 @@
     <Version>2.0.2</Version>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>Release</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="Http\result\" />
   </ItemGroup>

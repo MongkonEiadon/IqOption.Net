@@ -13,8 +13,8 @@ namespace IqOptionApi.Ws.Base
         public const string OptionArchived = "option-archived";
 
         public const string SocketOptionOpened = "socket-option-opened";
-        public const string SubscribeMessage = "subscribemessage";
-        public const string UnsubscribeMessage = "unsubscribemessage";
+        public const string SubscribeMessage = "subscribeMessage";
+        public const string UnsubscribeMessage = "unsubscribeMessage";
 
         public const string UserTournamentPositionChanged = "user-tournament-position-changed";
 
@@ -24,5 +24,7 @@ namespace IqOptionApi.Ws.Base
 
         public const string BalanceChanged = "balance-changed";
         public const string Candles = "candles";
+
+        public const string Quotes = "candle-generated";
     }
 }
