@@ -11,6 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\IqOptionApi\IqOptionApi.csproj" />
+        <ProjectReference Include="..\..\src\IqOptionApi.NET\IqOptionApi.NET.csproj" />
     </ItemGroup>
 </Project>

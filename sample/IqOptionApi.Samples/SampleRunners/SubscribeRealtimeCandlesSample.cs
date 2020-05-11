@@ -3,15 +3,11 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
-using Serilog;
 
 namespace IqOptionApi.Samples.SampleRunners
 {
     public class SubscribeRealtimeCandlesSample : SampleRunner
     {
-        
-        private readonly ILogger _logger = LogHelper.Log;
-        
         public override async Task RunSample()
         {
             if (await IqClientApi.ConnectAsync())
