@@ -1,14 +1,12 @@
 ﻿using System;
 using System.IO;
-
 using FluentAssertions;
-
-using IqOptionApi.ws.result;
+using IqOptionApi.unit;
+using IqOptionApi.Ws.result;
 using Newtonsoft.Json;
-
 using NUnit.Framework;
 
-namespace IqOptionApi.unit.JsonTest
+namespace IqOptionApi.Tests.JsonTest.BuyResult
 {
     public class BuyCompleteTest : TestFor<LoadJsonFileTest> {
 

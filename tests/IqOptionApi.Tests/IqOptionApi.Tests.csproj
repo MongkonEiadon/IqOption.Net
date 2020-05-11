@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Pack</Configurations>
 
     
@@ -33,13 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IqOptionApi\IqOptionApi.csproj" />
+    <ProjectReference Include="..\..\src\IqOptionApi.NET\IqOptionApi.NET.csproj" />
   </ItemGroup>
-
-
+  
   <ItemGroup>
-    
-
     <None Update="appsettings.Debug.json">
       <IsTransformFile>true</IsTransformFile>
       <DependentUpon>appsettings.json</DependentUpon>

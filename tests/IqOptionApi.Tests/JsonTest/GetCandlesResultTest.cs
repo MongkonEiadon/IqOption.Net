@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-
 using FluentAssertions;
-
-using IqOptionApi.ws;
+using IqOptionApi.unit;
+using IqOptionApi.Ws;
 using Newtonsoft.Json;
-
 using NUnit.Framework;
-namespace IqOptionApi.unit.JsonTest {
+
+namespace IqOptionApi.Tests.JsonTest {
     public class GetCandlesResultTest : TestFor<LoadJsonFileTest> {
         public GetCandlesResultTest() {
 

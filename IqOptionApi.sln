@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi.Samples", "Samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi.NET", "src\IqOptionApi.NET\IqOptionApi.NET.csproj", "{925CAFCB-016F-407C-869A-3DA9A1157946}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IqOptionApi.Tests", "tests\IqOptionApi.Tests\IqOptionApi.Tests.csproj", "{72988539-D915-4DBA-909A-A99C121ADF04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{900633CE-8D1B-43E6-BEC7-9942E75610F8}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F980D376-4C0E-4248-B77F-B6D1015C0244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -19,6 +23,10 @@ Global
 		{925CAFCB-016F-407C-869A-3DA9A1157946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{925CAFCB-016F-407C-869A-3DA9A1157946}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{925CAFCB-016F-407C-869A-3DA9A1157946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72988539-D915-4DBA-909A-A99C121ADF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72988539-D915-4DBA-909A-A99C121ADF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72988539-D915-4DBA-909A-A99C121ADF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72988539-D915-4DBA-909A-A99C121ADF04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +34,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F980D376-4C0E-4248-B77F-B6D1015C0244} = {254AA6AE-687A-4F41-9637-7F1D89533DC4}
+		{72988539-D915-4DBA-909A-A99C121ADF04} = {900633CE-8D1B-43E6-BEC7-9942E75610F8}
 	EndGlobalSection
 EndGlobal

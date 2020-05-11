@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using AutoFixture;
 using AutoFixture.AutoMoq;
-
 using Moq;
-
 using NUnit.Framework;
 
-namespace IqOptionApi.unit {
+namespace IqOptionApi.Tests {
     
      public abstract class TestFor<TUnit>  where TUnit : class
     {
