@@ -6,7 +6,7 @@ Now we can talk about the issue on gitter here
 
 |Branch|Build|Nuget|
 |:--:|:--:|:--:|
-**master**|[![Build status](https://ci.appveyor.com/api/projects/status/sueidsbt13avwvoc/branch/master?svg=true)](https://ci.appveyor.com/project/MongkonEiadon/iqoption-net/branch/master) |[![NuGet Badge](https://buildstats.info/nuget/iqoptionapi)](https://www.nuget.org/packages/iqoptionapi/) | 
+**master**|[![Build Status](https://dev.azure.com/mongkoneiadon0274/IqOptionAPI.NET/_apis/build/status/MongkonEiadon.IqOption.Net?branchName=master)](https://dev.azure.com/mongkoneiadon0274/IqOptionAPI.NET/_build/latest?definitionId=2&branchName=master) | 
 **developer(Pre-release)**|[![Build Status](https://dev.azure.com/mongkoneiadon/IqOption.net/_apis/build/status/CI%20for%20GitHub?branchName=develop)](https://dev.azure.com/mongkoneiadon/IqOption.net/_build/latest?definitionId=8&branchName=develop) | [![NuGet Badge](https://buildstats.info/nuget/iqoptionapi?includePreReleases=true)](https://www.nuget.org/packages/iqoptionapi/2.0.0-alpha1)|
 
 
