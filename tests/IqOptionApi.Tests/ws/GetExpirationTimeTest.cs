@@ -1,12 +1,10 @@
 using System;
-
 using FluentAssertions;
-
-using IqOptionApi.ws.request;
-
+using IqOptionApi.unit;
+using IqOptionApi.Ws.Request;
 using NUnit.Framework;
 
-namespace IqOptionApi.unit.ws {
+namespace IqOptionApi.Tests.ws {
     
     [TestFixture]
 

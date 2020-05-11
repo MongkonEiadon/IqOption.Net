@@ -1,13 +1,10 @@
 ﻿using FluentAssertions;
-
-using IqOptionApi.ws.result;
-
+using IqOptionApi.unit;
+using IqOptionApi.Ws.result;
 using Newtonsoft.Json;
-
 using NUnit.Framework;
 
-
-namespace IqOptionApi.unit.JsonTest
+namespace IqOptionApi.Tests.JsonTest.BuyResult
 {
     public class BuyFailedTest : TestFor<LoadJsonFileTest>
     {
@@ -35,9 +32,6 @@ namespace IqOptionApi.unit.JsonTest
             var msg = result.Message;
             msg.IsSuccessful.Should().BeFalse();
             msg.GetMessageDescription().Should().Be("หมดเวลาสำหรับการซื้อออปชันแล้ว โปรดลองอีกครั้งภายหลัง");
-
         }
-
-
     }
 }

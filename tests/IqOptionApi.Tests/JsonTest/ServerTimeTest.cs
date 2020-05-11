@@ -1,13 +1,11 @@
 ﻿using System;
-
 using FluentAssertions;
-
 using IqOptionApi.Models;
+using IqOptionApi.unit;
 using Newtonsoft.Json;
-
 using NUnit.Framework;
 
-namespace IqOptionApi.unit.JsonTest {
+namespace IqOptionApi.Tests.JsonTest {
     
     [TestFixture]
     public class ServerTimeTest : TestFor<LoadJsonFileTest> {

@@ -2,12 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
-using IqOptionApi.ws;
-using IqOptionApi.ws.request;
-
+using IqOptionApi.unit;
+using IqOptionApi.Ws;
+using IqOptionApi.Ws.Request;
 using NUnit.Framework;
 
-namespace IqOptionApi.unit.ws
+namespace IqOptionApi.Tests.ws
 {
     public class GetCandlesTest : TestFor<Object>
     {
