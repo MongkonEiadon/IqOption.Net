@@ -2,25 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Configurations>Debug;Release;Pack</Configurations>
-
-    
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="Json\**\*.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Json\buycomplete.json" />
-    <None Remove="Json\BuyResult\buyFailed.json" />
-    <None Remove="Json\heartbeat.json" />
-    <None Remove="Json\subscribeMessage\candle-generated.json" />
-    <None Remove="Json\timesync.json" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
@@ -35,25 +18,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\IqOptionApi.NET\IqOptionApi.NET.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <None Update="appsettings.Debug.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
-    <None Update="appsettings.json">
-      <TransformOnBuild>true</TransformOnBuild>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="appsettings.Release.json">
-      <IsTransformFile>true</IsTransformFile>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </None>
+    <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\Json\**\*.*" CopyToOutputDirectory="Always" TargetPath="Json\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core" />
   </ItemGroup>
 
 
-  <ItemGroup>
-    <Folder Include="http" />
-  </ItemGroup>
 
 </Project>

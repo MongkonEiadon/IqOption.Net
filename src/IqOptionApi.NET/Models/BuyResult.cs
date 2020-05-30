@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace IqOptionApi.Models
 {
+    /*
     public class BuyResult
     {
         [JsonProperty("user_id")] public long UserId { get; set; }
@@ -54,4 +55,5 @@ namespace IqOptionApi.Models
             return new BuyResult {ErrorMessage = msg};
         }
     }
+    */
 }

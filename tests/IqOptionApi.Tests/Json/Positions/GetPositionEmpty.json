@@ -1,0 +1,9 @@
+{
+  "request_id": "",
+  "name": "positions",
+  "msg": {
+    "total": 0,
+    "positions": []
+  },
+  "status": 2000
+}

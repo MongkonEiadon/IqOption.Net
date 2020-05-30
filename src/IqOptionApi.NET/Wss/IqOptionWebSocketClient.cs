@@ -2,19 +2,24 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Threading.Tasks;
-using System.Timers;
-using IqOptionApi.Models;
-using IqOptionApi.Ws.Base;
+ using System.Threading;
+ using System.Threading.Tasks;
+ using IqOptionApi.Logging;
+ using IqOptionApi.Models;
+ using IqOptionApi.Models.BinaryOptions;
+ using IqOptionApi.Ws.Base;
 using IqOptionApi.Ws.Request;
-using Serilog;
-using WebSocketSharp;
+ using IqOptionApi.Wss.Request.DigitalOptions;
+ using Serilog;
+ using Serilog.Context;
+ using WebSocketSharp;
+ using Timer = System.Timers.Timer;
 
-namespace IqOptionApi.Ws
+ namespace IqOptionApi.Ws
 {
     public partial class IqOptionWebSocketClient : IDisposable
     {
-        private readonly WebSocket _client;
+        public readonly WebSocket _client;
 
         //privates
         private ILogger _logger;
@@ -72,90 +77,95 @@ namespace IqOptionApi.Ws
 
         public IObservable<string> MessageReceivedObservable { get; }
 
+        /// <summary>
+        /// Commit the message with Fire-And-Forgot style
+        /// </summary>
+        /// <param name="messageCreator"></param>
+        /// <returns></returns>
         public Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
         {
-            var payload = messageCreator.CreateIqOptionMessage();
-            
-            _logger.ForContext("Topic", "request >>").Debug("{payload}", payload);
-            
-            _client.Send(payload);
+            using (LogContext.Push(new ProfileEnricher(Profile)))
+            {
+                var payload = messageCreator.CreateIqOptionMessage();
+                _client.Send(payload);
+                _logger
+                    .ForContext("Topic", "request >>")
+                    .Debug("{payload}", payload);
+            }
 
             return Task.CompletedTask;
         }
 
-        #endregion
-
-
-        #region [InfoData]
-
-        private readonly Subject<InfoData[]> _infoDataSubject = new Subject<InfoData[]>();
-        public IObservable<InfoData[]> InfoDataObservable => _infoDataSubject.Publish().RefCount();
-
-        #endregion
-
-        #region [BuyV2]
-
-        private readonly Subject<BuyResult> _buyResultSubject = new Subject<BuyResult>();
-        public IObservable<BuyResult> BuyResultObservable => _buyResultSubject.Publish().RefCount();
-
-        public Task<BuyResult> BuyAsync(
-            ActivePair pair,
-            int size,
-            OrderDirection direction,
-            DateTimeOffset expiration)
+        /// <summary>
+        /// Commit the message to the IqOption Server, and wait for result back
+        /// </summary>
+        /// <param name="messageCreator">The message creator builder.</param>
+        /// <param name="observableResult">The target observable that will trigger after message was incomming</param>
+        /// <typeparam name="TResult">The expected result</typeparam>
+        /// <returns></returns>
+        public Task<TResult> SendMessageAsync<TResult>(
+            IWsIqOptionMessageCreator messageCreator,
+            IObservable<TResult> observableResult)
         {
-            var tcs = new TaskCompletionSource<BuyResult>();
+            var tcs = new TaskCompletionSource<TResult>();
+            var token = new CancellationTokenSource(5000).Token;
+
             try
             {
-                var obs = BuyResultObservable
-                    .Where(x => x != null)
-                    .Subscribe(x =>
-                        tcs.TrySetResult(x));
-
-                tcs.Task.ContinueWith(t =>
+                token.ThrowIfCancellationRequested();
+                token.Register(() =>
                 {
-                    if (t.Result != null) obs.Dispose();
+                    if (tcs.TrySetCanceled())
+                    {
+                        _logger.ForContext("Topic", "Wait Result Cancelled")
+                            .Debug("Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
+                                typeof(TResult), 5000, messageCreator.CreateIqOptionMessage());
+                    }
                 });
+                
+                observableResult
+                    .FirstAsync()
+                    .Subscribe(x => { tcs.TrySetResult(x); }, token);
 
-                //reduce second to 00s 
-                if (expiration.Second % 60 != 0)
-                    expiration = expiration.AddSeconds(60 - expiration.Second);
-
-                // incasse of non-binary options
-                var optionType = OptionType.Turbo;
-                if (expiration.Subtract(ServerTime).Minutes >= 5)
-                    optionType = OptionType.Binary;
-
-                SendMessageAsync(
-                        new BuyV2WsMessage(
-                            Profile.BalanceId,
-                            pair,
-                            optionType,
-                            direction,
-                            expiration,
-                            size))
-                    .ConfigureAwait(false);
+                // send message
+                SendMessageAsync(messageCreator);
             }
             catch (Exception ex)
             {
                 tcs.TrySetException(ex);
             }
-
+            
             return tcs.Task;
         }
 
         #endregion
 
 
+        
         #region [CurrentCandleInfo]
 
         public IObservable<CurrentCandle> RealTimeCandleInfoObservable => _candleInfoSubject.AsObservable();
 
+        
+        /// <summary>
+        /// Subscribe to the realtime quotes, after called this method
+        /// The <see cref="ActivePair"/> with specific <see cref="TimeFrame"/> will received every single tick
+        /// </summary>
+        /// <param name="pair">The Active pair to subscribe</param>
+        /// <param name="timeFrame">The Time frame to subscribe</param>
+        /// <returns></returns>
         public Task SubscribeQuoteAsync(ActivePair pair, TimeFrame timeFrame)
         {
             return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
         }
 
+        /// <summary>
+        /// UnSubscribe to the realtime quotes, after called this method
+        /// The <see cref="ActivePair"/> with specific <see cref="TimeFrame"/> will not received anymore
+        /// </summary>
+        /// <param name="pair">The Active pair to unsubscribe</param>
+        /// <param name="timeFrame">The Time frame to unsubscribe</param>
+        /// <returns></returns>
         public Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame)
         {
             return SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));

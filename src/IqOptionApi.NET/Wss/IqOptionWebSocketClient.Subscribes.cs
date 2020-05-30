@@ -23,54 +23,51 @@ namespace IqOptionApi.Ws
 
         private void SubscribeIncomingMessage(string x)
         {
+            try
             {
-                try
+                var msg = x.JsonAs<WsMessageBase<object>>();
+                SystemReconnectionTimer.BeginInit();
+
+                switch (msg.Name)
                 {
-                    var msg = x.JsonAs<WsMessageBase<object>>();
+                    case MessageType.Heartbeat:
+                        SetHeartbeatTick((long) msg.Message);
+                        break;
 
-                    //_logger.WithTopic(msg.Name).Information("");
+                    case MessageType.TimeSync:
+                        SetServerTime((long) msg.Message);
+                        break;
 
-                    SystemReconnectionTimer.BeginInit();
+                    default:
 
-                    switch (msg.Name)
-                    {
-                        case MessageType.Heartbeat:
-                            SetHeartbeatTick((long) msg.Message);
-                            break;
+                        // list of subs.
+                        var methods = _subscribeMethodInfos.Where(m => m.Attribute.TopicName == msg.Name);
 
-                        case MessageType.TimeSync:
-                            SetServerTime((long) msg.Message);
-                            break;
-
-                        default:
-
-                            // list of subs.
-                            var methods = _subscribeMethodInfos.Where(m => m.Attribute.TopicName == msg.Name);
-
-                            // invoke subscribers
-                            if (methods.Any())
-                                foreach (var method in _subscribeMethodInfos.Where(m =>
-                                    m.Attribute.TopicName == msg.Name))
-                                {
-                                    var args = msg.MessageAs(method.Attribute.ArgumentType);
-                                    method.TargetMethod.Invoke(this, new[] {args});
-                                    _logger
-                                        .WithTopic(msg.Name)
-                                        .Debug("Incoming socket message was handle by {Method}",
-                                            method.TargetMethod.ToString());
-                                }
-                            else // not support subscribers
+                        // invoke subscribers
+                        if (methods.Any())
+                            foreach (var method in _subscribeMethodInfos.Where(m =>
+                                m.Attribute.TopicName == msg.Name))
+                            {
+                                var args = msg.MessageAs(method.Attribute.ArgumentType);
+                                method.TargetMethod.Invoke(this, new[] {args});
                                 _logger
                                     .WithTopic(msg.Name)
-                                    .Debug(x);
+                                    .Debug("Message was handled!");
+                            }
+                        else // not support subscribers
+                            _logger
+                                .WithTopic(msg.Name)
+                                .Debug("Not found handled method to support this kind of message. \n{x}", x);
 
-                            break;
-                    }
+
+                        _logger.WithTopic(msg.Name).Verbose(x);
+
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
             }
         }
     }

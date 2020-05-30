@@ -1,0 +1,13 @@
+{
+  "request_id": "",
+  "name": "digital-option-placed",
+  "msg": {
+    "part": "DATA",
+    "level": "INVALID_SCHEMA",
+    "type": "DigitalOptions::PlaceDigitalOptionRequest",
+    "message": "strconv.ParseFloat: parsing \"\": invalid syntax",
+    "schema": "IqDL 0.6\n\n/* DigitalOptions::PlaceDigitalOptionRequest from  https://gitlab.mobbtech.com/iqdl/schema/tree/0996db412464eec981c7c59a2861ba12d844d28b/MGW/DigitalOptions/payloads.iqdl#L86-98  */\nstruct PlaceDigitalOptionRequest {\n  /** баланс пользователя */\n  userBalanceId         Int52 required\n\n  /** идентификатор инструмента */\n  instrumentId          String required\n\n  /** количество */\n  count                 Decimal\n\n  /** сумма */\n  amount                Decimal\n})",
+    "schema_version": "0996db412464eec981c7c59a2861ba12d844d28b"
+  },
+  "status": 4000
+}

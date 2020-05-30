@@ -3,6 +3,8 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
+using IqOptionApi.Ws;
+using IqOptionApi.Ws.Request;
 
 namespace IqOptionApi.Samples.SampleRunners
 {

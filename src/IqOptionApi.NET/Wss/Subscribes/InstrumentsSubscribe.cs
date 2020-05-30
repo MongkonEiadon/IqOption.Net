@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
+using IqOptionApi.Ws.Request;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.Ws
@@ -18,7 +19,7 @@ namespace IqOptionApi.Ws
             _instrumentResultSetSubject.Publish().RefCount();
 
 
-        public Task<InstrumentResultSet> SendInstrumentsRequestAsync()
+        public Task<InstrumentResultSet> SendInstrumentsRequestAsync(params InstrumentType[] instrumentTypes)
         {
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
             try
@@ -26,17 +27,17 @@ namespace IqOptionApi.Ws
                 _logger.Verbose(nameof(SendInstrumentsRequestAsync));
 
                 //subscribe for the lastest result
-                InstrumentResultSetObservable
+                var obs = InstrumentResultSetObservable
                     .Subscribe(x => { tcs.TrySetResult(x); });
+                
 
                 //clear before query new 
                 _instrumentResultSet = new InstrumentResultSet();
 
-                //execute them all
                 Task.WhenAll(
-                    //SendMessageAsync(GetInstrumentWsMessageBase.CreateRequest(InstrumentType.Forex)),
-                    //SendMessageAsync(GetInstrumentWsMessageBase.CreateRequest(InstrumentType.CFD)),
-                    //SendMessageAsync(GetInstrumentWsMessageBase.CreateRequest(InstrumentType.Crypto))
+                    SendMessageAsync(new GetInstrumentWsRequest(InstrumentType.Forex)),
+                    SendMessageAsync(new GetInstrumentWsRequest(InstrumentType.CFD)),
+                    SendMessageAsync(new GetInstrumentWsRequest(InstrumentType.Crypto))
                 );
             }
 

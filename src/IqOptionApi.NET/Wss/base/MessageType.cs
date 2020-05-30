@@ -26,5 +26,8 @@ namespace IqOptionApi.Ws.Base
         public const string Candles = "candles";
 
         public const string Quotes = "candle-generated";
+
+        public const string PlacedDigitalOptions = "digital-option-placed";
+        public const string PlacedBinaryOptions = "option";
     }
 }

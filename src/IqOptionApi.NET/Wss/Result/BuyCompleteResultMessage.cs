@@ -1,9 +1,10 @@
 ﻿using IqOptionApi.Models;
+using IqOptionApi.Models.BinaryOptions;
 using IqOptionApi.Ws.Base;
 
 namespace IqOptionApi.Ws.result
 {
-    public class BuyCompleteResultMessage : WsMessageBase<WsMessageWithSuccessfulResult<BuyResult>>
+    internal class BuyCompleteResultMessage : WsMessageBase<WsMessageWithSuccessfulResult<BinaryOptionsResult>>
     {
     }
 }

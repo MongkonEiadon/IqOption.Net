@@ -1,0 +1,3176 @@
+{
+    "request_id": "",
+    "name": "instruments",
+    "msg": {
+        "user_group_id": 191,
+        "is_regulated": false,
+        "type": "forex",
+        "instruments": [
+            {
+                "ticker": "USDCAD",
+                "is_visible": true,
+                "id": "USDCAD",
+                "active_id": 100,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDCAD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDCAD",
+                "localization_key": "front.USDCAD",
+                "image": "/storage/public/5a/c8/f2c2e5302.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1418329520000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "CAD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURSGD",
+                "is_visible": true,
+                "id": "EURSGD",
+                "active_id": 955,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURSGD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURSGD",
+                "localization_key": "front.EURSGD",
+                "image": "/storage/public/5a/fc/b0ab0f06f.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526479124000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "SGD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURJPY",
+                "is_visible": true,
+                "id": "EURJPY",
+                "active_id": 4,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURJPY",
+                "localization_key": "front.EURJPY",
+                "image": "/storage/public/5a/c8/f1c42651b.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "CADCHF",
+                "is_visible": true,
+                "id": "CADCHF",
+                "active_id": 107,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "CADCHF",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "CADCHF",
+                "localization_key": "front.CADCHF",
+                "image": "/storage/public/5a/c8/f32b9836d.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1421237041000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "CAD",
+                "currency_right_side": "CHF",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDNOK",
+                "is_visible": true,
+                "id": "USDNOK",
+                "active_id": 168,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDNOK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDNOK",
+                "localization_key": "front.USDNOK",
+                "image": "/storage/public/5a/c8/f34cc5b87.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1448278295000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "NOK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDDKK",
+                "is_visible": true,
+                "id": "USDDKK",
+                "active_id": 1045,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDDKK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDDKK",
+                "localization_key": "front.USDDKK",
+                "image": "/storage/public/5b/29/54700be88.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "DKK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NZDUSD",
+                "is_visible": true,
+                "id": "NZDUSD",
+                "active_id": 8,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NZDUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NZDUSD",
+                "localization_key": "front.NZDUSD",
+                "image": "/storage/public/5a/c8/f228c33b0.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NZD",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURCHF",
+                "is_visible": true,
+                "id": "EURCHF",
+                "active_id": 946,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURCHF",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURCHF",
+                "localization_key": "front.EURCHF",
+                "image": "/storage/public/5a/fc/b19827d7c.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526478575000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "CHF",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDUSD",
+                "is_visible": true,
+                "id": "AUDUSD",
+                "active_id": 99,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDUSD",
+                "localization_key": "front.AUDUSD",
+                "image": "/storage/public/5a/c8/f2b7db16c.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1414059475000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURMXN",
+                "is_visible": true,
+                "id": "EURMXN",
+                "active_id": 1008,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURMXN",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURMXN",
+                "localization_key": "front.EURMXN",
+                "image": "/storage/public/5b/29/51460291f.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "MXN",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDCHF",
+                "is_visible": true,
+                "id": "USDCHF",
+                "active_id": 72,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDCHF",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDCHF",
+                "localization_key": "front.USDCHF",
+                "image": "/storage/public/5a/c8/f2a64b893.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1384344699000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "CHF",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURNOK",
+                "is_visible": true,
+                "id": "EURNOK",
+                "active_id": 951,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURNOK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURNOK",
+                "localization_key": "front.EURNOK",
+                "image": "/storage/public/5a/fc/b151c81b4.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526478847000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "NOK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "SEKJPY",
+                "is_visible": true,
+                "id": "SEKJPY",
+                "active_id": 1038,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "SEKJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "SEKJPY",
+                "localization_key": "front.SEKJPY",
+                "image": "/storage/public/5b/29/54110feb5.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "SEK",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "CADNOK",
+                "is_visible": true,
+                "id": "CADNOK",
+                "active_id": 993,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "CADNOK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "CADNOK",
+                "localization_key": "front.CADNOK",
+                "image": "/storage/public/5b/29/500dacf24.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "CAD",
+                "currency_right_side": "NOK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NOKSEK",
+                "is_visible": true,
+                "id": "NOKSEK",
+                "active_id": 1025,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NOKSEK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NOKSEK",
+                "localization_key": "front.NOKSEK",
+                "image": "/storage/public/5b/29/528b69b5e.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NOK",
+                "currency_right_side": "SEK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDNZD",
+                "is_visible": true,
+                "id": "AUDNZD",
+                "active_id": 944,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDNZD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDNZD",
+                "localization_key": "front.AUDNZD",
+                "image": "/storage/public/5a/fc/b1b14ad0c.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526478449000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "NZD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "GBPJPY",
+                "is_visible": true,
+                "id": "GBPJPY",
+                "active_id": 3,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "GBPJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "GBPJPY",
+                "localization_key": "front.GBPJPY",
+                "image": "/storage/public/5a/c8/f1b6a4fcd.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "GBP",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDNOK",
+                "is_visible": true,
+                "id": "AUDNOK",
+                "active_id": 986,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDNOK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDNOK",
+                "localization_key": "front.AUDNOK",
+                "image": "/storage/public/5b/29/4df9e3058.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335684000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "NOK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURAUD",
+                "is_visible": true,
+                "id": "EURAUD",
+                "active_id": 108,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURAUD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURAUD",
+                "localization_key": "front.EURAUD",
+                "image": "/storage/public/5a/c8/f33a3d1c7.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1421237041000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "AUD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDCHF",
+                "is_visible": true,
+                "id": "AUDCHF",
+                "active_id": 943,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDCHF",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDCHF",
+                "localization_key": "front.AUDCHF",
+                "image": "/storage/public/5a/fc/b1ba8e337.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526478362000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "CHF",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDCAD",
+                "is_visible": true,
+                "id": "AUDCAD",
+                "active_id": 7,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDCAD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDCAD",
+                "localization_key": "front.AUDCAD",
+                "image": "/storage/public/5a/c8/f21e7fb92.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "CAD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NZDCHF",
+                "is_visible": true,
+                "id": "NZDCHF",
+                "active_id": 1048,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NZDCHF",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NZDCHF",
+                "localization_key": "front.NZDCHF",
+                "image": "/storage/public/5b/29/549cdcb74.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NZD",
+                "currency_right_side": "CHF",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURZAR",
+                "is_visible": true,
+                "id": "EURZAR",
+                "active_id": 1011,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURZAR",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURZAR",
+                "localization_key": "front.EURZAR",
+                "image": "/storage/public/5b/29/516ddb9fb.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "ZAR",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDSEK",
+                "is_visible": true,
+                "id": "USDSEK",
+                "active_id": 219,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDSEK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDSEK",
+                "localization_key": "front.USDSEK",
+                "image": "/storage/public/5a/c8/f38c97cc6.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1470924718000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "SEK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURDKK",
+                "is_visible": true,
+                "id": "EURDKK",
+                "active_id": 1007,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURDKK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURDKK",
+                "localization_key": "front.EURDKK",
+                "image": "/storage/public/5b/29/51186b69d.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "DKK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURGBP",
+                "is_visible": true,
+                "id": "EURGBP",
+                "active_id": 2,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURGBP",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURGBP",
+                "localization_key": "front.EURGBP",
+                "image": "/storage/public/5a/c8/f1ad8b90b.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "GBP",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURCAD",
+                "is_visible": true,
+                "id": "EURCAD",
+                "active_id": 105,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURCAD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURCAD",
+                "localization_key": "front.EURCAD",
+                "image": "/storage/public/5a/c8/f311bcc72.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1421237041000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "CAD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDCZK",
+                "is_visible": true,
+                "id": "USDCZK",
+                "active_id": 1050,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDCZK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDCZK",
+                "localization_key": "front.USDCZK",
+                "image": "/storage/public/5b/29/54bb7b04f.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "CZK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURNZD",
+                "is_visible": true,
+                "id": "EURNZD",
+                "active_id": 212,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURNZD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURNZD",
+                "localization_key": "front.EURNZD",
+                "image": "/storage/public/5a/c8/f37d6b995.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1459188468000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "NZD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDSGD",
+                "is_visible": true,
+                "id": "AUDSGD",
+                "active_id": 989,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDSGD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDSGD",
+                "localization_key": "front.AUDSGD",
+                "image": "/storage/public/5b/29/4e5cc1b9a.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335684000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "SGD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NZDCAD",
+                "is_visible": true,
+                "id": "NZDCAD",
+                "active_id": 948,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NZDCAD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NZDCAD",
+                "localization_key": "front.NZDCAD",
+                "image": "/storage/public/5a/fc/b1792bdfd.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526478703000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NZD",
+                "currency_right_side": "CAD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "CHFSGD",
+                "is_visible": true,
+                "id": "CHFSGD",
+                "active_id": 952,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "CHFSGD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "CHFSGD",
+                "localization_key": "front.CHFSGD",
+                "image": "/storage/public/5a/fc/b144c1c6f.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1526478901000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "CHF",
+                "currency_right_side": "SGD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "GBPCAD",
+                "is_visible": true,
+                "id": "GBPCAD",
+                "active_id": 102,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "GBPCAD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "GBPCAD",
+                "localization_key": "front.GBPCAD",
+                "image": "/storage/public/5a/c8/f2e54ea8d.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1421237041000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "GBP",
+                "currency_right_side": "CAD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDJPY",
+                "is_visible": true,
+                "id": "USDJPY",
+                "active_id": 6,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDJPY",
+                "localization_key": "front.USDJPY",
+                "image": "/storage/public/5a/c8/f1d76908b.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EURUSD",
+                "is_visible": true,
+                "id": "EURUSD",
+                "active_id": 1,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "EURUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EURUSD",
+                "localization_key": "front.EURUSD",
+                "image": "/storage/public/5a/c8/f1a43625d.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EUR",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDSEK",
+                "is_visible": true,
+                "id": "AUDSEK",
+                "active_id": 988,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDSEK",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDSEK",
+                "localization_key": "front.AUDSEK",
+                "image": "/storage/public/5b/29/4e175f376.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335684000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "SEK",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDPLN",
+                "is_visible": true,
+                "id": "USDPLN",
+                "active_id": 866,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDPLN",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDPLN",
+                "localization_key": "front.USDPLN",
+                "image": "/storage/public/5a/c8/f40ba287a.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 4,
+                "pip_scale": 4,
+                "start_time": 1524063600000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "PLN",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDHUF",
+                "is_visible": true,
+                "id": "USDHUF",
+                "active_id": 1051,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDHUF",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDHUF",
+                "localization_key": "front.USDHUF",
+                "image": "/storage/public/5b/29/54c83e824.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "HUF",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "CHFJPY",
+                "is_visible": true,
+                "id": "CHFJPY",
+                "active_id": 106,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "CHFJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "CHFJPY",
+                "localization_key": "front.CHFJPY",
+                "image": "/storage/public/5a/c8/f31f6a0b9.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1421237041000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "CHF",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NZDJPY",
+                "is_visible": true,
+                "id": "NZDJPY",
+                "active_id": 949,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NZDJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NZDJPY",
+                "localization_key": "front.NZDJPY",
+                "image": "/storage/public/5a/fc/b16ed9465.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1526478758000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NZD",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "CADJPY",
+                "is_visible": true,
+                "id": "CADJPY",
+                "active_id": 945,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "CADJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "CADJPY",
+                "localization_key": "front.CADJPY",
+                "image": "/storage/public/5a/fc/b1a6ed4d4.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1526478529000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "CAD",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "USDRUB",
+                "is_visible": true,
+                "id": "USDRUB",
+                "active_id": 10,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "USDRUB",
+                "schedule": [
+                    {
+                        "open": 1590130801,
+                        "close": 1590163200
+                    },
+                    {
+                        "open": 1590390001,
+                        "close": 1590422400
+                    },
+                    {
+                        "open": 1590476401,
+                        "close": 1590508800
+                    },
+                    {
+                        "open": 1590562801,
+                        "close": 1590595200
+                    },
+                    {
+                        "open": 1590649201,
+                        "close": 1590681600
+                    },
+                    {
+                        "open": 1590735601,
+                        "close": 1590768000
+                    },
+                    {
+                        "open": 1590994801,
+                        "close": 1591027200
+                    },
+                    {
+                        "open": 1591081201,
+                        "close": 1591113600
+                    },
+                    {
+                        "open": 1591167601,
+                        "close": 1591200000
+                    }
+                ],
+                "is_enabled": true,
+                "name": "USDRUB",
+                "localization_key": "front.USDRUB",
+                "image": "/storage/public/5a/c8/f293c3b53.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 3,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "USD",
+                "currency_right_side": "RUB",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "SGDJPY",
+                "is_visible": true,
+                "id": "SGDJPY",
+                "active_id": 1041,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "SGDJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "SGDJPY",
+                "localization_key": "front.SGDJPY",
+                "image": "/storage/public/5b/29/5435cb59c.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "SGD",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "GBPUSD",
+                "is_visible": true,
+                "id": "GBPUSD",
+                "active_id": 5,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "GBPUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "GBPUSD",
+                "localization_key": "front.GBPUSD",
+                "image": "/storage/public/5a/c8/f1cd214a6.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1381547581000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "GBP",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "CADPLN",
+                "is_visible": true,
+                "id": "CADPLN",
+                "active_id": 994,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "CADPLN",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "CADPLN",
+                "localization_key": "front.CADPLN",
+                "image": "/storage/public/5b/29/50447c258.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "CAD",
+                "currency_right_side": "PLN",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NZDSGD",
+                "is_visible": true,
+                "id": "NZDSGD",
+                "active_id": 1031,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NZDSGD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NZDSGD",
+                "localization_key": "front.NZDSGD",
+                "image": "/storage/public/5b/29/5399702c6.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 4,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NZD",
+                "currency_right_side": "SGD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "AUDJPY",
+                "is_visible": true,
+                "id": "AUDJPY",
+                "active_id": 101,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "AUDJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "AUDJPY",
+                "localization_key": "front.AUDJPY",
+                "image": "/storage/public/5a/c8/f2d6cefbd.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1421237041000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "AUD",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NOKJPY",
+                "is_visible": true,
+                "id": "NOKJPY",
+                "active_id": 1024,
+                "active_group_id": 1,
+                "active_type": "Forex",
+                "underlying": "NOKJPY",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590181200
+                    },
+                    {
+                        "open": 1590354061,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590786000
+                    },
+                    {
+                        "open": 1590958861,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NOKJPY",
+                "localization_key": "front.NOKJPY",
+                "image": "/storage/public/5b/29/527b8bee8.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1529335685000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NOK",
+                "currency_right_side": "JPY",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            }
+        ]
+    },
+    "status": 2000
+}

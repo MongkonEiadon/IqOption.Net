@@ -13,7 +13,9 @@ namespace IqOptionApi.Ws.Base
         [JsonProperty("name")] public virtual string Name { get; set; }
 
         [JsonProperty("msg")] public virtual T Message { get; set; }
-
+        
+        [JsonProperty("status")] public virtual int StatusCode { get; set; }
+        
         public virtual string CreateIqOptionMessage()
         {
             return this.AsJson();

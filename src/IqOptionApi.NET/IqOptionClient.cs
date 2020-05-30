@@ -5,6 +5,8 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using IqOptionApi.Http;
 using IqOptionApi.Models;
+using IqOptionApi.Models.BinaryOptions;
+using IqOptionApi.Models.DigitalOptions;
 using IqOptionApi.Ws;
 using Serilog;
 
@@ -85,7 +87,7 @@ namespace IqOptionApi
             return true;
         }
 
-        public Task<BuyResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
+        public Task<BinaryOptionsResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
             DateTimeOffset expiration)
         {
             return WsClient?.BuyAsync(pair, size, direction, expiration);
@@ -109,10 +111,20 @@ namespace IqOptionApi
             return Task.FromResult(stream);
         }
 
+        /// <inheritdoc/>
         public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf)
-        {
-            return WsClient?.UnsubscribeCandlesAsync(pair, tf);
-        }
+            => WsClient?.UnsubscribeCandlesAsync(pair, tf);
+        
+
+        /// <inheritdoc/>
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction,
+            DigitalExpiryDuration duration, int amount)
+            => WsClient?.PlaceDigitalOptions(pair, direction, duration, amount);
+
+        
+        /// <inheritdoc/>
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, int amount)
+            => WsClient?.PlaceDigitalOptions(instrumentId, amount);
 
         public void Dispose()
         {
@@ -171,10 +183,10 @@ namespace IqOptionApi
         public IqOptionWebSocketClient WsClient { get; private set; }
 
         //obs
-        public IObservable<InfoData[]> InfoDatasObservable => WsClient?.InfoDataObservable;
         public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
         public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
-        public IObservable<BuyResult> BuyResultObservable => WsClient?.BuyResultObservable;
+        public IObservable<BinaryOptionsResult> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
+
 
         #endregion
     }

@@ -1,0 +1,1843 @@
+{
+    "request_id": "",
+    "name": "instruments",
+    "msg": {
+        "user_group_id": 191,
+        "is_regulated": false,
+        "type": "crypto",
+        "instruments": [
+            {
+                "ticker": "XEMUSD-L",
+                "is_visible": true,
+                "id": "XEMUSD-L",
+                "active_id": 1120,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "XEMUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "XEMUSD-L",
+                "localization_key": "front.XEMUSD-L",
+                "image": "/storage/public/5c/7e/9093c007c4c0h4b8b6.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1531992037000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "XEM",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "ETHUSD",
+                "is_visible": true,
+                "id": "ETHUSD",
+                "active_id": 818,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "ETHUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "ETHUSD",
+                "localization_key": "front.ETHUSD",
+                "image": "/storage/public/5a/ca/1a3d9b240.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1483142463000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "ETH",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "IOTUSD-L",
+                "is_visible": true,
+                "id": "IOTUSD-L",
+                "active_id": 1116,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "IOTUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "IOTUSD-L",
+                "localization_key": "front.IOTUSD-L",
+                "image": "/storage/public/5c/7e/90b91398e9j9g7d3e9.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1531479980000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "IOT",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EOSUSD-L",
+                "is_visible": true,
+                "id": "EOSUSD-L",
+                "active_id": 1244,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "EOSUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EOSUSD-L",
+                "localization_key": "front.EOSUSD-L",
+                "image": "/storage/public/5c/7e/91a8025745b8h1h8d1.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1539351265000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EOS",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "QTMUSD",
+                "is_visible": true,
+                "id": "QTMUSD",
+                "active_id": 845,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "QTMUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "QTMUSD",
+                "localization_key": "front.QTMUSD",
+                "image": "/storage/public/5a/ca/195a176d0.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1521410691000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "QTM",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "EOSUSD",
+                "is_visible": true,
+                "id": "EOSUSD",
+                "active_id": 864,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "EOSUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "EOSUSD",
+                "localization_key": "front.EOSUSD",
+                "image": "/storage/public/5a/ca/18ebceefb.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1521411030000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "EOS",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "BCHUSD-L",
+                "is_visible": true,
+                "id": "BCHUSD-L",
+                "active_id": 836,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "BCHUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "BCHUSD-L",
+                "localization_key": "front.BCHUSD-L",
+                "image": "/storage/public/5c/7e/a5972290f5b2a7f2c1.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1502236800000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "BCH",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "BTCUSD",
+                "is_visible": true,
+                "id": "BTCUSD",
+                "active_id": 816,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "BTCUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "BTCUSD",
+                "localization_key": "front.BTCUSD",
+                "image": "/storage/public/5a/ca/1a6edbed1.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1483142402000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "BTC",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "TRXUSD",
+                "is_visible": true,
+                "id": "TRXUSD",
+                "active_id": 858,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "TRXUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "TRXUSD",
+                "localization_key": "front.TRXUSD",
+                "image": "/storage/public/5a/fa/21f9670b7.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1521410949000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "TRX",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "XLMUSD-L",
+                "is_visible": true,
+                "id": "XLMUSD-L",
+                "active_id": 1117,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "XLMUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "XLMUSD-L",
+                "localization_key": "front.XLMUSD-L",
+                "image": "/storage/public/5c/7e/90afd2cdb7e6f8e2a9.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1531479980000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "XLM",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "ETHUSD-L",
+                "is_visible": true,
+                "id": "ETHUSD-L",
+                "active_id": 831,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "ETHUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "ETHUSD-L",
+                "localization_key": "front.ETHUSD-L",
+                "image": "/storage/public/5c/7e/a4ee79f779a2c2c3d6.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1483228800000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "ETH",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "ZECUSD",
+                "is_visible": true,
+                "id": "ZECUSD",
+                "active_id": 826,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "ZECUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "ZECUSD",
+                "localization_key": "front.ZECUSD",
+                "image": "/storage/public/5a/ca/19cd59d1c.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1483061347000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "ZEC",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "LTCUSD",
+                "is_visible": true,
+                "id": "LTCUSD",
+                "active_id": 819,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "LTCUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "LTCUSD",
+                "localization_key": "front.LTCUSD",
+                "image": "/storage/public/5c/7e/a4cba03b17h1c1d6f3.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1483142922000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "LTC",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "BCHUSD",
+                "is_visible": true,
+                "id": "BCHUSD",
+                "active_id": 824,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "BCHUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "BCHUSD",
+                "localization_key": "front.BCHUSD",
+                "image": "/storage/public/5a/ca/19ebae10a.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1502236800000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "BCH",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "NEOUSD-L",
+                "is_visible": true,
+                "id": "NEOUSD-L",
+                "active_id": 1118,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "NEOUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "NEOUSD-L",
+                "localization_key": "front.NEOUSD-L",
+                "image": "/storage/public/5c/7e/90a5b38da8e2e0g9f3.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1531479980000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "NEO",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "BTCUSD-L",
+                "is_visible": true,
+                "id": "BTCUSD-L",
+                "active_id": 830,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "BTCUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "BTCUSD-L",
+                "localization_key": "front.BTCUSD-L",
+                "image": "/storage/public/5c/7e/a586419249g2i7b8j3.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1483228800000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "BTC",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "XLMUSD",
+                "is_visible": true,
+                "id": "XLMUSD",
+                "active_id": 847,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "XLMUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "XLMUSD",
+                "localization_key": "front.XLMUSD",
+                "image": "/storage/public/5a/ca/193318915.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1407456000000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "XLM",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "OMGUSD",
+                "is_visible": true,
+                "id": "OMGUSD",
+                "active_id": 825,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "OMGUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "OMGUSD",
+                "localization_key": "front.OMGUSD",
+                "image": "/storage/public/5a/ca/19def234f.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1502971588000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "OMG",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "TRXUSD-L",
+                "is_visible": true,
+                "id": "TRXUSD-L",
+                "active_id": 1242,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "TRXUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "TRXUSD-L",
+                "localization_key": "front.TRXUSD-L",
+                "image": "/storage/public/5c/7e/91b319c335b8d1e2a2.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1536601923000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "TRX",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "ADAUSD-L",
+                "is_visible": true,
+                "id": "ADAUSD-L",
+                "active_id": 1119,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "ADAUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "ADAUSD-L",
+                "localization_key": "front.ADAUSD-L",
+                "image": "/storage/public/5c/7e/909d4920f8g7f1e2d5.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1531992037000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "ADA",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "DSHUSD",
+                "is_visible": true,
+                "id": "DSHUSD",
+                "active_id": 821,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "DSHUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "DSHUSD",
+                "localization_key": "front.DSHUSD",
+                "image": "/storage/public/5c/7e/a6423f0ae0h4h1e5d8.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1488570137000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "DAH",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "LTCUSD-L",
+                "is_visible": true,
+                "id": "LTCUSD-L",
+                "active_id": 834,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "LTCUSD-L",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "LTCUSD-L",
+                "localization_key": "front.LTCUSD-L",
+                "image": "/storage/public/5c/7e/a4af633042g8h5g0b0.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1483142922000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "LTC",
+                "currency_right_side": "USD",
+                "expirations": [
+                    {
+                        "expiration": 1590699600,
+                        "deadtime": 900
+                    }
+                ],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "XRPUSD",
+                "is_visible": true,
+                "id": "XRPUSD",
+                "active_id": 817,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "XRPUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "XRPUSD",
+                "localization_key": "front.XRPUSD",
+                "image": "/storage/public/5a/ca/1a4c9b504.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 5,
+                "pip_scale": 2,
+                "start_time": 1495247244000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "XRP",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            },
+            {
+                "ticker": "ETCUSD",
+                "is_visible": true,
+                "id": "ETCUSD",
+                "active_id": 829,
+                "active_group_id": 16,
+                "active_type": "Crypto",
+                "underlying": "ETCUSD",
+                "schedule": [
+                    {
+                        "open": 1590105601,
+                        "close": 1590192000
+                    },
+                    {
+                        "open": 1590192001,
+                        "close": 1590278400
+                    },
+                    {
+                        "open": 1590278401,
+                        "close": 1590364800
+                    },
+                    {
+                        "open": 1590364801,
+                        "close": 1590451200
+                    },
+                    {
+                        "open": 1590451201,
+                        "close": 1590537600
+                    },
+                    {
+                        "open": 1590537601,
+                        "close": 1590624000
+                    },
+                    {
+                        "open": 1590624001,
+                        "close": 1590710400
+                    },
+                    {
+                        "open": 1590710401,
+                        "close": 1590796800
+                    },
+                    {
+                        "open": 1590796801,
+                        "close": 1590883200
+                    },
+                    {
+                        "open": 1590883201,
+                        "close": 1590969600
+                    },
+                    {
+                        "open": 1590969601,
+                        "close": 1591056000
+                    },
+                    {
+                        "open": 1591056001,
+                        "close": 1591142400
+                    }
+                ],
+                "is_enabled": true,
+                "name": "ETCUSD",
+                "localization_key": "front.ETCUSD",
+                "image": "/storage/public/5a/ca/198572254.png",
+                "image_prefix": "https://files.iqoption.com",
+                "precision": 3,
+                "pip_scale": 2,
+                "start_time": 1483056015000,
+                "last_ask": null,
+                "last_bid": null,
+                "currency_left_side": "ETC",
+                "currency_right_side": "USD",
+                "expirations": [],
+                "tags": {},
+                "is_suspended": false
+            }
+        ]
+    },
+    "status": 2000
+}

@@ -15,7 +15,7 @@ namespace IqOptionApi.Samples
             try
             {
                 // change this to run example
-                Task.Run(() => new SubscribeRealtimeCandlesSample().RunSample());
+                Task.Run(() => new OpenBinaryOptionsSample().RunSample());
 
                 Console.ReadLine();
             }
