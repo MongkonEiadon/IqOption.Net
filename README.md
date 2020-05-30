@@ -12,7 +12,7 @@ Now we can talk about the issue on gitter here
 
 # Package Installation
 ``` javascript
-PM> Install-Package iqoptionapi -Version 2.0.3
+PM> Install-Package IqOptionApi.NET -Version 2.1.0
 
 ```
 
