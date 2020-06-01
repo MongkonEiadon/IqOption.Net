@@ -17,7 +17,7 @@ namespace IqOptionApi.Ws
             _heartbeatTick = heartbeat;
 
             // sync back the heartbeat to server
-            SendMessageAsync(new HeartbeatAcknowledgeRequest(Heartbeat));
+            SendMessageAsync(new HeartbeatAcknowledgeRequest(Heartbeat)).ConfigureAwait(true);
         }
 
         private void SetServerTime(long serverTime)

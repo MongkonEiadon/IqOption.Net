@@ -6,21 +6,19 @@ namespace IqOptionApi.Ws.Base
 {
     public class WsMessageBase<T> : IWsMessage<T>, IWsIqOptionMessageCreator
     {
-        [JsonProperty("microserviceName")] public string MicroserviceName { get; set; }
-
-        [JsonProperty("version")] public virtual string Version { get; set; } = "1.0";
-
-        [JsonProperty("name")] public virtual string Name { get; set; }
-
-        [JsonProperty("msg")] public virtual T Message { get; set; }
+        [JsonProperty("request_id", Order = 1)] public virtual string RequestId { get; set; }
+        [JsonProperty("name", Order = 2)] public virtual string Name { get; set; }
         
-        [JsonProperty("status")] public virtual int StatusCode { get; set; }
+        [JsonProperty("version", Order = 11)] public virtual string Version { get; set; } = "1.0";
+        [JsonProperty("msg", Order = 3)] public virtual T Message { get; set; }
         
-        [JsonProperty("request_id")] public virtual long RequestId { get; set; }
+        [JsonProperty("status", Order = Int32.MaxValue)] public virtual int StatusCode { get; set; }
+        
+        [JsonProperty("microserviceName", Order = 10)] public string MicroserviceName { get; set; }
         
         public virtual string CreateIqOptionMessage(long? requestId)
         {
-            requestId = RequestId;
+            RequestId = requestId.ToString();
             return this.AsJson();
         }
 

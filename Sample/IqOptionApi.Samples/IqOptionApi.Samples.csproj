@@ -8,7 +8,10 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.2" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-        <PackageReference Include="iqoptionapi" Version="2.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\IqOptionApi.NET\IqOptionApi.NET.csproj" />
     </ItemGroup>
 
 </Project>

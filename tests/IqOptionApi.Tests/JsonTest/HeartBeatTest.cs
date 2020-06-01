@@ -10,10 +10,13 @@ namespace IqOptionApi.Tests.JsonTest {
     [TestFixture]
     public class HeartBeatTest : TestFor<LoadJsonFileTest>
     {
-        private readonly LoadJsonFileTest _loadTest;
-        private string Json => _loadTest.LoadJson("heartbeat.json");
-        public HeartBeatTest(LoadJsonFileTest loadTest) {
-            _loadTest = loadTest;
+        private string Json;
+        
+        [SetUp]
+        public void TestSetup() {
+            Json = CreateUnit().LoadJson("Json/heartbeat.json");
+            Json.Should().NotBeEmpty();
+
         }
 
 
@@ -25,7 +28,6 @@ namespace IqOptionApi.Tests.JsonTest {
 
 
             // assert
-
             var dt = DateTimeOffset.FromUnixTimeMilliseconds(1534749247713);
 
             result.Should().NotBeNull();

@@ -10,11 +10,13 @@ namespace IqOptionApi.Tests.JsonTest {
     [TestFixture]
     public class ServerTimeTest : TestFor<LoadJsonFileTest> {
 
+        private string Json;
+        
+        [SetUp]
+        public void TestSetup() {
 
-        private string Json { get;  }
-        public ServerTimeTest() {
-
-            Json = CreateUnit().LoadJson("timesync.json");
+            Json = CreateUnit().LoadJson("Json/timesync.json");
+            Json.Should().NotBeEmpty();
         }
 
 
@@ -23,7 +25,6 @@ namespace IqOptionApi.Tests.JsonTest {
 
             // act
             var result = JsonConvert.DeserializeObject<ServerTime>(Json);
-
 
             // assert
             var dt = DateTimeOffset.FromUnixTimeMilliseconds(1534749220468);

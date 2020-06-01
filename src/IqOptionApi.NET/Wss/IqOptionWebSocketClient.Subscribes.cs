@@ -57,7 +57,7 @@ namespace IqOptionApi.Ws
                                 .LogDebug("Not found handled method to support this kind of message topic '{0}'", msg.Name);
 
 
-                        _logger.LogTrace("{0}", x);
+                        _logger.LogTrace("⬇ {0}", x);
 
                         break;
                 }

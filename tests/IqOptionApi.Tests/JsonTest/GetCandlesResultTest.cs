@@ -7,21 +7,23 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest {
-    public class GetCandlesResultTest : TestFor<LoadJsonFileTest> {
-        public GetCandlesResultTest() {
+    public class GetCandlesResultTest : TestFor<LoadJsonFileTest>
+    {
 
-            GetCandlesSuccessJson = _loadJsonFileTest.LoadJson("candles\\GetCandles_Success.json");
+        private string Json;
+        
+        [SetUp]
+        public void TestSetup() {
+
+            Json = CreateUnit().LoadJson("Json/Candles/GetCandles_Success.json");
         }
-
-        private readonly LoadJsonFileTest _loadJsonFileTest;
-
-        private string GetCandlesSuccessJson { get; }
+        
 
         [Test]
         public void GetCandlesResult_CandlesItems_ResultMustReturnSuccess() {
 
             //act
-            var result = JsonConvert.DeserializeObject<GetCandleItemsResultMessage>(GetCandlesSuccessJson);
+            var result = JsonConvert.DeserializeObject<GetCandleItemsResultMessage>(Json);
 
 
             //assert
@@ -39,7 +41,7 @@ namespace IqOptionApi.Tests.JsonTest {
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {
 
             //act
-            var result = JsonConvert.DeserializeObject<GetCandleItemsResultMessage>(GetCandlesSuccessJson);
+            var result = JsonConvert.DeserializeObject<GetCandleItemsResultMessage>(Json);
 
 
             //assert
@@ -58,7 +60,7 @@ namespace IqOptionApi.Tests.JsonTest {
             //arrange
 
             //act
-            var result = JsonConvert.DeserializeObject<GetCandleItemsResultMessage>(GetCandlesSuccessJson);
+            var result = JsonConvert.DeserializeObject<GetCandleItemsResultMessage>(Json);
 
 
             //assert

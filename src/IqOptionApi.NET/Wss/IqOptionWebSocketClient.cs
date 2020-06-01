@@ -1,6 +1,6 @@
 ﻿﻿using System;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
+ using System.Reactive.Concurrency;
+ using System.Reactive.Linq;
  using System.Threading;
  using System.Threading.Tasks;
  using IqOptionApi.Logging;
@@ -9,6 +9,7 @@ using System.Reactive.Linq;
 using IqOptionApi.Ws.Request;
  using Microsoft.Extensions.Logging;
  using WebSocketSharp;
+ using AsyncLock = IqOptionApi.Core.AsyncLock;
  using Timer = System.Timers.Timer;
 
  namespace IqOptionApi.Ws
@@ -67,6 +68,7 @@ using IqOptionApi.Ws.Request;
         #region [Public's]
 
         public IObservable<string> MessageReceivedObservable { get; }
+        private readonly AsyncLock _asyncLock = new AsyncLock();
 
         private long _requestCounter = 0;
         /// <summary>
@@ -74,14 +76,15 @@ using IqOptionApi.Ws.Request;
         /// </summary>
         /// <param name="messageCreator"></param>
         /// <returns></returns>
-        public Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
+        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
         {
-            _requestCounter = _requestCounter + 1;
-            var payload = messageCreator.CreateIqOptionMessage(_requestCounter);
-            _client.Send(payload);
-            _logger.LogDebug("Request >> {payload}", payload);
-
-            return Task.CompletedTask;
+            using (await _asyncLock.WaitAsync(CancellationToken.None).ConfigureAwait(false))
+            {
+                _requestCounter = _requestCounter + 1;
+                var payload = messageCreator.CreateIqOptionMessage(_requestCounter);
+                _client.Send(payload);
+                _logger.LogDebug("⬆ {payload}", payload);
+            }
         }
 
         /// <summary>
@@ -105,8 +108,9 @@ using IqOptionApi.Ws.Request;
                 {
                     if (tcs.TrySetCanceled())
                     {
-                        _logger.LogWarning("Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
-                                typeof(TResult), 5000, messageCreator.ToString());
+                        _logger.LogWarning(string.Format(
+                            "Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
+                            typeof(TResult), 5000, messageCreator));
                     }
                 });
                 
@@ -115,7 +119,7 @@ using IqOptionApi.Ws.Request;
                     .Subscribe(x => { tcs.TrySetResult(x); }, token);
 
                 // send message
-                SendMessageAsync(messageCreator);
+                SendMessageAsync(messageCreator).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
