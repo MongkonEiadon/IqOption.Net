@@ -10,9 +10,15 @@ namespace IqOptionApi.Samples.SampleRunners
         {
             if (await IqClientApi.ConnectAsync())
             {
-                var result = await IqClientApi.BuyAsync(ActivePair.EURUSD_OTC, 1, OrderDirection.Call, DateTimeOffset.MinValue);
+                while (true)
+                {
+                    await Task.Delay(5000);
 
-                Console.WriteLine($"PositionId = {result.PositionId}");
+                    var result = await IqClientApi.BuyAsync(ActivePair.EURUSD_OTC, 1, OrderDirection.Call,
+                        DateTimeOffset.Now);
+
+                    Console.WriteLine($"PositionId = {result.PositionId}");
+                }
             }
         }
     }

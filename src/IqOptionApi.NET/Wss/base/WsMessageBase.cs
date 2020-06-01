@@ -16,8 +16,11 @@ namespace IqOptionApi.Ws.Base
         
         [JsonProperty("status")] public virtual int StatusCode { get; set; }
         
-        public virtual string CreateIqOptionMessage()
+        [JsonProperty("request_id")] public virtual long RequestId { get; set; }
+        
+        public virtual string CreateIqOptionMessage(long? requestId)
         {
+            requestId = RequestId;
             return this.AsJson();
         }
 

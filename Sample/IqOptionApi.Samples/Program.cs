@@ -14,8 +14,10 @@ namespace IqOptionApi.Samples
         {
             try
             {
+                
+                
                 // change this to run example
-                Task.Run(() => new OpenBinaryOptionsSample().RunSample());
+                Task.Run(() => new PlaceDigitalOptionSample().RunSample());
 
                 Console.ReadLine();
             }

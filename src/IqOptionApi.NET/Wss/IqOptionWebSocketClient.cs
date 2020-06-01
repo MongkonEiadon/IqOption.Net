@@ -1,17 +1,13 @@
 ﻿﻿using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
  using System.Threading;
  using System.Threading.Tasks;
  using IqOptionApi.Logging;
  using IqOptionApi.Models;
- using IqOptionApi.Models.BinaryOptions;
  using IqOptionApi.Ws.Base;
 using IqOptionApi.Ws.Request;
- using IqOptionApi.Wss.Request.DigitalOptions;
- using Serilog;
- using Serilog.Context;
+ using Microsoft.Extensions.Logging;
  using WebSocketSharp;
  using Timer = System.Timers.Timer;
 
@@ -20,14 +16,14 @@ using IqOptionApi.Ws.Request;
     public partial class IqOptionWebSocketClient : IDisposable
     {
         public readonly WebSocket _client;
-
-        //privates
-        private ILogger _logger;
-
+        private readonly ILogger _logger;
         private readonly Timer SystemReconnectionTimer = new Timer(TimeSpan.FromMinutes(3).Ticks);
 
-        public IqOptionWebSocketClient(string secureToken, string host = "iqoption.com")
+        public IqOptionWebSocketClient(string secureToken, 
+            string host = "iqoption.com")
         {
+            _logger = IqOptionApiLog.Logger;
+            
             SecureToken = secureToken;
 
             _client = new WebSocket($"wss://{host}/echo/websocket");
@@ -35,9 +31,8 @@ using IqOptionApi.Ws.Request;
             {
                 var a = args;
             };
-
+            
             _client.Connect();
-
 
             var scheduler = new EventLoopScheduler();
             MessageReceivedObservable =
@@ -52,22 +47,18 @@ using IqOptionApi.Ws.Request;
                     .Publish()
                     .RefCount();
 
-            // create logger context
-            _logger = IqOptionLoggerFactory.CreateWebSocketLogger(Profile);
-
             _client.OnMessage += (sender, args) => SubscribeIncomingMessage(args.Data);
 
             SystemReconnectionTimer.AutoReset = true;
             SystemReconnectionTimer.Enabled = true;
             SystemReconnectionTimer.Elapsed += (sender, args) =>
             {
-                _logger.Warning("System try to reconnect");
+                _logger.LogWarning("System try to reconnect");
                 SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
             };
-
-
+            
             // send secure token to connect to server
-            SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
+            SendMessageAsync(new SsidWsMessageBase(SecureToken), ProfileObservable).Wait();
         }
 
         public string SecureToken { get; }
@@ -77,6 +68,7 @@ using IqOptionApi.Ws.Request;
 
         public IObservable<string> MessageReceivedObservable { get; }
 
+        private long _requestCounter = 0;
         /// <summary>
         /// Commit the message with Fire-And-Forgot style
         /// </summary>
@@ -84,14 +76,10 @@ using IqOptionApi.Ws.Request;
         /// <returns></returns>
         public Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
         {
-            using (LogContext.Push(new ProfileEnricher(Profile)))
-            {
-                var payload = messageCreator.CreateIqOptionMessage();
-                _client.Send(payload);
-                _logger
-                    .ForContext("Topic", "request >>")
-                    .Debug("{payload}", payload);
-            }
+            _requestCounter = _requestCounter + 1;
+            var payload = messageCreator.CreateIqOptionMessage(_requestCounter);
+            _client.Send(payload);
+            _logger.LogDebug("Request >> {payload}", payload);
 
             return Task.CompletedTask;
         }
@@ -117,9 +105,8 @@ using IqOptionApi.Ws.Request;
                 {
                     if (tcs.TrySetCanceled())
                     {
-                        _logger.ForContext("Topic", "Wait Result Cancelled")
-                            .Debug("Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
-                                typeof(TResult), 5000, messageCreator.CreateIqOptionMessage());
+                        _logger.LogWarning("Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
+                                typeof(TResult), 5000, messageCreator.ToString());
                     }
                 });
                 
