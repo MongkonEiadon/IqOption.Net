@@ -1,4 +1,6 @@
 using System;
+using IqOptionApi.Models;
+using IqOptionApi.Ws.Request;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.Ws
@@ -13,6 +15,9 @@ namespace IqOptionApi.Ws
         private void SetHeartbeatTick(long heartbeat)
         {
             _heartbeatTick = heartbeat;
+
+            // sync back the heartbeat to server
+            SendMessageAsync(new HeartbeatAcknowledgeRequest(Heartbeat)).ConfigureAwait(true);
         }
 
         private void SetServerTime(long serverTime)

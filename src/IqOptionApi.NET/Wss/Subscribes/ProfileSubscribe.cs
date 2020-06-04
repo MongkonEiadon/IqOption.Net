@@ -12,16 +12,11 @@ namespace IqOptionApi.Ws
     {
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
         public Profile Profile { get; private set; }
-
-        public IObservable<Profile> ProfileObservable()
-        {
-            return _profileSubject.AsObservable();
-        }
+        public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
 
         [SubscribeForTopicName(MessageType.Profile, typeof(Profile))]
         public void Subscribe(Profile type)
         {
-            _logger = IqOptionLoggerFactory.CreateWebSocketLogger(type);
             Profile = type;
             _profileSubject.OnNext(type);
         }

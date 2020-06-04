@@ -6,6 +6,7 @@ using IqOptionApi.Extensions;
 using IqOptionApi.utilities;
 using IqOptionApi.Utilities;
 using IqOptionApi.Ws.Base;
+using Microsoft.Extensions.Logging;
 
 namespace IqOptionApi.Ws
 {
@@ -21,7 +22,7 @@ namespace IqOptionApi.Ws
                 ).ToArray();
 
 
-        private void SubscribeIncomingMessage(string x)
+        internal void SubscribeIncomingMessage(string x)
         {
             try
             {
@@ -50,24 +51,20 @@ namespace IqOptionApi.Ws
                             {
                                 var args = msg.MessageAs(method.Attribute.ArgumentType);
                                 method.TargetMethod.Invoke(this, new[] {args});
-                                _logger
-                                    .WithTopic(msg.Name)
-                                    .Debug("Message was handled!");
                             }
                         else // not support subscribers
                             _logger
-                                .WithTopic(msg.Name)
-                                .Debug("Not found handled method to support this kind of message. \n{x}", x);
+                                .LogDebug("Not found handled method to support this kind of message topic '{0}'", msg.Name);
 
 
-                        _logger.WithTopic(msg.Name).Verbose(x);
+                        _logger.LogTrace("⬇ {0}", x);
 
                         break;
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
+                _logger.LogError(ex.Message);
             }
         }
     }

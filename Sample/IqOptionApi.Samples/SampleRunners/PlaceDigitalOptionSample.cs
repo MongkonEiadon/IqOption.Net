@@ -11,9 +11,14 @@ namespace IqOptionApi.Samples.SampleRunners
         {
             if (await IqClientApi.ConnectAsync())
             {
-                var position = await IqClientApi.WsClient.PlaceDigitalOptions(ActivePair.EURUSD_OTC, OrderDirection.Call, DigitalExpiryDuration.M1, 1);
+                while (true)
+                {
+                    await Task.Delay(10000);
+                    var position = await IqClientApi.WsClient.PlaceDigitalOptions(ActivePair.EURUSD,
+                        OrderDirection.Call, DigitalExpiryDuration.M1, 1);
 
-                Console.WriteLine(position.Id);
+                    Console.WriteLine(position.Id);
+                }
             }
         }
     }

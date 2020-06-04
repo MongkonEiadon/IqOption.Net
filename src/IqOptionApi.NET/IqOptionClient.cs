@@ -4,22 +4,27 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using IqOptionApi.Http;
+using IqOptionApi.Logging;
 using IqOptionApi.Models;
 using IqOptionApi.Models.BinaryOptions;
 using IqOptionApi.Models.DigitalOptions;
 using IqOptionApi.Ws;
-using Serilog;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IqOptionApi
 {
     public class IqOptionClient : IIqOptionClient
     {
+        private readonly ILogger _logger;
+        
         #region [Ctor]
 
-        public IqOptionClient(string username, string password, string host = "iqoption.com")
+        public IqOptionClient(string username, string password)
         {
             Username = username;
             Password = password;
+            _logger = IqOptionApiLog.Logger;
 
             //set up client
             HttpClient = new IqOptionHttpClient(username, password);
@@ -41,7 +46,7 @@ namespace IqOptionApi
                     {
                         if (t.Result != null && t.Result.IsSuccessful)
                         {
-                            _logger.Information($"{Username} logged in success!");
+                            _logger.LogInformation($"{Username} logged in success!");
 
                             if (WsClient != null) WsClient.Dispose();
                             WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
@@ -54,10 +59,10 @@ namespace IqOptionApi
                             return;
                         }
 
-                        _logger.Information(
+                        _logger.LogInformation(
                             $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
                         tcs.TrySetResult(false);
-                    });
+                    }).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -79,11 +84,11 @@ namespace IqOptionApi
 
             if (result?.Message == null && !result.IsSuccessful)
             {
-                _logger.Error($"Change balance ({balanceId}) error : {result.Message}");
+                _logger.LogError($"Change balance ({balanceId}) error : {result.Message}");
                 return false;
             }
 
-            _logger.Information($"Change balance to {balanceId} successfully!");
+            _logger.LogInformation($"Change balance to {balanceId} successfully!");
             return true;
         }
 
@@ -139,8 +144,8 @@ namespace IqOptionApi
         private void SubscribeWebSocket()
         {
             //subscribe profile
-            HttpClient.ProfileObservable()
-                .Merge(WsClient.ProfileObservable())
+            HttpClient.ProfileObservable
+                .Merge(WsClient.ProfileObservable)
                 .DistinctUntilChanged()
                 .Where(x => x != null)
                 .Subscribe(x => Profile = x);
@@ -152,7 +157,6 @@ namespace IqOptionApi
 
         #region [Privates]
 
-        private readonly ILogger _logger = IqOptionLoggerFactory.CreateLogger();
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
 
         private readonly Subject<bool> connectedSubject = new Subject<bool>();

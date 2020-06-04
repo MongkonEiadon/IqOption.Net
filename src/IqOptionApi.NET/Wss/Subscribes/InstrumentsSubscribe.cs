@@ -24,12 +24,9 @@ namespace IqOptionApi.Ws
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
             try
             {
-                _logger.Verbose(nameof(SendInstrumentsRequestAsync));
-
                 //subscribe for the lastest result
                 var obs = InstrumentResultSetObservable
                     .Subscribe(x => { tcs.TrySetResult(x); });
-                
 
                 //clear before query new 
                 _instrumentResultSet = new InstrumentResultSet();
