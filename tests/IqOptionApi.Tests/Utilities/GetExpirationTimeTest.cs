@@ -21,7 +21,7 @@ namespace IqOptionApi.Tests.Utilities
             var dtExpected = DateTimeOffset.Parse(expected);
             
             // act
-            var result = DateTimeUtilities.GetExpirationTime(dtNow, DigitalExpiryDuration.M1);
+            var result = DateTimeUtilities.GetExpirationTime(dtNow, DigitalOptionsExpiryDuration.M1);
             
             // assert
             dtExpected.Should().Be(result);
@@ -54,10 +54,10 @@ namespace IqOptionApi.Tests.Utilities
         }
         
         
-        [TestCase("2020-05-29 17:30:09Z", DigitalExpiryDuration.M5, "2020-05-29 17:35:00Z")] 
-        [TestCase("2020-05-29 17:33:31Z", DigitalExpiryDuration.M5, "2020-05-29 17:35:00Z")] 
-        [TestCase("2020-05-29 17:34:29Z", DigitalExpiryDuration.M5, "2020-05-29 17:35:00Z")] 
-        [TestCase("2020-05-29 17:34:31Z", DigitalExpiryDuration.M5, "2020-05-29 17:40:00Z")] 
+        [TestCase("2020-05-29 17:30:09Z", DigitalOptionsExpiryDuration.M5, "2020-05-29 17:35:00Z")] 
+        [TestCase("2020-05-29 17:33:31Z", DigitalOptionsExpiryDuration.M5, "2020-05-29 17:35:00Z")] 
+        [TestCase("2020-05-29 17:34:29Z", DigitalOptionsExpiryDuration.M5, "2020-05-29 17:35:00Z")] 
+        [TestCase("2020-05-29 17:34:31Z", DigitalOptionsExpiryDuration.M5, "2020-05-29 17:40:00Z")] 
         public void GetExpirationTime_Digital_TimeShouldBeCorrect(string now, BinaryOptionsDuration duration, string expected)
         {
             // arrange

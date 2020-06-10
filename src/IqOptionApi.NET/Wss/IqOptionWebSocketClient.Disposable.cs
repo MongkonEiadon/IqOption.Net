@@ -21,7 +21,8 @@ namespace IqOptionApi.Ws
             foreach (var disposableMethodInfo in _disposableMethodInfos)
                 disposableMethodInfo.TargetMethod.Invoke(this, null);
 
-            _client?.CloseAsync();
+            WebSocketClient?.Close();
+            WebSocketClient = null;
         }
     }
 }

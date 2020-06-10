@@ -9,13 +9,13 @@ namespace IqOptionApi.Tests.Models
     [TestFixture]
     public class DigitalOptionsIdentitiferTest
     {
-        [TestCase(ActivePair.EURCHF, OrderDirection.Call, DigitalExpiryDuration.M15, "doEURCHF201811101250PT15MCSPT")]
-        [TestCase(ActivePair.GBPUSD, OrderDirection.Put, DigitalExpiryDuration.M5, "doGBPUSD201811101250PT5MPSPT")]
-        [TestCase(ActivePair.EURUSD, OrderDirection.Call, DigitalExpiryDuration.M1, "doEURUSD201811101250PT1MCSPT")]
+        [TestCase(ActivePair.EURCHF, OrderDirection.Call, DigitalOptionsExpiryDuration.M15, "doEURCHF201811101250PT15MCSPT")]
+        [TestCase(ActivePair.GBPUSD, OrderDirection.Put, DigitalOptionsExpiryDuration.M5, "doGBPUSD201811101250PT5MPSPT")]
+        [TestCase(ActivePair.EURUSD, OrderDirection.Call, DigitalOptionsExpiryDuration.M1, "doEURUSD201811101250PT1MCSPT")]
         public void TestCreate_InstrumentId(
             ActivePair active,
             OrderDirection direction,
-            DigitalExpiryDuration duration,
+            DigitalOptionsExpiryDuration duration,
             string expected)
         {
             var specificDate = DateTimeOffset.Parse("2018-11-10 12:50:50Z");

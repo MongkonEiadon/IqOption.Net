@@ -39,7 +39,7 @@ namespace IqOptionApi
         /// <param name="amount">The Amount of position</param>
         /// <returns></returns>
         Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction,
-            DigitalExpiryDuration duration, int amount);
+            DigitalOptionsExpiryDuration duration, double amount);
 
         /// <summary>
         /// Place the DigitalOptions order from the instruments_id
@@ -47,7 +47,7 @@ namespace IqOptionApi
         /// <param name="instrumentId">The Instrument identifier <example>doEURUSD201907191250PT5MPSPT</example></param>
         /// <param name="amount">The Amount of position</param>
         /// <returns></returns>
-        Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, int amount);
+        Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount);
 
         #endregion
 

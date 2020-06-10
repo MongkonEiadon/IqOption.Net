@@ -123,12 +123,12 @@ namespace IqOptionApi
 
         /// <inheritdoc/>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction,
-            DigitalExpiryDuration duration, int amount)
+            DigitalOptionsExpiryDuration duration, double amount)
             => WsClient?.PlaceDigitalOptions(pair, direction, duration, amount);
 
         
         /// <inheritdoc/>
-        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, int amount)
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
             => WsClient?.PlaceDigitalOptions(instrumentId, amount);
 
         public void Dispose()

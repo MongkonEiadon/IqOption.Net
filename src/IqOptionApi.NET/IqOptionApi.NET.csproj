@@ -17,14 +17,14 @@
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageReleaseNotes>
-      - Fix logging problem, now you can see log details on debugger console
-      - Fix LoginAsync broken
-      - Fix ConnectAsync broken
+      - Improve order-changed and subscriber/unsubscribe
+      - Fix Dispose() method broken
+      - Fix Amount of PlaceDigitals from int to double
     </PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
-    <AssemblyVersion>2.1.1</AssemblyVersion>
-    <FileVersion>2.1.1</FileVersion>
-    <Version>2.1.1</Version>
+    <AssemblyVersion>2.1.4</AssemblyVersion>
+    <FileVersion>2.1.4</FileVersion>
+    <Version>2.1.4</Version>
     <RootNamespace>IqOptionApi</RootNamespace>
     <AssemblyName>IqOptionApi</AssemblyName>
     <PackageId>iqoptionapi</PackageId>

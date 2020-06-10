@@ -14,8 +14,6 @@ namespace IqOptionApi.Samples
         {
             try
             {
-                
-                
                 // change this to run example
                 Task.Run(() => new PlaceDigitalOptionSample().RunSample());
 
