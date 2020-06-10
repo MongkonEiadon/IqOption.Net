@@ -16,50 +16,16 @@ using IqOptionApi.Ws.Request;
 {
     public partial class IqOptionWebSocketClient : IDisposable
     {
-        public readonly WebSocket _client;
+        public WebSocket WebSocketClient { get; private set; }
         private readonly ILogger _logger;
         private readonly Timer SystemReconnectionTimer = new Timer(TimeSpan.FromMinutes(3).Ticks);
 
-        public IqOptionWebSocketClient(string secureToken, 
-            string host = "iqoption.com")
+        public IqOptionWebSocketClient(string secureToken)
         {
             _logger = IqOptionApiLog.Logger;
-            
             SecureToken = secureToken;
-
-            _client = new WebSocket($"wss://{host}/echo/websocket");
-            _client.OnError += (sender, args) =>
-            {
-                var a = args;
-            };
             
-            _client.Connect();
-
-            var scheduler = new EventLoopScheduler();
-            MessageReceivedObservable =
-                Observable.Using(
-                        () => _client,
-                        _ => Observable
-                            .FromEventPattern<EventHandler<MessageEventArgs>, MessageEventArgs>(
-                                handler => _.OnMessage += handler,
-                                handler => _.OnMessage -= handler))
-                    .Select(x => x.EventArgs.Data)
-                    .SubscribeOn(scheduler)
-                    .Publish()
-                    .RefCount();
-
-            _client.OnMessage += (sender, args) => SubscribeIncomingMessage(args.Data);
-
-            SystemReconnectionTimer.AutoReset = true;
-            SystemReconnectionTimer.Enabled = true;
-            SystemReconnectionTimer.Elapsed += (sender, args) =>
-            {
-                _logger.LogWarning("System try to reconnect");
-                SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
-            };
-            
-            // send secure token to connect to server
-            SendMessageAsync(new SsidWsMessageBase(SecureToken), ProfileObservable).Wait();
+            InitialSocket(secureToken);
         }
 
         public string SecureToken { get; }
@@ -67,7 +33,7 @@ using IqOptionApi.Ws.Request;
 
         #region [Public's]
 
-        public IObservable<string> MessageReceivedObservable { get; }
+        public IObservable<string> MessageReceivedObservable { get; private set; }
         private readonly AsyncLock _asyncLock = new AsyncLock();
 
         private long _requestCounter = 0;
@@ -82,7 +48,7 @@ using IqOptionApi.Ws.Request;
             {
                 _requestCounter = _requestCounter + 1;
                 var payload = messageCreator.CreateIqOptionMessage(_requestCounter);
-                _client.Send(payload);
+                WebSocketClient.Send(payload);
                 _logger.LogDebug("⬆ {payload}", payload);
             }
         }
@@ -163,5 +129,53 @@ using IqOptionApi.Ws.Request;
         }
 
         #endregion
+
+        protected virtual void InitialSocket(string secureToken)
+        {
+            WebSocketClient = new WebSocket("wss://iqoption.com/echo/websocket");
+            WebSocketClient.OnError += (sender, args) =>
+            {
+                _logger.LogError($"WebSocket Error : {args.Message}");
+            };
+            
+            WebSocketClient.Connect();
+
+            var scheduler = new EventLoopScheduler();
+            MessageReceivedObservable =
+                Observable.Using(
+                        () => WebSocketClient,
+                        _ => Observable
+                            .FromEventPattern<EventHandler<MessageEventArgs>, MessageEventArgs>(
+                                handler => _.OnMessage += handler,
+                                handler => _.OnMessage -= handler))
+                    .Select(x => x.EventArgs.Data)
+                    .SubscribeOn(scheduler)
+                    .Publish()
+                    .RefCount();
+
+            WebSocketClient.OnMessage += (sender, args) => SubscribeIncomingMessage(args.Data);
+
+            SystemReconnectionTimer.AutoReset = true;
+            SystemReconnectionTimer.Enabled = true;
+            SystemReconnectionTimer.Elapsed += (sender, args) =>
+            {
+                _logger.LogWarning("System try to reconnect");
+                SendMessageAsync(new SsidWsMessageBase(secureToken)).ConfigureAwait(false);
+            };
+            
+            // send secure token to connect to server
+            SendMessageAsync(new SsidWsMessageBase(secureToken), ProfileObservable).Wait();
+
+            // send order changed subscribe
+            InitialSubscribeOrderChanged();
+        }
+
+        private void InitialSubscribeOrderChanged()
+        {
+            foreach (var instru in new []{ InstrumentType.Crypto, InstrumentType.Forex, InstrumentType.BinaryOption, InstrumentType.DigitalOption, InstrumentType.TurboOption})
+            {
+                Task.Run(() => SubscribeOrderChanged(instru));
+            }
+        }
     }
 }

@@ -24,13 +24,13 @@ namespace IqOptionApi.Wss.Request.DigitalOptions
     internal sealed class PlaceDigitalOptionsMessageRequest : WsSendMessageBase<OpenDigitalOptionsBody>
     {
         internal PlaceDigitalOptionsMessageRequest(DigitalOptionsIdentifier positionIdentifier, int userbalanceId,
-            int amount)
+            double amount)
             : this(positionIdentifier.CreateInstrumentId(), userbalanceId, amount)
         {
             
         }
 
-        internal PlaceDigitalOptionsMessageRequest(string positionIdentifier, int userbalanceId, int amount)
+        internal PlaceDigitalOptionsMessageRequest(string positionIdentifier, int userbalanceId, double amount)
         {
             Message = new RequestBody<OpenDigitalOptionsBody>
             {

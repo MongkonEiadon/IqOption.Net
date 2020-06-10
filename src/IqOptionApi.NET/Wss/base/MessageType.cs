@@ -13,6 +13,7 @@ namespace IqOptionApi.Ws.Base
         public const string OptionArchived = "option-archived";
 
         public const string SocketOptionOpened = "socket-option-opened";
+        public const string SubscribeOrderChanged = "order-changed";
         public const string SubscribeMessage = "subscribeMessage";
         public const string UnsubscribeMessage = "unsubscribeMessage";
 

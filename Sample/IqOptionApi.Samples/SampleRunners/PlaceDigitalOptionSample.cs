@@ -11,13 +11,22 @@ namespace IqOptionApi.Samples.SampleRunners
         {
             if (await IqClientApi.ConnectAsync())
             {
+                IqClientApi.WsClient.OrderChangedObservable().Subscribe(x =>
+                {
+                    Console.WriteLine(string.Format("OrderChanged - {0}, InstrumentId: {1}, Side: {2}, Margin(Amount): {3}",
+                        x.OrderChangedEventInfo.Id,
+                        x.OrderChangedEventInfo.InstrumentId,
+                        x.OrderChangedEventInfo.Side,
+                        x.OrderChangedEventInfo.Margin));
+                });
+                
                 while (true)
                 {
                     await Task.Delay(10000);
                     var position = await IqClientApi.WsClient.PlaceDigitalOptions(ActivePair.EURUSD,
-                        OrderDirection.Call, DigitalExpiryDuration.M1, 1);
+                        OrderDirection.Call, DigitalOptionsExpiryDuration.M1, 1);
 
-                    Console.WriteLine(position.Id);
+                    Console.WriteLine($"Placed position Id: {position.Id}");
                 }
             }
         }

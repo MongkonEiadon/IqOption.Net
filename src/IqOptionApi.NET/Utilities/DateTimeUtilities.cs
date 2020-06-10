@@ -8,7 +8,7 @@ namespace IqOptionApi.Utilities
 {
     public static class DateTimeUtilities
     {
-        public static DateTimeOffset GetExpirationTime(DateTimeOffset dt, DigitalExpiryDuration duration)
+        public static DateTimeOffset GetExpirationTime(DateTimeOffset dt, DigitalOptionsExpiryDuration duration)
         {
             return ExpirationTimeTable(dt)[(int) duration];
         }
@@ -32,6 +32,9 @@ namespace IqOptionApi.Utilities
             
             for (var i = 1; i <= 5; i++)
                 dic.Add(i, exp.AddMinutes(i - 1));
+            
+            
+            
 
             /*
             var idx = 50;

@@ -18,7 +18,7 @@ namespace IqOptionApi.Ws
         /// <param name="duration">The duration period in (1Min, 5Min, 15Min) from now</param>
         /// <param name="amount">The Amount of position</param>
         /// <returns></returns>
-        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction, DigitalExpiryDuration duration, int amount)
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction, DigitalOptionsExpiryDuration duration, double amount)
         {
 
             return SendMessageAsync(new PlaceDigitalOptionsMessageRequest(new DigitalOptionsIdentifier(
@@ -33,7 +33,7 @@ namespace IqOptionApi.Ws
         /// <param name="instrumentId">The Instrument identifier <example>doEURUSD201907191250PT5MPSPT</example></param>
         /// <param name="amount">The Amount of position</param>
         /// <returns></returns>
-        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, int amount)
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
         {
             return SendMessageAsync(
                 new PlaceDigitalOptionsMessageRequest(instrumentId, (int) Profile.BalanceId, amount),
