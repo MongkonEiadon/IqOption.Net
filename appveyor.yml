@@ -36,4 +36,4 @@ deploy:
     skip_symbols: false
     artifact: /.*\.(nupkg|snupkg)/
     on:
-      branch: master
+      branch: feature/add_travis
