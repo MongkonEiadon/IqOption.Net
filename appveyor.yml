@@ -7,13 +7,6 @@ init:
   # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
 
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
-
 nuget:
   disable_publish_on_pr: true
 
@@ -26,6 +19,13 @@ before_build:
 build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
   - cmd: dotnet build ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
 
 after_build:
   - cmd: dotnet pack ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release -o Build\Packages\
