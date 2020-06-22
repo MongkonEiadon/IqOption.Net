@@ -5,10 +5,11 @@ using Newtonsoft.Json.Converters;
 
 namespace IqOptionApi.Models
 {
-    public class ServerTime : WsMessageBase<DateTimeOffset>
+    public class ServerTime : WsMessageBase<long>
     {
         [JsonProperty("msg")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public override DateTimeOffset Message { get; set; }
+        public override long Message { get; set; }
+
+        public DateTimeOffset ServerTick => DateTimeOffset.FromUnixTimeMilliseconds(Message);
     }
 }

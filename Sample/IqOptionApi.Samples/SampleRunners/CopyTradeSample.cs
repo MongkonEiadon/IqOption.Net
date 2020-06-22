@@ -19,10 +19,10 @@ namespace IqOptionApi.Samples.SampleRunners
             });
 
             // for digitals forex and others
-            trader.WsClient.OrderChangedObservable().Subscribe(x =>
+            trader.WsClient.PositionChangedObservable().Subscribe(x =>
             {
                 if (x.InstrumentType == InstrumentType.DigitalOption)
-                    follower.PlaceDigitalOptions(x.OrderChangedEventInfo.InstrumentId, x.OrderChangedEventInfo.Margin);
+                    follower.PlaceDigitalOptions(x.InstrumentId, x.InvestAmount);
             });
         }
     }

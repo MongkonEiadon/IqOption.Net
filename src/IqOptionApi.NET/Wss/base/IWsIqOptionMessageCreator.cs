@@ -2,6 +2,6 @@
 {
     public interface IWsIqOptionMessageCreator
     {
-        string CreateIqOptionMessage(long? requestId);
+        string CreateIqOptionMessage(string requestId);
     }
 }

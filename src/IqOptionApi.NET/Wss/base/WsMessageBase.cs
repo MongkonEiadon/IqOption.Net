@@ -16,9 +16,9 @@ namespace IqOptionApi.Ws.Base
         
         [JsonProperty("microserviceName", Order = 10)] public string MicroserviceName { get; set; }
         
-        public virtual string CreateIqOptionMessage(long? requestId)
+        public virtual string CreateIqOptionMessage(string requestId)
         {
-            RequestId = requestId.ToString();
+            RequestId = requestId;
             return this.AsJson();
         }
 

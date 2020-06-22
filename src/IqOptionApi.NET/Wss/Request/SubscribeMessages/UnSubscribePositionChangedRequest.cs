@@ -4,7 +4,7 @@ using IqOptionApi.Ws.Request.Portfolio;
 
 namespace IqOptionApi.Ws.Request
 {
-    internal class UnSubscribePositionChangedRequest : SubscribePortFolioPositionChangedRequest
+    internal class UnSubscribePositionChangedRequest : SubscribePortfolioPositionChangedRequest
     {
         public UnSubscribePositionChangedRequest(long userId, long balanceId, InstrumentType instrumentType):base(userId, balanceId, instrumentType)
         {

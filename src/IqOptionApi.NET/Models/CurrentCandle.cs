@@ -4,7 +4,10 @@ namespace IqOptionApi.Models
 {
     public class CurrentCandle : CandleInfo
     {
-        [JsonProperty("active_id")] public ActivePair ActivePair { get; set; }
+        [JsonProperty("active_id")] 
+        public int ActiveId { get; set; }
+
+        public ActivePair ActivePair => (ActivePair) ActiveId;
         [JsonProperty("size")] public TimeFrame TimeFrame { get; set; }
         
         [JsonProperty("at")] public long At { get; set; }

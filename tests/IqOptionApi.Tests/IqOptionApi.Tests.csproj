@@ -5,11 +5,11 @@
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.10.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.2.26" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />
-    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Moq" Version="4.14.3" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="FluentPath" Version="2.0.0" />

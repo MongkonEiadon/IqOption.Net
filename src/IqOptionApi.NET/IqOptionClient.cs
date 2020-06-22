@@ -17,7 +17,7 @@ namespace IqOptionApi
     public class IqOptionClient : IIqOptionClient
     {
         private readonly ILogger _logger;
-        
+
         #region [Ctor]
 
         public IqOptionClient(string username, string password)
@@ -112,21 +112,30 @@ namespace IqOptionApi
             var stream = WsClient?
                 .RealTimeCandleInfoObservable
                 .Where(x => x.ActivePair == pair && x.TimeFrame == tf);
-            
+
             return Task.FromResult(stream);
         }
+
+
+        /// <inheritdoc/>
+        public void SubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active)
+            => WsClient?.SubscribeTradersMoodChanged(instrumentType, active);
+
+        /// <inheritdoc/>
+        public void UnSubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active)
+            => WsClient?.UnSubscribeTradersMoodChanged(instrumentType, active);
 
         /// <inheritdoc/>
         public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf)
             => WsClient?.UnsubscribeCandlesAsync(pair, tf);
-        
+
 
         /// <inheritdoc/>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction,
             DigitalOptionsExpiryDuration duration, double amount)
             => WsClient?.PlaceDigitalOptions(pair, direction, duration, amount);
 
-        
+
         /// <inheritdoc/>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
             => WsClient?.PlaceDigitalOptions(instrumentId, amount);

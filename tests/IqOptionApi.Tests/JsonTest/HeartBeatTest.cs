@@ -31,7 +31,7 @@ namespace IqOptionApi.Tests.JsonTest {
             var dt = DateTimeOffset.FromUnixTimeMilliseconds(1534749247713);
 
             result.Should().NotBeNull();
-            result.Message.Should().Be(dt);
+            result.Hearbeat.Should().Be(dt);
         }
     }
 }
