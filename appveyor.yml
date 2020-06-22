@@ -21,7 +21,7 @@ build_script:
   - ps: ./build/package.ps1
 
 artifacts:
-  - path: Build\Packages\*nupkg
+  - path: \src\IqOptionApi.NET\Build\Packages\*nupkg
 
 # any cleanup in here
 deploy:
