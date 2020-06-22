@@ -1,11 +1,18 @@
+version: '1.0.{build}'
+image: Visual Studio 2017
+branches:
+  only:
+    - feature/add_travis
 init:
-  - ps: git config --global core.autocrlf input
-  - ps: '[Environment]::SetEnvironmentVariable("LCOW_SUPPORTED", "1", "Machine")'
-  - ps: Restart-Service docker
-
-image: Visual Studio 2019
-
-nuget:
-  account_feed: false
-  project_feed: false
-  disable_publish_on_pr: true
+  # Good practise, because Windows line endings are different from Unix/Linux ones
+  - cmd: git config --global core.autocrlf true
+install:
+# Install repo specific stuff here
+before_build:
+  # Display .NET Core version
+  - cmd: dotnet --version
+  # Display minimal restore text
+  - cmd: dotnet restore ./IqOptionApi.sln --verbosity m
+build_script:
+  # output will be in ./src/bin/debug/netcoreapp1.1/publish
+  - cmd: dotnet publish ./src/IqOptionApi.NET/IqOptionApi.NET.csproj
