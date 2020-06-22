@@ -19,14 +19,14 @@ namespace IqOptionApi.Samples.SampleRunners
                 streamMin5.Merge(streamMin1)
                     .Subscribe(candleInfo =>
                     {
-                        _logger.Information(
+                        Console.WriteLine(
                             $"Now {ActivePair.EURUSD_OTC} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
                     });
-                
-                
+
+
                 // hold 2 secs
                 Thread.Sleep(2000);
-                
+
                 // after this line no-more realtime data for min5 print on console
                 await IqClientApi.UnSubscribeRealtimeData(ActivePair.EURUSD_OTC, TimeFrame.Min5);
             }

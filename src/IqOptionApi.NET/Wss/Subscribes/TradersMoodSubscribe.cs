@@ -27,7 +27,7 @@ namespace IqOptionApi.Ws
         /// <param name="pair"></param>
         public void SubscribeTradersMoodChanged(InstrumentType type, ActivePair pair)
         {
-            SendMessageAsync(new SubscribeTradersMoodChangedRequest(type, pair)).ConfigureAwait(false);
+            SendMessageAsync(new SubscribeTradersMoodChangedRequest(type, pair), "s_").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace IqOptionApi.Ws
         /// <param name="pair">The Active pair</param>
         public void UnSubscribeTradersMoodChanged(InstrumentType type, ActivePair pair)
         {
-            SendMessageAsync(new UnsubscribeTradersMoodChanged(type, pair)).ConfigureAwait(false);
+            SendMessageAsync(new UnsubscribeTradersMoodChanged(type, pair), "s_").ConfigureAwait(false);
         }
     }
 }

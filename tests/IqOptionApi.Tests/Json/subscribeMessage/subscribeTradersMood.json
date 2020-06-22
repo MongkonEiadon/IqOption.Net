@@ -1,0 +1,13 @@
+{
+    "name": "subscribeMessage",
+    "request_id": "s_75",
+    "msg": {
+        "name": "traders-mood-changed",
+        "params": {
+            "routingFilters": {
+                "instrument": "binary-option",
+                "asset_id": "76"
+            }
+        }
+    }
+}

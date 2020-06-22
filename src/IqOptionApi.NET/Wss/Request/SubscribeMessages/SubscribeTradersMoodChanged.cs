@@ -6,24 +6,20 @@ namespace IqOptionApi.Wss.Request.SubscribeMessages
 {
     internal class SubscribeTradersMoodChangedRequest : WsMessageBase<dynamic>
     {
+        public override string Name => "subscribeMessage";
+
         public SubscribeTradersMoodChangedRequest(InstrumentType instrumentType, ActivePair activePair)
         {
             base.Message = new
             {
-                Name = "subscribeMessage",
-                Msg =
-                    new
-                    {
-                        Name = "traders-mood-changed",
-                        Params =
+                name = "traders-mood-changed",
+                @params =
+                    new {
+                        routingFilters =
                             new
                             {
-                                routingFilters =
-                                    new
-                                    {
-                                        instrument = InstrumentTypeUtilities.GetInstrumentTypeFullName(instrumentType),
-                                        asset_id = (int)activePair
-                                    }
+                                instrument = InstrumentTypeUtilities.GetInstrumentTypeFullName(instrumentType),
+                                asset_id = (int) activePair
                             }
                     }
             };
