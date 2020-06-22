@@ -21,7 +21,7 @@ build_script:
   - cmd: dotnet build ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release
 
 after_build:
-  - cmd: dotnet pack ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release -o Build\Packages\ -p:PackageVersion="2.1.{build}"
+  - cmd: dotnet pack ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release -o Build\Packages\ -p:PackageVersion='{version}'
 
 test_script:
   # restore packages for our unit tests
