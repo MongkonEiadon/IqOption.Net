@@ -28,7 +28,7 @@ test_script:
   - cmd: dotnet test
 
 after_test:
-  - cmd: cd src/IqOptionApi
+  - cmd: cd src/IqOptionApi.NET
   - cmd: dotnet pack --configuration release -o Build\Packages\
 
 artifacts:
