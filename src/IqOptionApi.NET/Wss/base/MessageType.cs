@@ -15,7 +15,7 @@ namespace IqOptionApi.Ws.Base
         public const string SocketOptionOpened = "socket-option-opened";
         public const string SubscribeOrderChanged = "order-changed";
         public const string SubscribePortfolioChanged = "position-changed";
-        public const string TraderMoodChanged = "traders-mood";
+        public const string TraderMoodChanged = "traders-mood-changed";
         public const string SubscribeMessage = "subscribeMessage";
         public const string UnsubscribeMessage = "unsubscribeMessage";
 
