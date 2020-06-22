@@ -7,7 +7,9 @@ init:
   # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
 
-install:
+nuget:
+  disable_publish_on_pr: true
+
 # Install repo specific stuff here
 before_build:
   # Display .NET Core version
@@ -28,12 +30,17 @@ test_script:
 artifacts:
   - path: Build\Packages\*nupkg
 
+before_deploy:
+  - cmd: cd src/IqOptionApi
+  - cmd: dotnet pack --configuration release -o Build\Packages\
+
 # any cleanup in here
 deploy:
   - provider: NuGet
     api_key:
-      secure: $env:APPVEYOR_NUGET_APIKEY
+      secure: iAOTJg7HXhC5IC1IGU186QfHt46ixII7hlz/7d2kbc5iOBG+WT2rSRbf4RtcafyN
     skip_symbols: false
     artifact: /.*\.(nupkg|snupkg)/
     on:
       branch: feature/add_travis
+      appveyor_repo_tag: true
