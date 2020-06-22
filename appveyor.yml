@@ -1,13 +1,15 @@
-version: "1.0.{build}"
+version: "2.1.{build}"
 image: Visual Studio 2019
 branches:
   only:
-    - feature/add_travis
+    - master
 init:
   # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
 
-install:
+nuget:
+  disable_publish_on_pr: true
+
 # Install repo specific stuff here
 before_build:
   # Display .NET Core version
@@ -16,24 +18,18 @@ before_build:
   - cmd: dotnet restore ./IqOptionApi.sln --verbosity m
 build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
-  - cmd: dotnet build ./src/IqOptionApi.NET/IqOptionApi.NET.csproj
-
-test_script:
-  # restore packages for our unit tests
-  - cmd: dotnet restore ./tests/IqOptionApi.Tests/IqOptionApi.Tests.csproj --verbosity m
-  # run the unit tests (requires changing into the test directory)
-  - cmd: cd tests/IqOptionApi.Tests
-  - cmd: dotnet test
+  - ps: ./build/package.ps1
 
 artifacts:
-  - path: Build\Packages\*nupkg
+  - path: \src\IqOptionApi.NET\Build\Packages\*nupkg
 
 # any cleanup in here
 deploy:
   - provider: NuGet
     api_key:
-      secure: $env:APPVEYOR_NUGET_APIKEY
+      secure: PD+Mb+nDiji71lFSy6wzQr+k796j3KBXsZswzX0p+LBZ+orVn+yPI/soLlHxfexz
     skip_symbols: false
     artifact: /.*\.(nupkg|snupkg)/
+    appveyor_repo_tag: true
     on:
       branch: master

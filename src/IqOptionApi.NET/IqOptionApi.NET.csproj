@@ -13,18 +13,12 @@
     <Description>Iqoption Api for .NET - https://github.com/MongkonEiadon/Iqoption.Net</Description>
     <PackageTags>IqOption Api</PackageTags>
     <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/MongkonEiadon/Iqoption.Net</RepositoryUrl>
     <PackageProjectUrl>https://mongkoneiadon.github.io/Iqoption.Net/</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>
-      - Improve order-changed and subscriber/unsubscribe
-      - Fix Dispose() method broken
-      - Fix Amount of PlaceDigitals from int to double
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>UPDATED BY BUILD</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
-    <AssemblyVersion>2.1.4</AssemblyVersion>
-    <FileVersion>2.1.4</FileVersion>
-    <Version>2.1.4</Version>
     <RootNamespace>IqOptionApi</RootNamespace>
     <AssemblyName>IqOptionApi</AssemblyName>
     <PackageId>iqoptionapi</PackageId>
