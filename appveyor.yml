@@ -6,9 +6,30 @@ branches:
 init:
   # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
+  - ps: >-
+    if ($env:APPVEYOR_REPO_TAG -eq "true")
+
+    {
+      Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME).$($env:APPVEYOR_BUILD_NUMBER)"
+    }
+
+    else
+
+    {
+      Update-AppveyorBuild -Version "2.1.$($env:APPVEYOR_BUILD_NUMBER)-$($env:APPVEYOR_REPO_COMMIT.substring(0,7))"
+    }
 
 nuget:
   disable_publish_on_pr: true
+
+assembly_info:
+  # Patch true ensures that the assemblies version number
+  # gets set to the build version number
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
 
 # Install repo specific stuff here
 before_build:
