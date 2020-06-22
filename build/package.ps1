@@ -30,7 +30,7 @@ Write-Host "Publishing project" -ForegroundColor Green
 # Discover and run tests
 Write-Host "Running tests" -ForegroundColor Green
 cd $testDir
-& dotnet restore Rn.CommonTests.csproj --verbosity m
+& dotnet restore IqOptionApi.Tests.csproj --verbosity m
 $testOutput = & dotnet test | Out-String
 Write-Host $testOutput
 
