@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using IqOptionApi.Http;
 using IqOptionApi.Models;
- using IqOptionApi.Models.BinaryOptions;
- using IqOptionApi.Models.DigitalOptions;
- using IqOptionApi.Ws;
+using IqOptionApi.Models.BinaryOptions;
+using IqOptionApi.Models.DigitalOptions;
+using IqOptionApi.Ws;
 
 namespace IqOptionApi
 {
@@ -23,11 +23,25 @@ namespace IqOptionApi
 
         Task<BinaryOptionsResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTimeOffset expiration);
 
-        
+
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf);
-        
+
         Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf);
+
+        #region Subscribe
+
+        /// <summary>
+        /// Subscribe traders mood changed
+        /// </summary>
+        void SubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active);
+
+        /// <summary>
+        /// Unsubscribe traders mood changed
+        /// </summary>
+        void UnSubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active);
+
+        #endregion
 
         #region PlacePositionCommands
 

@@ -1,4 +1,4 @@
-version: '1.0.{build}'
+version: "1.0.{build}"
 image: Visual Studio 2019
 branches:
   only:
@@ -24,12 +24,10 @@ test_script:
   # run the unit tests (requires changing into the test directory)
   - cmd: cd tests/IqOptionApi.Tests
   - cmd: dotnet test
-    
 
 artifacts:
   - path: Build\Packages\*nupkg
-    
-on_finish:
+
 # any cleanup in here
 deploy:
   - provider: NuGet

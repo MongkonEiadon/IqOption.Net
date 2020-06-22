@@ -6,7 +6,6 @@ namespace IqOptionApi.Samples.SampleRunners
 {
     public class ChangeBalanceSample : SampleRunner
     {
-
         public override async Task RunSample()
         {
             if (await IqClientApi.ConnectAsync())
