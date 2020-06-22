@@ -20,16 +20,15 @@ build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
   - cmd: dotnet build ./src/IqOptionApi.NET/IqOptionApi.NET.csproj
 
+after_build:
+  - cmd: dotnet pack ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release -o Build\Packages\
+
 test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./tests/IqOptionApi.Tests/IqOptionApi.Tests.csproj --verbosity m
   # run the unit tests (requires changing into the test directory)
   - cmd: cd tests/IqOptionApi.Tests
   - cmd: dotnet test
-
-after_test:
-  - cmd: cd ./src/IqOptionApi.NET
-  - cmd: dotnet pack --configuration release -o Build\Packages\
 
 artifacts:
   - path: Build\Packages\*nupkg
