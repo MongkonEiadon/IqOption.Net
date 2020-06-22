@@ -18,24 +18,7 @@ before_build:
   - cmd: dotnet restore ./IqOptionApi.sln --verbosity m
 build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
-  - cmd: dotnet build ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release
-
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
-
-after_build:
-  - cmd: dotnet pack ./src/IqOptionApi.NET/IqOptionApi.NET.csproj --configuration release -o Build\Packages\
-
-test_script:
-  # restore packages for our unit tests
-  - cmd: dotnet restore ./tests/IqOptionApi.Tests/IqOptionApi.Tests.csproj --verbosity m
-  # run the unit tests (requires changing into the test directory)
-  - cmd: cd tests/IqOptionApi.Tests
-  - cmd: dotnet test
+  - ps: ./build/package.ps1
 
 artifacts:
   - path: Build\Packages\*nupkg
