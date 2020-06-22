@@ -27,12 +27,12 @@ test_script:
   - cmd: cd tests/IqOptionApi.Tests
   - cmd: dotnet test
 
-artifacts:
-  - path: Build\Packages\*nupkg
-
-before_deploy:
+after_test:
   - cmd: cd src/IqOptionApi
   - cmd: dotnet pack --configuration release -o Build\Packages\
+
+artifacts:
+  - path: Build\Packages\*nupkg
 
 # any cleanup in here
 deploy:
