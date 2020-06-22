@@ -40,6 +40,6 @@ deploy:
       secure: iAOTJg7HXhC5IC1IGU186QfHt46ixII7hlz/7d2kbc5iOBG+WT2rSRbf4RtcafyN
     skip_symbols: false
     artifact: /.*\.(nupkg|snupkg)/
+    appveyor_repo_tag: true
     on:
       branch: feature/add_travis
-      appveyor_repo_tag: true
