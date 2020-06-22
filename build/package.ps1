@@ -13,7 +13,7 @@ $projectFile = $projectDir + "\IqOptionApi.NET.csproj";
 # C:\projects\rn-common\src\Rn.CommonTests
 $testDir = $buildDir + "\tests\IqOptionApi.Tests";
 # C:\projects\rn-common\src\Rn.Common\Rn.Common.x.x.x.nupkg
-$nugetFile = $projectDir + "\iqoptionapi." + $buildNumber + ".nupkg";
+$nugetFile = $projectDir + "\Build\Packages\iqoptionapi." + $buildNumber + ".nupkg";
 
 # Display .Net Core version
 Write-Host "Checking .NET Core version" -ForegroundColor Green
