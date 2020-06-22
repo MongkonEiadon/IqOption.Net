@@ -25,7 +25,7 @@ Write-Host "Restoring project" -ForegroundColor Green
 
 # Publish the project
 Write-Host "Publishing project" -ForegroundColor Green
-& dotnet publish $projectFile
+& dotnet build $projectFile -c Release
 
 # Discover and run tests
 Write-Host "Running tests" -ForegroundColor Green
