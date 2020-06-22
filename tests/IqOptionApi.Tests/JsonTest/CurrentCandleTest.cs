@@ -7,14 +7,15 @@ using NUnit.Framework;
 
 namespace IqOptionApi.Tests.JsonTest {
     public class CurrentCandleTest : TestFor<LoadJsonFileTest> {
-        public CurrentCandleTest() {
+        
+        private string Json { get; set; }
 
-            Json = _loadJsonFileTest.LoadJson("subscribeMessage\\candle-generated.json");
+        [SetUp]
+        public void TestSetup() {
+
+            Json = CreateUnit().LoadJson("Json/subscribeMessage/candle-generated.json");
+            Json.Should().NotBeEmpty();
         }
-
-        private readonly LoadJsonFileTest _loadJsonFileTest;
-
-        private string Json { get; }
 
         [Test]
         public void GetCandlesResult_WithFromAndTo_DateTimeMustSetCorrectly() {

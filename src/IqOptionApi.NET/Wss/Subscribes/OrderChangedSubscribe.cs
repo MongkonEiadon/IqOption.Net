@@ -4,7 +4,6 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
 using IqOptionApi.utilities;
-using IqOptionApi.Ws.Base;
 using IqOptionApi.Ws.Request;
 using IqOptionApi.Ws.Request.Portfolio;
 
@@ -12,20 +11,28 @@ namespace IqOptionApi.Ws
 {
     public partial class IqOptionWebSocketClient
     {
-        private readonly Subject<OrderChanged> _orderChangedSubject = new Subject<OrderChanged>();
-        public IObservable<OrderChanged> OrderChangedObservable() => _orderChangedSubject.AsObservable();
-
+        //private readonly Subject<OrderChanged> _orderChangedSubject = new Subject<OrderChanged>();
+        private readonly Subject<PositionChanged> _positionChangedSubject = new Subject<PositionChanged>();
+        
+        //public IObservable<OrderChanged> OrderChangedObservable() => _orderChangedSubject.AsObservable();
+        public IObservable<PositionChanged> PositionChangedObservable() => _positionChangedSubject.DistinctUntilChanged().AsObservable();
+         
+        
+        /*
         [SubscribeForTopicName(MessageType.SubscribeOrderChanged, typeof(OrderChanged))]
-        public void Subscribe(OrderChanged orderChanged)
+        void Subscribe(OrderChanged orderChanged)
         {
             _orderChangedSubject.OnNext(orderChanged);
         }
+        */
 
-        /// <summary>
-        /// To subscribe the order changed support for "Forex", "Digital-Option"
-        /// </summary>
-        /// <param name="instrumentType"></param>
-        /// <returns></returns>
+        [SubscribeForTopicName("position-changed", typeof(PositionChanged))]
+        public void Subscribe(PositionChanged positionChanged)
+        {
+            _positionChangedSubject.OnNext(positionChanged);
+        }
+
+        /*
         public async Task SubscribeOrderChanged(InstrumentType instrumentType)
         {
             if (Profile == null)
@@ -35,6 +42,33 @@ namespace IqOptionApi.Ws
             }
             
             await SendMessageAsync(new SubscribePortfolioOrderChangedRequest(Profile.UserId, instrumentType))
+                .ConfigureAwait(false);
+        }
+        */
+
+        /// <summary>
+        /// To subscribe the order changed support for "Forex", "Digital-Option"
+        /// </summary>
+        /// <returns></returns>
+        public async Task SubscribePositionChanged(InstrumentType instrumentType)
+        {
+            if (Profile == null)
+            {
+                await SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
+                await Task.Delay(500);
+            }
+
+            await UnSubscribePositionChanged(instrumentType);
+
+            await SendMessageAsync(new SubscribePortfolioPositionChangedRequest(Profile.UserId,
+                    Profile.BalanceId, instrumentType))
+                .ConfigureAwait(false);
+        }
+
+        public async Task UnSubscribePositionChanged(InstrumentType instrumentType)
+        {
+            await SendMessageAsync(new UnSubscribePositionChangedRequest(Profile.UserId,
+                    Profile.BalanceId, instrumentType))
                 .ConfigureAwait(false);
         }
     }

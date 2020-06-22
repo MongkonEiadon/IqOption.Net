@@ -11,7 +11,7 @@ namespace IqOptionApi.Samples.SampleRunners
     public abstract class SampleRunner : ISampleRunner
     {
         protected readonly ILogger _logger = LogHelper.Log;
-        protected IqOptionClient IqClientApi = new IqOptionClient("username@email.com", "yourpassword");
+        protected IqOptionClient IqClientApi = new IqOptionClient("adventuretimelaz11@thairiches.com", "0123456789");
 
         public abstract Task RunSample();
     }

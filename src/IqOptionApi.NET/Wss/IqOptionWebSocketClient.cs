@@ -42,12 +42,12 @@ using IqOptionApi.Ws.Request;
         /// </summary>
         /// <param name="messageCreator"></param>
         /// <returns></returns>
-        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator)
+        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator, string requestPrefix = "")
         {
             using (await _asyncLock.WaitAsync(CancellationToken.None).ConfigureAwait(false))
             {
                 _requestCounter = _requestCounter + 1;
-                var payload = messageCreator.CreateIqOptionMessage(_requestCounter);
+                var payload = messageCreator.CreateIqOptionMessage($"{requestPrefix}{_requestCounter}");
                 WebSocketClient.Send(payload);
                 _logger.LogDebug("⬆ {payload}", payload);
             }
@@ -113,7 +113,7 @@ using IqOptionApi.Ws.Request;
         /// <returns></returns>
         public Task SubscribeQuoteAsync(ActivePair pair, TimeFrame timeFrame)
         {
-            return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame));
+            return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame), "s_");
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ using IqOptionApi.Ws.Request;
         {
             foreach (var instru in new []{ InstrumentType.Crypto, InstrumentType.Forex, InstrumentType.BinaryOption, InstrumentType.DigitalOption, InstrumentType.TurboOption})
             {
-                Task.Run(() => SubscribeOrderChanged(instru));
+                //Task.Run(() => SubscribeOrderChanged(instru));
             }
         }
     }

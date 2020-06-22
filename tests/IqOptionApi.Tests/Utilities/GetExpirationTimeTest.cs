@@ -70,7 +70,5 @@ namespace IqOptionApi.Tests.Utilities
             // assert
             dtExpected.Should().Be(result);
         }
-        
-        
     }
 }

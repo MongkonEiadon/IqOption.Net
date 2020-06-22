@@ -1,5 +1,6 @@
 ﻿{
   "name": "candle-generated",
+  "microserviceName": "quotes",
   "msg": {
     "active_id": 1,
     "size": 5,
@@ -13,6 +14,7 @@
     "max": 1.14107,
     "ask": 1.14115,
     "bid": 1.14099,
-    "volume": 0
+    "volume": 0,
+    "phase": "C"
   }
 }

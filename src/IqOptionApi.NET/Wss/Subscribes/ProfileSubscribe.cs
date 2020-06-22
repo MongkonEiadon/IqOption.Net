@@ -4,6 +4,7 @@ using System.Reactive.Subjects;
 using IqOptionApi.Models;
 using IqOptionApi.utilities;
 using IqOptionApi.Ws.Base;
+using IqOptionApi.Ws.Request.Portfolio;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApi.Ws
@@ -19,6 +20,21 @@ namespace IqOptionApi.Ws
         {
             Profile = type;
             _profileSubject.OnNext(type);
+            
+            //invoke subscribe portfolio changed
+            foreach (var instru in new[]
+            {
+                //InstrumentType.Forex,
+                //InstrumentType.CFD,
+                //InstrumentType.Crypto,
+                InstrumentType.DigitalOption,
+                //InstrumentType.TurboOption,
+                //InstrumentType.BinaryOption,
+                //InstrumentType.FxOption
+            })
+            {
+                SubscribePositionChanged(instru).ConfigureAwait(false);
+            }
         }
 
         [Predisposable]

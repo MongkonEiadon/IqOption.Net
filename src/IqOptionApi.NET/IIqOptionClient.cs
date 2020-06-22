@@ -26,6 +26,7 @@ namespace IqOptionApi
         
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf);
+        
         Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf);
 
         #region PlacePositionCommands

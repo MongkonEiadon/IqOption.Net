@@ -2,7 +2,7 @@
 
 namespace IqOptionApi.Models
 {
-    public enum ActivePair
+    public enum ActivePair : int
     {
         EURRUB = 9,
         COMMBK = 13,

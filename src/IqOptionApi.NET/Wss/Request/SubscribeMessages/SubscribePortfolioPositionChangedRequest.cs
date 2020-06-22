@@ -26,33 +26,37 @@ namespace IqOptionApi.Ws.Request.Portfolio
         }
     }
 
-    internal class SubscribePortFolioPositionChangedRequest : WsMessageBase<SubscribePortFolioPositionChangedRequestBody>
+    internal class SubscribePortfolioPositionChangedRequest : WsMessageBase<SubscribePortFolioPositionChangedRequestBody>
     {
         public override string Name => MessageType.SubscribeMessage;
         
-        public SubscribePortFolioPositionChangedRequest(long userId, long userBalanceId, InstrumentType instrumentType)
+        public SubscribePortfolioPositionChangedRequest(long userId, long userBalanceId, InstrumentType instrumentType)
         {
             var instrumentTypeName = "";
             if (instrumentType == InstrumentType.Forex)
                 instrumentTypeName = "forex";
-            if (instrumentType == InstrumentType.CFD)
+            else if (instrumentType == InstrumentType.CFD)
                 instrumentTypeName = "cfd";
-            if (instrumentType == InstrumentType.Crypto)
+            else if (instrumentType == InstrumentType.Crypto)
                 instrumentTypeName = "crypto";
-            if (instrumentType == InstrumentType.DigitalOption)
+            else if (instrumentType == InstrumentType.DigitalOption)
                 instrumentTypeName = "digital-option";
-            if (instrumentType == InstrumentType.BinaryOption)
+            else if (instrumentType == InstrumentType.BinaryOption)
                 instrumentTypeName = "binary-option";
-            if (instrumentType == InstrumentType.TurboOption)
+            else if (instrumentType == InstrumentType.TurboOption)
                 instrumentTypeName = "turbo-option";
+            else if (instrumentType == InstrumentType.FxOption)
+                instrumentTypeName = "fx-option";
+            else
+                return;
             
             //msg
             base.Message = new SubscribePortFolioPositionChangedRequestBody
             {
                 // name
-                Name = "portfolio.order-changed",
+                Name = "portfolio.position-changed",
                 //version
-                Version = "1.0",
+                Version = "2.0",
                 //params
                 Parameters = new SubscribePortFolioPositionChangedRequestBody.InstrumentRoutingFilterParameters
                 {
