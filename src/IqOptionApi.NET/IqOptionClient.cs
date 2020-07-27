@@ -140,6 +140,15 @@ namespace IqOptionApi
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
             => WsClient?.PlaceDigitalOptions(instrumentId, amount);
 
+        /// <inheritdoc/>
+        public void SubscribeLiveDeal(String message, ActivePair pair, DigitalOptionsExpiryType duration)
+            => WsClient?.SubscribeLiveDeal(message, pair, duration);
+
+        /// <inheritdoc/>
+        public void UnSubscribeLiveDeal(String message, ActivePair pair, DigitalOptionsExpiryType duration)
+            => WsClient?.UnSubscribeLiveDeal(message, pair, duration);
+
+
         public void Dispose()
         {
             connectedSubject?.Dispose();

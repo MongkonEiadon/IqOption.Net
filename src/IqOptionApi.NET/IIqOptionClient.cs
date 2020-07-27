@@ -41,6 +41,17 @@ namespace IqOptionApi
         /// </summary>
         void UnSubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active);
 
+        /// <summary>
+        /// Subscribe live deal
+        /// </summary>
+        void SubscribeLiveDeal(string message, ActivePair pair, DigitalOptionsExpiryType duration);
+
+        /// <summary>
+        /// Unsubscribe live deal
+        /// </summary>
+        void UnSubscribeLiveDeal(string message, ActivePair pair, DigitalOptionsExpiryType duration);
+
+
         #endregion
 
         #region PlacePositionCommands
