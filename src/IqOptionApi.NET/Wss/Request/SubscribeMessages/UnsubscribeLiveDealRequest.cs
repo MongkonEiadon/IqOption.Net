@@ -12,7 +12,6 @@ namespace IqOptionApi.Wss.Request.SubscribeMessages
         public UnsubscribeLiveDealRequest(string message, ActivePair pair, DigitalOptionsExpiryType duration)
         {
             
-
             base.Message = new
             {
                 name = message,
