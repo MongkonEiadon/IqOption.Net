@@ -32,5 +32,10 @@ namespace IqOptionApi.Ws.Base
 
         public const string PlacedDigitalOptions = "digital-option-placed";
         public const string PlacedBinaryOptions = "option";
+
+        public const string LiveDealDigitalOption = "live-deal-digital-option";
+
+        public const string LiveDealBinaryOption = "live-deal-binary-option-placed";
+
     }
 }
