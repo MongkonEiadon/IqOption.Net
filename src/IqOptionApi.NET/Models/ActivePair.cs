@@ -121,6 +121,7 @@ namespace IqOptionApi.Models
         [EnumMember(Value = "AUDNZD")] AUDNZD = 944,
         [EnumMember(Value = "CADJPY")] CADJPY = 945,
         [EnumMember(Value = "EURCHF")] EURCHF = 946,
+        [EnumMember(Value = "GBPNZD")] GBPNZD = 947,
         [EnumMember(Value = "NZDCAD")] NZDCAD = 948,
         [EnumMember(Value = "NZDJPY")] NZDJPY = 949,
         [EnumMember(Value = "EURNOK")] EURNOK = 951,
