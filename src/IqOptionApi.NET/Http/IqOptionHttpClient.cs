@@ -63,8 +63,7 @@ namespace IqOptionApi.Http
                     .AddHeader("Content-Type", "application/x-www-form-urlencoded")
                     .AddHeader("content-type", "multipart/form-data")
                     .AddHeader("Accept", "application/json")
-                    .AddParameter("email", LoginModel.Email, ParameterType.QueryString)
-                    .AddParameter("password", LoginModel.Password, ParameterType.QueryString);
+                    .AddJsonBody(new { email = LoginModel.Email, password = LoginModel.Password });
 
                 client.ExecuteAsync(request)
                     .ContinueWith(t =>
