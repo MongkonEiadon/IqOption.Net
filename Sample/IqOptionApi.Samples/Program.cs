@@ -15,7 +15,7 @@ namespace IqOptionApi.Samples
             try
             {
                 // change this to run example
-                Task.Run(() => new SubscribeTradersMoodSample().RunSample());
+                Task.Run(() => new GetHistoryPositionsSample().RunSample());
 
                 Console.ReadLine();
             }
