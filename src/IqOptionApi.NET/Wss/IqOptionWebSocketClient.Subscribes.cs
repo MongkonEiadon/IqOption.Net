@@ -46,11 +46,11 @@ namespace IqOptionApi.Ws
 
                         // invoke subscribers
                         if (methods.Any())
-                            foreach (var method in _subscribeMethodInfos.Where(m =>
-                                m.Attribute.TopicName == msg.Name))
+                            foreach (var method in _subscribeMethodInfos.Where(m => m.Attribute.TopicName == msg.Name))
                             {
-                                var args = msg.MessageAs(method.Attribute.ArgumentType);
-                                method.TargetMethod.Invoke(this, new[] {args});
+                                var AttributeInfo = method.Attribute.ArgumentType;
+                                var invokeArgs = ((method.Attribute.Callback) ? new[] { x.JsonAs(AttributeInfo) } : new[] { msg.MessageAs(method.Attribute.ArgumentType) });
+                                method.TargetMethod.Invoke(this, invokeArgs);
                             }
                         else // not support subscribers
                             _logger

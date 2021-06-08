@@ -17,6 +17,7 @@ namespace IqOptionApi
     public class IqOptionClient : IIqOptionClient
     {
         private readonly ILogger _logger;
+        private bool IsSSIDLogin = false;
 
         #region [Ctor]
 
@@ -27,46 +28,70 @@ namespace IqOptionApi
             _logger = IqOptionApiLog.Logger;
 
             //set up client
-            HttpClient = new IqOptionHttpClient(username, password);
+            HttpClient = new IqOptionHttpClient(username, password, "iqoption.com");
+        }
+
+        public IqOptionClient(string SSID)
+        {
+            this.IsSSIDLogin = true;
+            _logger = IqOptionApiLog.Logger;
+            if (WsClient != null) WsClient.Dispose();
+            WsClient = new IqOptionWebSocketClient(SSID);
+
+            //set up client
+            HttpClient = new IqOptionHttpClient(SSID);
         }
 
         #endregion
 
+        // @AOMDev - Fix login problem
         public Task<bool> ConnectAsync()
         {
-            connectedSubject.OnNext(false);
-            IsConnected = false;
-
             var tcs = new TaskCompletionSource<bool>();
-            try
+            if (this.IsSSIDLogin)
             {
-                HttpClient
-                    .LoginAsync()
-                    .ContinueWith(t =>
-                    {
-                        if (t.Result != null && t.Result.IsSuccessful)
-                        {
-                            _logger.LogInformation($"{Username} logged in success!");
+                SubscribeWebSocket();
 
-                            if (WsClient != null) WsClient.Dispose();
-                            WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
+                IsConnected = true;
+                connectedSubject.OnNext(true);
 
-                            SubscribeWebSocket();
-
-                            IsConnected = true;
-                            connectedSubject.OnNext(true);
-                            tcs.TrySetResult(true);
-                            return;
-                        }
-
-                        _logger.LogInformation(
-                            $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
-                        tcs.TrySetResult(false);
-                    }).ConfigureAwait(false);
+                tcs.TrySetResult(true);
             }
-            catch (Exception ex)
+            else
             {
-                tcs.TrySetException(ex);
+                connectedSubject.OnNext(false);
+                IsConnected = false;
+                try
+                {
+                    HttpClient
+                        .LoginAsync()
+                        .ContinueWith(t =>
+                        {
+                            if (t.Result != null && t.Result.IsSuccessful)
+                            {
+                                _logger.LogInformation($"{Username} logged in success!");
+
+                                if (WsClient != null) WsClient.Dispose();
+                                string SSID = t.Result.Data.Ssid;
+                                WsClient = new IqOptionWebSocketClient(SSID);
+
+                                SubscribeWebSocket();
+
+                                IsConnected = true;
+                                connectedSubject.OnNext(true);
+                                tcs.TrySetResult(true);
+                                return;
+                            }
+
+                            _logger.LogInformation(
+                                $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
+                            tcs.TrySetResult(false);
+                        }).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
             }
 
             return tcs.Task;
@@ -139,6 +164,10 @@ namespace IqOptionApi
         /// <inheritdoc/>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
             => WsClient?.PlaceDigitalOptions(instrumentId, amount);
+
+        /// <inheritdoc/>
+        public Task<HistoryPositions> GetHistoryPositions(List<InstrumentType> instrument_types, int limit, int offset)
+            => WsClient?.GetHistoryPositions(instrument_types, limit, offset);
 
         public void Dispose()
         {

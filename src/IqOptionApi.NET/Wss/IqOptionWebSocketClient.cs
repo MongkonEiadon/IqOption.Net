@@ -54,7 +54,7 @@ using IqOptionApi.Ws.Request;
         }
 
         /// <summary>
-        /// Commit the message to the IqOption Server, and wait for result back
+        /// Commit the message to the IqOption Server, and wait for result back with subscribe method
         /// </summary>
         /// <param name="messageCreator">The message creator builder.</param>
         /// <param name="observableResult">The target observable that will trigger after message was incomming</param>
@@ -95,10 +95,49 @@ using IqOptionApi.Ws.Request;
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Commit the message to the IqOption Server, and wait for result back with same request id
+        /// </summary>
+        /// <param name="messageCreator">The message creator builder.</param>
+        /// <param name="observableResult">The target observable that will trigger after message was incomming and simulate http request</param>
+        /// <typeparam name="TResult">The expected result</typeparam>
+        /// <returns></returns>
+        public Task<TResult> SendMessageAsync<TResult>(
+            IWsIqOptionMessageCreator messageCreator,
+            IObservable<WsMessageBase<TResult>> observableResult)
+        {
+            var tcs = new TaskCompletionSource<TResult>();
+            var token = new CancellationTokenSource(10 * 1000).Token;
+
+            try
+            {
+                token.ThrowIfCancellationRequested();
+                token.Register(() =>
+                {
+                    if (tcs.TrySetCanceled())
+                    {
+                        _logger.LogWarning(string.Format(
+                            "Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
+                            typeof(TResult), 5000, messageCreator));
+                    }
+                });
+
+                observableResult.Subscribe(x =>
+                {
+                    if (x.RequestId == messageCreator.GetRequestID()) tcs.TrySetResult(x.Message);
+                });
+                SendMessageAsync(messageCreator).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                tcs.TrySetException(ex);
+            }
+            return tcs.Task;
+        }
         #endregion
 
 
-        
+
         #region [CurrentCandleInfo]
 
         public IObservable<CurrentCandle> RealTimeCandleInfoObservable => _candleInfoSubject.AsObservable();
@@ -133,6 +172,7 @@ using IqOptionApi.Ws.Request;
         protected virtual void InitialSocket(string secureToken)
         {
             WebSocketClient = new WebSocket("wss://iqoption.com/echo/websocket");
+            WebSocketClient.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
             WebSocketClient.OnError += (sender, args) =>
             {
                 _logger.LogError($"WebSocket Error : {args.Message}");

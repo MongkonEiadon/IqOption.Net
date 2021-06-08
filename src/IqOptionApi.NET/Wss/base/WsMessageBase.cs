@@ -6,8 +6,9 @@ namespace IqOptionApi.Ws.Base
 {
     public class WsMessageBase<T> : IWsMessage<T>, IWsIqOptionMessageCreator
     {
-        [JsonProperty("request_id", Order = 1)] public virtual string RequestId { get; set; }
-        [JsonProperty("name", Order = 2)] public virtual string Name { get; set; }
+        [JsonProperty("request_id", Order = 2)] public virtual string RequestId { get; set; }
+        [JsonProperty("local_time", Order = 3)] public virtual int LocalTime { get; set; }
+        [JsonProperty("name", Order = 1)] public virtual string Name { get; set; }
         
         [JsonProperty("version", Order = 11)] public virtual string Version { get; set; } = "1.0";
         [JsonProperty("msg", Order = 3)] public virtual T Message { get; set; }
@@ -19,7 +20,13 @@ namespace IqOptionApi.Ws.Base
         public virtual string CreateIqOptionMessage(string requestId)
         {
             RequestId = requestId;
+            LocalTime = int.Parse(requestId.Replace("s_", "")) * 1000;
             return this.AsJson();
+        }
+
+        public virtual string GetRequestID()
+        {
+            return RequestId;
         }
 
         public override string ToString()
