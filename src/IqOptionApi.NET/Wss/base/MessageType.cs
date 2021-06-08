@@ -32,5 +32,8 @@ namespace IqOptionApi.Ws.Base
 
         public const string PlacedDigitalOptions = "digital-option-placed";
         public const string PlacedBinaryOptions = "option";
+
+        // @AOMDev - History Position Callback
+        public const string HistoryPositions = "history-positions";
     }
 }
