@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -9,14 +10,15 @@ using IqOptionApi.Models;
 using IqOptionApi.Models.BinaryOptions;
 using IqOptionApi.Models.DigitalOptions;
 using IqOptionApi.Ws;
+using IqOptionApi.Ws.Base;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IqOptionApi
 {
     public class IqOptionClient : IIqOptionClient
     {
         private readonly ILogger _logger;
+        private bool IsSSIDLogin = false;
 
         #region [Ctor]
 
@@ -27,46 +29,71 @@ namespace IqOptionApi
             _logger = IqOptionApiLog.Logger;
 
             //set up client
-            HttpClient = new IqOptionHttpClient(username, password);
+            HttpClient = new IqOptionHttpClient(username, password, "iqoption.com");
+        }
+        public IqOptionClient(string SSID)
+        {
+            this.IsSSIDLogin = true;
+            _logger = IqOptionApiLog.Logger;
+            if (WsClient != null) WsClient.Dispose();
+            WsClient = new IqOptionWebSocketClient(SSID);
+
+            //set up client
+            HttpClient = new IqOptionHttpClient(SSID);
         }
 
         #endregion
 
         public Task<bool> ConnectAsync()
         {
-            connectedSubject.OnNext(false);
-            IsConnected = false;
-
             var tcs = new TaskCompletionSource<bool>();
-            try
+            if (this.IsSSIDLogin)
             {
-                HttpClient
-                    .LoginAsync()
-                    .ContinueWith(t =>
-                    {
-                        if (t.Result != null && t.Result.IsSuccessful)
-                        {
-                            _logger.LogInformation($"{Username} logged in success!");
+                SubscribeWebSocket();
 
-                            if (WsClient != null) WsClient.Dispose();
-                            WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
+                IsConnected = true;
+                connectedSubject.OnNext(true);
 
-                            SubscribeWebSocket();
-
-                            IsConnected = true;
-                            connectedSubject.OnNext(true);
-                            tcs.TrySetResult(true);
-                            return;
-                        }
-
-                        _logger.LogInformation(
-                            $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
-                        tcs.TrySetResult(false);
-                    }).ConfigureAwait(false);
+                tcs.TrySetResult(true);
             }
-            catch (Exception ex)
-            {
-                tcs.TrySetException(ex);
+            else 
+            { 
+                connectedSubject.OnNext(false);
+                IsConnected = false;
+
+                try
+                {
+                    string Message = null;
+                    HttpClient
+                        .LoginAsync()
+                        .ContinueWith(t =>
+                        {
+                            if (t.Result != null && t.Result.IsSuccessful)
+                            {
+                                Message = $"{Username} logged in success!";
+                                _logger.LogInformation(Message);
+
+                                if (WsClient != null) WsClient.Dispose();
+                                string SSID = t.Result.Data.Ssid;
+                                WsClient = new IqOptionWebSocketClient(SSID);
+
+                                SubscribeWebSocket();
+
+                                IsConnected = true;
+                                connectedSubject.OnNext(true);
+                                tcs.TrySetResult(true);
+                                return;
+                            }
+
+                            Message = $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}";
+                            _logger.LogInformation(Message);
+                            tcs.TrySetResult(false);
+                        }).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
             }
 
             return tcs.Task;
@@ -82,6 +109,11 @@ namespace IqOptionApi
         {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
 
+            if (result == null)
+            {
+                return true;
+            }
+
             if (result?.Message == null && !result.IsSuccessful)
             {
                 _logger.LogError($"Change balance ({balanceId}) error : {result.Message}");
@@ -92,12 +124,25 @@ namespace IqOptionApi
             return true;
         }
 
-        public Task<BinaryOptionsResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
-            DateTimeOffset expiration)
+        public Task<BinaryOptionsResult> BuyAsync(ActivePair pair, double size, OrderDirection direction,int expiration)
         {
             return WsClient?.BuyAsync(pair, size, direction, expiration);
         }
 
+        public string BuyRequest(ActivePair pair, double size, OrderDirection direction, int expiration)
+        {
+            return WsClient?.BuyRequest(pair, size, direction, expiration);
+        }
+
+        public Task<BinaryOptionsResult> BuyAsync(ActivePair pair, double size, OrderDirection direction, DateTimeOffset expiration)
+        {
+            return WsClient?.BuyAsync(pair, size, direction, expiration);
+        }
+
+        public Task<Leaderboard> GetLeaderboard(Country country, int From=1, int To=64)
+        {
+            return WsClient?.GetLeaderboard(country, From, To);
+        }
 
         public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count,
             DateTimeOffset to)
@@ -125,10 +170,19 @@ namespace IqOptionApi
         public void UnSubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active)
             => WsClient?.UnSubscribeTradersMoodChanged(instrumentType, active);
 
+        public void SubscribeLiveDealPlaced(InstrumentType instrumentType, ActivePair active)
+            => WsClient?.SubscribeLiveDealPlaced(instrumentType, active);
+
+        /// <inheritdoc/>
+        public void UnSubscribeLiveDealPlaced(InstrumentType instrumentType, ActivePair active)
+            => WsClient?.UnSubscribeLiveDealPlaced(instrumentType, active);
+
         /// <inheritdoc/>
         public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf)
             => WsClient?.UnsubscribeCandlesAsync(pair, tf);
 
+        public void SubscribeInstrumentQuotes(ActivePair Pair, int ExpTime, InstrumentType Type)
+            => WsClient?.SubscribeInstrumentQuotes(Pair, ExpTime, Type);
 
         /// <inheritdoc/>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction,
@@ -140,9 +194,14 @@ namespace IqOptionApi
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
             => WsClient?.PlaceDigitalOptions(instrumentId, amount);
 
+        /// <inheritdoc/>
+        public Task<HistoryPositions> GetHistoryPositions(List<InstrumentType> instrument_types, int limit, int offset)
+            => WsClient?.GetHistoryPositions(instrument_types, limit, offset);
+
         public void Dispose()
         {
             connectedSubject?.Dispose();
+            WsClient?.WebSocketClient.Stop(WebSocketCloseStatus.NormalClosure, "Disposed");
             WsClient?.Dispose();
         }
 
@@ -198,7 +257,8 @@ namespace IqOptionApi
         //obs
         public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
         public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
-        public IObservable<BinaryOptionsResult> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
+        public IObservable<WsMessageBase<BinaryOptionsResult>> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
+        public IObservable<Leaderboard> LeaderBoardObservable => WsClient?.LeaderboardObservable;
 
 
         #endregion

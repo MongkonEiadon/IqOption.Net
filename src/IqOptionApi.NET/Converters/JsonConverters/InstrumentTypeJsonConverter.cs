@@ -18,6 +18,13 @@ namespace IqOptionApi.Converters.JsonConverters
 
             switch (value)
             {
+                case "turbo-option":
+                case "turbo":
+                    return InstrumentType.TurboOption;
+                case "digital-option":
+                    return InstrumentType.DigitalOption;
+                case "binary-option":
+                    return InstrumentType.BinaryOption;
                 case "forex":
                     return InstrumentType.Forex;
                 case "cfd":

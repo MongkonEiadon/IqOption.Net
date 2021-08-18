@@ -10,11 +10,12 @@ namespace IqOptionApi.Models
     {
         [EnumMember(Value = "1")] Real = 1,
 
+        [EnumMember(Value = "2")] Tournament = 2,
 
         [EnumMember(Value = "4")] Practice = 4,
 
-
         [EnumMember(Value = "5")] RealOption = 5,
+
         Unknow
     }
 

@@ -20,7 +20,11 @@ namespace IqOptionApi.Ws.Base
         public const string UnsubscribeMessage = "unsubscribeMessage";
 
         public const string UserTournamentPositionChanged = "user-tournament-position-changed";
-
+        public const string LeaderboardDealsClient = "leaderboard-deals-client";
+        public const string LiveDealPlaced = "live-deal-binary-option-placed";
+        public const string UserProfile = "user-profile-client";
+        public const string InitializationData = "initialization-data";
+        public const string InstrumentQuotes = "instrument-quotes-generated";
 
         public const string Getinstruments = "get-instruments";
         public const string Ssid = "ssid";
@@ -32,5 +36,6 @@ namespace IqOptionApi.Ws.Base
 
         public const string PlacedDigitalOptions = "digital-option-placed";
         public const string PlacedBinaryOptions = "option";
+        public const string HistoryPositions = "history-positions";
     }
 }

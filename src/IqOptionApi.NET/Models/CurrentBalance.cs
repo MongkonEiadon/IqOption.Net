@@ -29,5 +29,9 @@ namespace IqOptionApi.Models
         [JsonProperty("bonus_total_amount")] public long BonusTotalAmount { get; set; }
 
         [JsonProperty("description")] public object Description { get; set; }
+
+        [JsonProperty("tournament_id")] public int? TournamentID { get; set; }
+
+        [JsonProperty("tournament_name")] public string TournamentName { get; set; }
     }
 }

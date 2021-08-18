@@ -5,15 +5,18 @@ namespace IqOptionApi.utilities
     [AttributeUsage(AttributeTargets.Method)]
     public class SubscribeForTopicNameAttribute : Attribute
     {
-        public SubscribeForTopicNameAttribute(string topicName, Type argumentType)
+        public SubscribeForTopicNameAttribute(string topicName, Type argumentType, bool Callback=false)
         {
-            TopicName = topicName;
-            ArgumentType = argumentType;
+            this.TopicName = topicName;
+            this.ArgumentType = argumentType;
+            this.Callback = Callback;
         }
 
         public string TopicName { get; }
 
         public Type ArgumentType { get; }
+
+        public bool Callback { get; }
     }
 
 

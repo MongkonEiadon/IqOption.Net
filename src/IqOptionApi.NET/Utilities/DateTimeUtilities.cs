@@ -21,7 +21,7 @@ namespace IqOptionApi.Utilities
         public static IDictionary<int, DateTimeOffset> ExpirationTimeTable(DateTimeOffset dt)
         {
             var dic = new Dictionary<int, DateTimeOffset>();
-            
+
             var now = dt.ToUnixTimeSeconds();
             var exp = dt.AddSeconds(-(dt.Second)).AddMilliseconds(-(dt.Millisecond));
 
@@ -29,29 +29,27 @@ namespace IqOptionApi.Utilities
                 exp = exp.AddMinutes(1);
             else exp = exp.AddMinutes(2);
 
-            
-            for (var i = 1; i <= 5; i++)
-                dic.Add(i, exp.AddMinutes(i - 1));
-            
-            
-            
-
-            /*
-            var idx = 50;
-            var index = 0;
-            exp = dt.AddSeconds(-(dt.Second)).AddMilliseconds(-(dt.Millisecond));
-            while (index < idx)
+            for (var i=1;i<=15;i++)
             {
-                if (exp.Minute % 15 == 0 && (exp.ToUnixTimeSeconds() - now > 60 * 5))
+                if (i == 1)
                 {
-                    dic.Add(1, exp);
-                    index = index + 1;
+                    dic.Add(i, exp.AddMinutes(i - 1));
                 }
-
-                exp = exp.AddMinutes(1);
+                else
+                {
+                    DateTimeOffset now_date = dt.AddMinutes(1).AddSeconds(30);
+                    while (true)
+                    {
+                        if (now_date.Minute % i == 0 && (now_date.ToUnixTimeSeconds() - dt.ToUnixTimeSeconds()) > 30)
+                        {
+                            break;
+                        }
+                        now_date = now_date.AddMinutes(1);
+                    }
+                    exp = now_date;
+                    dic.Add(i, exp);
+                }
             }
-            */
-
             return dic;
         }
     }

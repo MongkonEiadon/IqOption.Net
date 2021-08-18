@@ -5,6 +5,11 @@ namespace IqOptionApi.Utilities
 {
     internal static class InstrumentTypeUtilities
     {
+        public static string GetInstrumentTypeShortName(InstrumentType instrumentType)
+        {
+            var full = GetInstrumentTypeFullName(instrumentType).Split('-');
+            return full[0];
+        }
         public static string GetInstrumentTypeFullName(InstrumentType instrumentType)
         {
             var instrumentTypeName = "";

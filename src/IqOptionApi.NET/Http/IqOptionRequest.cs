@@ -6,7 +6,7 @@ namespace IqOptionApi.Http
     {
         protected IqOptionRequest(string action, Method method = Method.GET) : base(action, method)
         {
-            AddHeader("Accept", "application/json");
+            AddHeader("Accept", "*/*");
         }
     }
 }

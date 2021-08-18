@@ -45,6 +45,8 @@ namespace IqOptionApi.Models
 
         [JsonProperty("option_id")] public long OptionId { get; set; }
 
+        [JsonProperty("id")] public long Id { get; set; }
+
         [JsonProperty("balance_id")] public long BalanceId { get; set; }
 
         [JsonProperty("bonus_rate")] public long BonusRate { get; set; }

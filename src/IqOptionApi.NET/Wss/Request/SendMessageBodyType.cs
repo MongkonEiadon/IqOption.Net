@@ -6,5 +6,11 @@ namespace IqOptionApi.Ws.Request
 
         public const string OpenOptions = "binary-options.open-option";
 
+        public const string GetLeaderboardDeals = "request-leaderboard-deals-client";
+
+        public const string RequestUserProfile = "get-user-profile-client";
+
+        public const string RequestInitializationData = "get-initialization-data";
+
     }
 }

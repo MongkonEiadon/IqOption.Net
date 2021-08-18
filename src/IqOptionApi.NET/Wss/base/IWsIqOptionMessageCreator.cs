@@ -3,5 +3,6 @@
     public interface IWsIqOptionMessageCreator
     {
         string CreateIqOptionMessage(string requestId);
+        string GetRequestID();
     }
 }

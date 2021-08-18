@@ -1,7 +1,10 @@
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
 using IqOptionApi.Models.DigitalOptions;
 using IqOptionApi.Wss.Request.DigitalOptions;
+using Microsoft.Extensions.Logging;
 
 namespace IqOptionApi.Ws
 {
@@ -20,11 +23,9 @@ namespace IqOptionApi.Ws
         /// <returns></returns>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction, DigitalOptionsExpiryDuration duration, double amount)
         {
-
             return SendMessageAsync(new PlaceDigitalOptionsMessageRequest(new DigitalOptionsIdentifier(
-                    pair, direction, duration, ServerTime), (int) Profile.BalanceId, amount),
+                    pair, direction, duration, ServerTime), (int)Profile.BalanceId, amount),
                 PlaceDigitalOptionResultObservable);
-
         }
 
         /// <summary>
