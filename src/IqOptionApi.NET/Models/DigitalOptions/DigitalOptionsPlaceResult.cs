@@ -18,5 +18,6 @@ namespace IqOptionApi.Models.DigitalOptions
         public string ErrorMessage { get; set; }
 
         public bool IsError() => Id == null;
+        public string FromRequestID { get; set; }
     }
 }

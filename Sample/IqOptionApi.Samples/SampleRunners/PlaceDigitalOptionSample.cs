@@ -14,19 +14,16 @@ namespace IqOptionApi.Samples.SampleRunners
             
                 IqClientApi.PositionChangedObservable().Subscribe(x =>
                 {
-                    Console.WriteLine(string.Format("PortfolioChange - {0}, InstrumentId: {1}, Side: {2} {3}, Margin(Amount): {4}",
+                    Console.WriteLine(string.Format("PortfolioChange - {0}, InstrumentId: {1}, Margin(Amount): {2}",
                         x.Id,
                         x.InstrumentId,
-                        x.PortfolioChangedEventInfo.Status ,
-                        x.PortfolioChangedEventInfo.Type,
                         x.InvestAmount));
                 });
 
                 while (true)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(10));
-                    var position = await IqClientApi.PlaceDigitalOptions(ActivePair.EURUSD,
-                        OrderDirection.Call, DigitalOptionsExpiryDuration.M1, 1);
+                    var position = await IqClientApi.PlaceDigitalOptions(ActivePair.EURUSD, OrderDirection.Call, DigitalOptionsExpiryDuration.M1, 1);
 
                     Console.WriteLine($"Placed position Id: {position.Id}");
                 }

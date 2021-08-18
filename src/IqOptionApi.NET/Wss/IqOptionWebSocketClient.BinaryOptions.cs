@@ -1,14 +1,15 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using IqOptionApi.Models;
 using IqOptionApi.Models.BinaryOptions;
+using IqOptionApi.Utilities;
 using IqOptionApi.Ws.Request;
 
 namespace IqOptionApi.Ws
 {
     public partial class IqOptionWebSocketClient
     {
-        
+
         #region [BuyV2]
 
         /// <summary>
@@ -23,16 +24,17 @@ namespace IqOptionApi.Ws
             ActivePair pair,
             int size,
             OrderDirection direction,
-            DateTimeOffset expiration)
+            int Duration)
         {
 
-            //reduce second to 00s 
-            if (expiration.Second % 60 != 0)
-                expiration = expiration.AddSeconds(60 - expiration.Second);
+            //reduce second to 00s
+            DateTimeOffset now = DateTimeOffset.Now;
+            DateTimeOffset exp = DateTimeOffset.Now;
+            exp = DateTimeUtilities.GetExpirationTime(now,(BinaryOptionsDuration)Duration);
 
             // incasse of non-binary options
             var optionType = OptionType.Turbo;
-            if (expiration.Subtract(ServerTime).Minutes >= 5)
+            if (exp.Subtract(ServerTime).Minutes >= 5)
                 optionType = OptionType.Binary;
 
             return SendMessageAsync(
@@ -41,7 +43,7 @@ namespace IqOptionApi.Ws
                     pair,
                     optionType,
                     direction,
-                    expiration,
+                    exp,
                     size), BinaryOptionPlacedResultObservable);
         }
 

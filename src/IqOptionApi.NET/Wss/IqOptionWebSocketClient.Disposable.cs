@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net.WebSockets;
 using System.Reflection;
 using IqOptionApi.utilities;
 using IqOptionApi.Utilities;
@@ -18,10 +19,9 @@ namespace IqOptionApi.Ws
         public void Dispose()
         {
             //signal to complete the observer
-            foreach (var disposableMethodInfo in _disposableMethodInfos)
-                disposableMethodInfo.TargetMethod.Invoke(this, null);
+            foreach (var disposableMethodInfo in _disposableMethodInfos) disposableMethodInfo.TargetMethod.Invoke(this, null);
 
-            WebSocketClient?.Close();
+            WebSocketClient?.Stop(WebSocketCloseStatus.NormalClosure, "Disposed");
             WebSocketClient = null;
         }
     }

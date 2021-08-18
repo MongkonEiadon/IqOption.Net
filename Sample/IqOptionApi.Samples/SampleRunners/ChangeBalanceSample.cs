@@ -8,7 +8,8 @@ namespace IqOptionApi.Samples.SampleRunners
     {
         public override async Task RunSample()
         {
-            if (await IqClientApi.ConnectAsync())
+            bool IsConnected = await IqClientApi.ConnectAsync();
+            if (IsConnected)
             {
                 var profile = await IqClientApi.GetProfileAsync();
 

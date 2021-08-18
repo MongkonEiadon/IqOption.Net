@@ -6,7 +6,7 @@ namespace IqOptionApi.Wss.Request.SubscribeMessages
 {
     internal class SubscribeTradersMoodChangedRequest : WsMessageBase<dynamic>
     {
-        public override string Name => "subscribeMessage";
+        public override string Name => MessageType.SubscribeMessage;
 
         public SubscribeTradersMoodChangedRequest(InstrumentType instrumentType, ActivePair activePair)
         {

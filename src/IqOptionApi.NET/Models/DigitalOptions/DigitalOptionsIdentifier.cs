@@ -23,7 +23,7 @@ namespace IqOptionApi.Models.DigitalOptions
             Pair = pair;
             Direction = direction;
             Duration = duration;
-            Expiration = DateTimeUtilities.GetExpirationTime(now.UtcDateTime, duration);
+            Expiration = DateTimeUtilities.GetExpirationTime(now, duration);
         }
 
         public DigitalOptionsIdentifier(string instrumentId)
@@ -33,11 +33,11 @@ namespace IqOptionApi.Models.DigitalOptions
 
         public string CreateInstrumentId()
         {
-            var active = Pair.GetEnumMemberValue();
-            var dateFormat = Expiration.ToString("yyyyMMdd", CultureInfo.CreateSpecificCulture("en-US"));
-            var timeFormat = Expiration.ToString("HHmm");
-            var duration = Duration.GetEnumMemberValue();
-            var action = Direction == OrderDirection.Call ? "C" : "P";
+            string active = Pair.GetEnumMemberValue();
+            string dateFormat = Expiration.ToString("yyyyMMdd", CultureInfo.CreateSpecificCulture("en-US"));
+            string timeFormat = Expiration.ToString("HHmm");
+            string duration = Duration.GetEnumMemberValue();
+            string action = Direction == OrderDirection.Call ? "C" : "P";
             
             return $"do{active}{dateFormat}{timeFormat}PT{duration}{action}SPT";
         }

@@ -11,7 +11,7 @@ namespace IqOptionApi.Models.BinaryOptions
         
         [JsonProperty("refund_value")] public long RefundValue { get; set; }
         
-        [JsonProperty("price")] public long Amount { get; set; }
+        [JsonProperty("price")] public double Amount { get; set; }
         
         [JsonProperty("exp")]
         [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
@@ -34,6 +34,8 @@ namespace IqOptionApi.Models.BinaryOptions
 
         [JsonProperty("client_platform_id")] public long ClientPlatformId { get; set; }
         [JsonProperty("message")] public string ErrorMessage { get; set; }
+        [JsonProperty("value")] public double OpenPrice { get; set; }
+        [JsonProperty("profit_percent")] public double Profit { get; set; }
 
         public bool IsError() => !string.IsNullOrEmpty(ErrorMessage);
     }

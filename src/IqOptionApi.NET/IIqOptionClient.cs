@@ -21,8 +21,9 @@ namespace IqOptionApi
         Task<Profile> GetProfileAsync();
         Task<bool> ChangeBalanceAsync(long balanceId);
 
-        Task<BinaryOptionsResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTimeOffset expiration);
+        Task<BinaryOptionsResult> BuyAsync(ActivePair pair, double size, OrderDirection direction, int expiration);
 
+        Task<Leaderboard> GetLeaderboard(Country country, int From=1, int To=64);
 
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf);
@@ -36,10 +37,12 @@ namespace IqOptionApi
         /// </summary>
         void SubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active);
 
+        void SubscribeLiveDealPlaced(InstrumentType instrumentType, ActivePair active);
+
         /// <summary>
         /// Unsubscribe traders mood changed
         /// </summary>
-        void UnSubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active);
+        void UnSubscribeLiveDealPlaced(InstrumentType instrumentType, ActivePair active);
 
         #endregion
 

@@ -68,7 +68,7 @@ namespace IqOptionApi.Http
 
         #region Web-Methods
 
-        public Task<IqHttpResult<SsidResultMessage>> LoginAsync(string ApiVersion = "2")
+        public Task<IqHttpResult<SsidResultMessage>> LoginAsync(string ApiVersion="2")
         {
             var tcs = new TaskCompletionSource<IqHttpResult<SsidResultMessage>>();
             try
@@ -76,9 +76,9 @@ namespace IqOptionApi.Http
                 var client = new RestClient("https://auth.iqoption.com/api/v" + ApiVersion + "/login");
                 var request = new RestRequest(Method.POST) {RequestFormat = DataFormat.Json}
                     .AddHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .AddHeader("content-type", (ApiVersion == "2")? "application/x-www-form-urlencoded" : "multipart/form-data")
-                    .AddHeader("Accept", (ApiVersion=="2")?"*/*":"application/json")
-                    .AddParameter((ApiVersion == "2")?"identifier":"email", LoginModel.Email, ParameterType.QueryString)
+                    .AddHeader("content-type", "application/x-www-form-urlencoded")
+                    .AddHeader("Accept", "*/*")
+                    .AddParameter("identifier", LoginModel.Email, ParameterType.QueryString)
                     .AddParameter("password", LoginModel.Password, ParameterType.QueryString);
 
                 client.ExecuteAsync(request)
@@ -135,7 +135,9 @@ namespace IqOptionApi.Http
             var result = await Client.ExecutePostAsync(new ChangeBalanceRequest(balanceId));
 
             if (result.StatusCode == HttpStatusCode.OK)
+            {
                 return result.Content.JsonAs<IqHttpResult<IHttpResultMessage>>();
+            }
 
             return null;
         }

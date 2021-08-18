@@ -13,16 +13,15 @@ namespace IqOptionApi.Ws
     {
         #region [PlaceDigitalOptions]
 
-        private readonly Subject<DigitalOptionsPlacedResult> _placeDigitalOptionResult = new Subject<DigitalOptionsPlacedResult>();
-        public IObservable<DigitalOptionsPlacedResult> PlaceDigitalOptionResultObservable => _placeDigitalOptionResult.AsObservable();
+        private readonly Subject<WsMessageBase<DigitalOptionsPlacedResult>> _placeDigitalOptionResult = new Subject<WsMessageBase<DigitalOptionsPlacedResult>>();
+        public IObservable<WsMessageBase<DigitalOptionsPlacedResult>> PlaceDigitalOptionResultObservable => _placeDigitalOptionResult.AsObservable();
         
 
-        [SubscribeForTopicName(MessageType.PlacedDigitalOptions, typeof(DigitalOptionsPlacedResult))]
-        public void Subscribe(DigitalOptionsPlacedResult type)
+        [SubscribeForTopicName(MessageType.PlacedDigitalOptions, typeof(WsMessageBase<DigitalOptionsPlacedResult>), true)]
+        public void Subscribe(WsMessageBase<DigitalOptionsPlacedResult> type)
         {
             _placeDigitalOptionResult.OnNext(type);
         }
-
 
         #endregion
     }

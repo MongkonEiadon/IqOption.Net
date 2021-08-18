@@ -10,12 +10,12 @@ namespace IqOptionApi.Ws.Base
         [JsonProperty("local_time", Order = 3)] public virtual int LocalTime { get; set; }
         [JsonProperty("name", Order = 1)] public virtual string Name { get; set; }
         
-        [JsonProperty("version", Order = 11)] public virtual string Version { get; set; } = "1.0";
-        [JsonProperty("msg", Order = 3)] public virtual T Message { get; set; }
+        [JsonProperty("version", Order = 11, NullValueHandling = NullValueHandling.Ignore)] public virtual string Version { get; set; } = "1.0";
+        [JsonProperty("msg", Order = 4)] public virtual T Message { get; set; }
         
-        [JsonProperty("status", Order = Int32.MaxValue)] public virtual int StatusCode { get; set; }
+        [JsonProperty("status", Order = Int32.MaxValue, NullValueHandling = NullValueHandling.Ignore)] public virtual int? StatusCode { get; set; }
         
-        [JsonProperty("microserviceName", Order = 10)] public string MicroserviceName { get; set; }
+        [JsonProperty("microserviceName", Order = 10, NullValueHandling = NullValueHandling.Ignore)] public virtual string MicroserviceName { get; set; }
         
         public virtual string CreateIqOptionMessage(string requestId)
         {
@@ -28,7 +28,6 @@ namespace IqOptionApi.Ws.Base
         {
             return RequestId;
         }
-
         public override string ToString()
         {
             return this.AsJson();
